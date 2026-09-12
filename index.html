@@ -1,0 +1,2421 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>真心話轉盤</title>
+<meta name="description" content="兩人即時共享的轉盤，一起抽題回答、心情與心事即時同步封存拆信，配上溫暖的背景音樂。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="真心話轉盤">
+<meta property="og:title" content="真心話轉盤">
+<meta property="og:description" content="兩人即時共享的轉盤，一起抽題回答、心情與心事即時同步封存拆信，配上溫暖的背景音樂。">
+<meta property="og:url" content="https://markhaung.github.io/realtime-wheel/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=cwTeX+Kai+TC&family=Noto+Sans+TC:wght@400;500;700;800&display=swap">
+<style>
+  [hidden]{display:none !important;}
+  body{margin:0;}
+  :root{
+    --cream:#FFF8EF;
+    --paper:#FFFFFF;
+    --paper-2:#FFF2E1;
+    --ink:#5B4636;
+    --ink-soft:#8F7A68;
+    --ink-faint:#C6B29E;
+    --border:#F1DFC5;
+    --coral:#FF8F73;      --coral-soft:#FFE4DB;
+    --peach:#F5A758;      --peach-soft:#FFEAD3;
+    --butter:#E4B240;     --butter-soft:#FFF3D2;
+    --sage:#7FAE79;       --sage-soft:#E4F0DE;
+    --sky:#5FA3C4;        --sky-soft:#DEF0F7;
+    --lilac:#A583C9;      --lilac-soft:#EFE4F7;
+    --blush:#E87CA0;      --blush-soft:#FFE3EA;
+    --olive:#BEC167;      --olive-soft:#F2F2DE;
+    --lime:#94C167;       --lime-soft:#E8F2DE;
+    --mint:#67C17D;       --mint-soft:#DEF2E3;
+    --jade:#67C1A0;       --jade-soft:#DEF2EB;
+    --teal:#67C1C1;       --teal-soft:#DEF2F2;
+    --indigo:#6782C1;     --indigo-soft:#DEE4F2;
+    --violet:#7667C1;     --violet-soft:#E1DEF2;
+    --orchid:#B267C1;     --orchid-soft:#EFDEF2;
+    --magenta:#C167AA;    --magenta-soft:#F2DEED;
+    --wine:#C1676E;       --wine-soft:#F2DEDF;
+    --shadow-sm: 0 3px 12px -6px rgba(91,70,54,.28);
+    --shadow-lg: 0 20px 44px -20px rgba(91,70,54,.4);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --cream:#241A13; --paper:#2D2118; --paper-2:#382A1E;
+      --ink:#F5E7D6; --ink-soft:#CBB39B; --ink-faint:#8F7A61;
+      --border:#4A392A;
+      --coral:#FF9F85; --coral-soft:#4A2E23;
+      --peach:#F0AE6B; --peach-soft:#493721;
+      --butter:#E8C365; --butter-soft:#463A20;
+      --sage:#98C48F; --sage-soft:#2D3A27;
+      --sky:#7FC0DE; --sky-soft:#24394A;
+      --lilac:#C1A3E0; --lilac-soft:#372A45;
+      --blush:#F49CB9; --blush-soft:#452832;
+      --olive:#CACD89; --olive-soft:#484927;
+      --lime:#ABCD89; --lime-soft:#384927;
+      --mint:#89CD9A; --mint-soft:#274930;
+      --jade:#89CDB4; --jade-soft:#27493D;
+      --teal:#89CDCD; --teal-soft:#274949;
+      --indigo:#899DCD; --indigo-soft:#273149;
+      --violet:#9489CD; --violet-soft:#2D2749;
+      --orchid:#C189CD; --orchid-soft:#432749;
+      --magenta:#CD89BC; --magenta-soft:#492741;
+      --wine:#CD898F; --wine-soft:#49272A;
+      --shadow-sm: 0 3px 14px -6px rgba(0,0,0,.5);
+      --shadow-lg: 0 22px 48px -18px rgba(0,0,0,.65);
+    }
+  }
+  :root[data-theme="dark"]{
+    --cream:#241A13; --paper:#2D2118; --paper-2:#382A1E;
+    --ink:#F5E7D6; --ink-soft:#CBB39B; --ink-faint:#8F7A61;
+    --border:#4A392A;
+    --coral:#FF9F85; --coral-soft:#4A2E23;
+    --peach:#F0AE6B; --peach-soft:#493721;
+    --butter:#E8C365; --butter-soft:#463A20;
+    --sage:#98C48F; --sage-soft:#2D3A27;
+    --sky:#7FC0DE; --sky-soft:#24394A;
+    --lilac:#C1A3E0; --lilac-soft:#372A45;
+    --blush:#F49CB9; --blush-soft:#452832;
+    --olive:#CACD89; --olive-soft:#484927;
+    --lime:#ABCD89; --lime-soft:#384927;
+    --mint:#89CD9A; --mint-soft:#274930;
+    --jade:#89CDB4; --jade-soft:#27493D;
+    --teal:#89CDCD; --teal-soft:#274949;
+    --indigo:#899DCD; --indigo-soft:#273149;
+    --violet:#9489CD; --violet-soft:#2D2749;
+    --orchid:#C189CD; --orchid-soft:#432749;
+    --magenta:#CD89BC; --magenta-soft:#492741;
+    --wine:#CD898F; --wine-soft:#49272A;
+    --shadow-sm: 0 3px 14px -6px rgba(0,0,0,.5);
+    --shadow-lg: 0 22px 48px -18px rgba(0,0,0,.65);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    line-height:1.65;
+  }
+  h1,h2,h3{
+    font-family:"cwTeX Kai TC","Noto Sans TC",serif;
+    font-weight:400;
+    text-wrap:balance;
+    margin:0;
+  }
+  .wrap{max-width:640px; margin:0 auto; padding:36px 18px 90px;}
+
+  /* ---------- header ---------- */
+  .banner{
+    position:relative;
+    text-align:center;
+    background:var(--paper);
+    border:2px solid var(--border);
+    border-radius:32px;
+    padding:26px 24px 22px;
+    box-shadow:var(--shadow-sm);
+    margin-bottom:22px;
+  }
+  .banner .dot{position:absolute; width:11px; height:11px; border-radius:50%;}
+  .banner .dot.d1{background:var(--coral); top:16px; left:20px;}
+  .banner .dot.d2{background:var(--butter); top:16px; right:20px;}
+  .banner h1{font-size:clamp(26px,7vw,34px); color:var(--coral); letter-spacing:.03em;}
+  .banner p{margin:8px auto 0; max-width:44ch; color:var(--ink-soft); font-size:14px;}
+  .conn-note{margin-top:10px; font-size:12px; color:var(--ink-faint);}
+
+  details.howto{margin-top:14px; text-align:left;}
+  details.howto summary{
+    cursor:pointer; font-size:12.5px; font-weight:700; text-align:center; list-style:none;
+    animation:howto-glow 2.4s ease-in-out infinite;
+  }
+  details.howto summary::-webkit-details-marker{display:none;}
+  details.howto[open] summary{margin-bottom:8px; animation:none; color:var(--ink-faint);}
+  @keyframes howto-glow{0%,100%{color:var(--ink-faint);} 50%{color:var(--coral);}}
+  details.howto .howto-body{font-size:13px; color:var(--ink-soft); background:var(--paper-2); border-radius:16px; padding:14px 16px;}
+  details.howto .howto-body p{margin:0 0 8px;}
+  details.howto .howto-body p:last-child{margin-bottom:0;}
+
+  /* ---------- name ---------- */
+  .name-row{display:flex; align-items:center; gap:10px; justify-content:center; margin-bottom:26px; font-size:13.5px; color:var(--ink-soft);}
+  .name-row input{
+    font-family:inherit; font-size:14px; color:var(--ink);
+    background:var(--paper); border:2px solid var(--border);
+    border-radius:999px; padding:7px 16px; width:150px; text-align:center;
+  }
+  .name-row input:focus-visible{outline:2px solid var(--coral); outline-offset:2px;}
+
+  /* ---------- wheel ---------- */
+  .wheel-stage{display:flex; flex-direction:column; align-items:center; gap:14px; margin-bottom:26px;}
+  .wheel-wrap{position:relative; width:min(320px,80vw); height:min(320px,80vw);}
+  .wheel-wrap svg{width:100%; height:100%; display:block; filter:drop-shadow(var(--shadow-lg));}
+  #wheelGroup{transform-origin:160px 160px;}
+  .pointer{
+    position:absolute; top:-6px; left:50%; transform:translateX(-50%);
+    width:0; height:0;
+    border-left:13px solid transparent; border-right:13px solid transparent;
+    border-top:22px solid var(--ink);
+    filter:drop-shadow(0 2px 2px rgba(0,0,0,.25));
+    z-index:3;
+  }
+  .pointer::after{
+    content:""; position:absolute; left:-9px; top:-24px;
+    width:18px; height:18px; border-radius:50% 50% 50% 0;
+    background:var(--coral); transform:rotate(45deg); border:2px solid var(--paper);
+  }
+  .hub{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:78px; height:78px; border-radius:50%;
+    background:var(--paper); border:3px solid var(--coral);
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    font-family:"cwTeX Kai TC",serif; font-size:16px; color:var(--coral);
+    cursor:pointer; box-shadow:var(--shadow-sm); z-index:2; line-height:1.2; padding:4px;
+  }
+  .hub:hover{transform:translate(-50%,-50%) scale(1.05);}
+  .hub:active{transform:translate(-50%,-50%) scale(.97);}
+  .hub[aria-disabled="true"]{opacity:.5; cursor:default; pointer-events:none;}
+  .hub:focus-visible{outline:2px solid var(--sky); outline-offset:3px;}
+  .status-line{font-size:13px; color:var(--ink-soft); text-align:center; min-height:18px;}
+
+  @keyframes badge-pulse{0%,100%{opacity:1; transform:scale(1);} 50%{opacity:.5; transform:scale(.8);}}
+  @keyframes badge-pop{from{opacity:0; transform:scale(.8);} to{opacity:1; transform:scale(1);}}
+  @keyframes badge-bounce{0%,100%{transform:translateY(0);} 50%{transform:translateY(-3px);}}
+
+  .cat-picker{display:flex; flex-wrap:wrap; justify-content:center; gap:8px; max-width:480px; margin:0 auto;}
+  .cat-picker-label{width:100%; text-align:center; font-size:12px; color:var(--ink-soft); margin-bottom:-2px;}
+  .cat-chip{
+    border:none; border-radius:999px; padding:7px 14px; font-family:"Noto Sans TC",sans-serif;
+    font-size:13px; cursor:pointer; transition:transform .15s ease, filter .15s ease;
+    color:var(--ink);
+  }
+  .cat-chip:hover{transform:translateY(-2px); filter:brightness(1.03);}
+  .cat-chip:active{transform:translateY(0) scale(.97);}
+  .cat-chip[aria-disabled="true"]{opacity:.45; cursor:default; pointer-events:none; transform:none;}
+  .cat-chip:focus-visible{outline:2px solid var(--sky); outline-offset:2px;}
+
+  /* ---------- letter card ---------- */
+  .letter{
+    position:relative; background:var(--paper); border:2px solid var(--border);
+    border-radius:28px; padding:26px 24px 22px; margin-bottom:20px; box-shadow:var(--shadow-sm);
+  }
+  .letter.appear{animation:pop-in .45s cubic-bezier(.26,1.1,.4,1);}
+  @keyframes pop-in{0%{opacity:0; transform:translateY(10px) scale(.97);} 100%{opacity:1; transform:translateY(0) scale(1);}}
+  .tag{
+    display:inline-flex; align-items:center; gap:6px;
+    background:var(--tagsoft, var(--coral-soft)); color:var(--tagcolor, var(--coral));
+    font-size:12.5px; font-weight:700; letter-spacing:.04em;
+    padding:5px 14px; border-radius:999px; margin-bottom:14px;
+  }
+  .tag .tag-dot{width:7px; height:7px; border-radius:50%; background:currentColor;}
+  .letter h2{font-size:clamp(19px,5vw,23px); color:var(--ink); margin-bottom:16px;}
+
+  .opt-hint{font-size:12.5px; color:var(--ink-faint); margin-bottom:8px;}
+  .options{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;}
+  .opt{
+    appearance:none; border:2px solid var(--tagsoft, var(--coral-soft));
+    background:var(--tagsoft, var(--coral-soft)); color:var(--ink);
+    padding:9px 16px; border-radius:999px; font-family:inherit; font-size:13.5px;
+    cursor:pointer; transition:transform .12s ease, background .15s ease, border-color .15s ease;
+  }
+  .opt:hover{transform:translateY(-2px);}
+  .opt.selected{background:var(--tagcolor, var(--coral)); border-color:var(--tagcolor, var(--coral)); color:#fff; font-weight:700;}
+
+  .field-label{display:block; font-size:13px; color:var(--ink-soft); margin:2px 0 7px;}
+  textarea, .letter input[type=text]{
+    width:100%; font-family:inherit; font-size:14px; color:var(--ink);
+    background:var(--paper-2); border:2px solid var(--border); border-radius:16px; padding:11px 14px; resize:vertical;
+  }
+  textarea{min-height:60px;}
+  textarea::placeholder, .letter input::placeholder{color:var(--ink-faint);}
+  textarea:focus-visible, .letter input:focus-visible{outline:2px solid var(--sky); outline-offset:1px;}
+
+  .mood-row{margin:18px 0 4px;}
+  .mood-top{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:6px;}
+  .mood-word{font-family:"cwTeX Kai TC",serif; font-size:17px; color:var(--peach);}
+  .mood-num{font-size:12px; color:var(--ink-faint); font-variant-numeric:tabular-nums;}
+  input[type=range]{
+    -webkit-appearance:none; appearance:none; width:100%; height:8px; border-radius:999px;
+    background:linear-gradient(90deg,var(--sky),var(--butter) 55%,var(--coral) 100%); margin:6px 0 4px;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:24px; height:24px; border-radius:50%;
+    background:var(--paper); border:4px solid var(--coral); cursor:pointer; box-shadow:var(--shadow-sm);
+  }
+  input[type=range]::-moz-range-thumb{width:16px; height:16px; border-radius:50%; background:var(--paper); border:4px solid var(--coral); cursor:pointer;}
+
+  .btn-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px; align-items:center;}
+  .btn{
+    appearance:none; border:none; cursor:pointer; font-family:inherit;
+    border-radius:999px; padding:11px 22px; font-size:14px; font-weight:700;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn:disabled{opacity:.5; cursor:default; transform:none;}
+  .btn.primary{background:var(--coral); color:#fff; box-shadow:var(--shadow-sm);}
+  .btn.ghost{background:var(--paper-2); color:var(--ink-soft); border:2px solid var(--border);}
+  .hint{font-size:12.5px; color:var(--ink-faint);}
+
+  .sealed-note{
+    display:flex; align-items:center; gap:10px; margin-bottom:16px;
+    background:var(--sage-soft); color:var(--sage); padding:12px 16px;
+    border-radius:10px; border-left:4px solid currentColor; font-size:13.5px; font-weight:700;
+  }
+  .sealed-note .paw{
+    width:18px; height:18px; border-radius:50%; background:currentColor; flex:none; position:relative;
+  }
+  .sealed-note .paw::after{
+    content:""; position:absolute; left:6px; top:3px; width:5px; height:9px;
+    border:solid var(--paper); border-width:0 2px 2px 0; transform:rotate(40deg);
+  }
+
+  .nudge-note{
+    background:var(--peach-soft); border-radius:14px; padding:12px 16px; margin-bottom:16px;
+  }
+  .nudge-note p{margin:0 0 8px; font-size:13px; color:var(--ink-soft);}
+  .nudge-note .btn{padding:7px 16px; font-size:12.5px;}
+
+  .share-box{margin-top:16px; background:var(--paper-2); border-radius:18px; padding:16px;}
+  .share-box p{margin:0 0 8px; font-size:13px; color:var(--ink-soft);}
+  .code-row{display:flex; gap:8px;}
+  .code-row input{
+    flex:1; min-width:0; font-family:ui-monospace,"SFMono-Regular",Menlo,monospace; font-size:11.5px;
+    background:var(--paper); border:2px solid var(--border); border-radius:12px; padding:9px 12px; color:var(--ink);
+  }
+  .paste-row{margin-top:14px; display:flex; gap:8px;}
+  .paste-row input{
+    flex:1; min-width:0; font-family:inherit; font-size:13px; color:var(--ink);
+    background:var(--paper); border:2px solid var(--border); border-radius:12px; padding:9px 12px;
+  }
+  .btn.small{padding:9px 16px; font-size:12.5px; flex:none;}
+
+  /* ---------- reveal bubbles ---------- */
+  .reveal-title{text-align:center; font-family:"cwTeX Kai TC",serif; font-size:20px; color:var(--coral); margin-bottom:16px;}
+  .bubble{border-radius:22px; padding:16px 18px; margin-bottom:12px; max-width:92%; box-shadow:var(--shadow-sm);}
+  .bubble.starter{background:var(--peach-soft); margin-right:8%;}
+  .bubble.responder{background:var(--sky-soft); margin-left:8%; margin-right:0;}
+  .bubble-head{display:flex; align-items:center; gap:8px; margin-bottom:8px;}
+  .avatar{width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:#fff; flex:none;}
+  .bubble.starter .avatar{background:var(--peach);}
+  .bubble.responder .avatar{background:var(--sky);}
+  .bubble-name{font-weight:700; font-size:13.5px;}
+  .bubble-mood{font-size:12px; color:var(--ink-faint); margin-left:auto;}
+  .bubble-choice{font-size:14.5px; font-weight:700; margin-bottom:4px;}
+  .bubble-note{font-size:13.5px; color:var(--ink-soft); white-space:pre-wrap;}
+  .bubble-daily{font-size:12.5px; color:var(--ink-faint); white-space:pre-wrap; margin-top:8px; padding-top:8px; border-top:1px dashed currentColor; opacity:.85;}
+  .bubble-daily b{font-weight:700;}
+
+  /* ---------- 兩區：你寄出的信／對方寄來的信 ---------- */
+  .two-zone{display:grid; grid-template-columns:1fr; gap:16px; max-width:640px; margin:0 auto 26px;}
+  @media(min-width:760px){ .two-zone{grid-template-columns:1fr 1fr; align-items:start;} }
+  .zone{border-radius:20px; padding:16px 14px 18px;}
+  .zone-mine{background:var(--peach-soft);}
+  .zone-theirs{background:var(--sky-soft);}
+  .zone-title{margin:0 0 10px; font-size:13.5px; font-weight:800; display:flex; align-items:center; gap:7px;}
+  .zone-mine .zone-title{color:var(--peach);}
+  .zone-theirs .zone-title{color:var(--sky);}
+  .zone-title .need-dot{width:8px; height:8px; border-radius:50%; background:#FF3B30; animation:badge-pulse 1.4s ease-in-out infinite;}
+
+  .incoming-alert[hidden]{display:none;}
+  .incoming-alert{
+    display:inline-flex; align-items:center; gap:8px; align-self:center;
+    background:var(--sky); color:#fff; border:none; border-radius:999px;
+    padding:10px 20px; font-family:"Noto Sans TC",sans-serif; font-size:14px; font-weight:800;
+    cursor:pointer; box-shadow:0 8px 22px -6px rgba(95,163,196,.65); transition:transform .12s ease;
+    animation:badge-pop .4s cubic-bezier(.26,1.1,.4,1), badge-bounce 1.7s ease-in-out .6s infinite;
+  }
+  .incoming-alert:hover{transform:translateY(-2px);}
+  .incoming-alert:active{transform:translateY(0) scale(.97);}
+  .incoming-dot{
+    position:relative; flex:none; width:20px; height:15px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 18'%3E%3Crect x='1' y='1' width='22' height='16' rx='3' fill='none' stroke='white' stroke-width='2'/%3E%3Cpath d='M2 3 L12 12 L22 3' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:center; background-size:contain;
+  }
+  .incoming-dot::after{
+    content:""; position:absolute; top:-3px; right:-3px; width:8px; height:8px; border-radius:50%;
+    background:#FF3B30; box-shadow:0 0 0 2px var(--sky);
+    animation:badge-pulse 1.4s ease-in-out infinite;
+  }
+  .zone-body .letter{margin-bottom:0;}
+  .zone-empty{color:var(--ink-faint); font-size:13px; padding:16px 6px; text-align:center;}
+
+  /* ---------- drawer ---------- */
+  details.drawer{background:var(--paper); border:2px solid var(--border); border-radius:22px; margin-bottom:14px; box-shadow:var(--shadow-sm);}
+  details.drawer summary{
+    list-style:none; cursor:pointer; padding:15px 20px; display:flex; align-items:center;
+    justify-content:space-between; font-family:"cwTeX Kai TC",serif; font-size:16px; color:var(--ink);
+  }
+  details.drawer summary::-webkit-details-marker{display:none;}
+  details.drawer summary .arrow{color:var(--ink-faint); font-size:12px; transition:transform .2s ease;}
+  details.drawer[open] summary .arrow{transform:rotate(90deg);}
+  .drawer-body{padding:0 20px 18px; border-top:1px solid var(--border);}
+  .empty-note{color:var(--ink-faint); font-size:13px; padding:14px 0 2px;}
+
+  .memo{padding:14px 0; border-bottom:1px dashed var(--border);}
+  .memo:last-child{border-bottom:none;}
+  .memo-q{font-size:13.5px; font-weight:700; margin-bottom:8px;}
+  .memo-pair{display:flex; flex-direction:column; gap:6px;}
+  .memo-side{font-size:12.5px; color:var(--ink-soft);}
+  .memo-side b{color:var(--ink);}
+  .memo-daily{font-size:11.5px; color:var(--ink-faint); margin-top:2px;}
+  .memo-del{background:none; border:none; color:var(--ink-faint); font-size:15px; cursor:pointer; float:right;}
+  .memo-del:hover{color:var(--blush);}
+
+  footer{text-align:center; color:var(--ink-faint); font-size:12px; margin-top:30px; line-height:1.9;}
+
+  /* ---------- music control ---------- */
+  .music-pill{
+    position:fixed; right:16px; bottom:16px; z-index:20;
+    display:flex; align-items:center; gap:8px;
+    background:var(--paper); border:2px solid var(--border); border-radius:999px;
+    padding:8px 14px 8px 10px; box-shadow:var(--shadow-lg);
+  }
+  .music-toggle{
+    appearance:none; border:none; background:var(--coral-soft); color:var(--coral);
+    width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; flex:none;
+  }
+  .music-toggle.on{background:var(--coral); color:#fff;}
+  .music-toggle svg{width:16px; height:16px;}
+  .music-vol{width:64px; accent-color:var(--coral); height:5px; margin:0;}
+  .music-label{font-size:11px; color:var(--ink-faint); white-space:nowrap;}
+
+  @media (prefers-reduced-motion: reduce){
+    #wheelGroup{transition:none !important;}
+    .letter.appear{animation:none;}
+    .opt, .btn{transition:none;}
+  }
+  @media (max-width:420px){
+    .music-label{display:none;}
+  }
+
+  /* ---------- 聊天室登入畫面 ---------- */
+  .room-gate{
+    max-width:420px; margin:14vh auto 0; padding:28px 24px; text-align:center;
+    background:var(--paper); border:2px solid var(--border); border-radius:28px; box-shadow:var(--shadow-lg);
+  }
+  .room-gate h1{font-family:"cwTeX Kai TC",serif; font-size:26px; color:var(--coral); margin:0 0 10px;}
+  .room-gate p{font-size:14px; color:var(--ink-soft); line-height:1.7; margin:0 0 18px;}
+  .room-gate .btn{width:100%; margin-bottom:10px;}
+  .room-gate .divider{display:flex; align-items:center; gap:10px; color:var(--ink-faint); font-size:12px; margin:18px 0;}
+  .room-gate .divider::before, .room-gate .divider::after{content:""; flex:1; height:1px; background:var(--border);}
+  .room-gate input[type=text]{width:100%; box-sizing:border-box; margin-bottom:10px;}
+  .room-gate .gate-hint{font-size:12px; color:var(--ink-faint); margin-top:4px;}
+  .room-info{
+    display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap;
+    font-size:12px; color:var(--ink-soft); margin-top:6px;
+  }
+  .room-info button{
+    border:none; background:var(--paper-2); color:var(--ink-soft); border-radius:999px;
+    padding:4px 12px; font-size:12px; cursor:pointer; font-family:"Noto Sans TC",sans-serif;
+  }
+  .room-info button:hover{filter:brightness(.97);}
+</style>
+</head>
+<body>
+<section class="room-gate" id="roomGate">
+  <h1>真心話轉盤</h1>
+  <p>先建立一個只有你們兩人知道的聊天室，之後兩邊打開頁面就會即時同步。</p>
+  <button class="btn primary" id="createRoomBtn" type="button">建立新聊天室</button>
+  <div class="divider">或者</div>
+  <input type="text" id="joinRoomInput" placeholder="點選對方傳送的連結或貼上代碼">
+  <button class="btn ghost" id="joinRoomBtn" type="button">加入聊天室</button>
+  <p class="gate-hint" id="gateHint"></p>
+</section>
+
+<div class="wrap" id="appWrap" hidden>
+
+  <header class="banner">
+    <span class="dot d1"></span><span class="dot d2"></span>
+    <h1>真心話轉盤</h1>
+    <p>轉一輪，抽到什麼就聊什麼。你先寫下的話會封存起來，直到對方也回答了同一題，兩人的信才會一起即時打開。</p>
+    <p class="conn-note" id="connNote"></p>
+    <details class="howto">
+      <summary>怎麼玩？</summary>
+      <div class="howto-body" id="howtoBody">
+        <p><b>抽題方式：</b>可以直接轉輪盤隨機抽，也可以在輪盤下方點選想聊的主題手動挑題。抽到不喜歡的題目沒關係，只要還沒按「封存」，都可以重新抽一題，找到喜歡的再回答。</p>
+        <p><b>即時同步：</b>這個聊天室是你們兩人即時共享的，畫面下方固定分成「你寄出的信」跟「對方寄來的信」兩區，各自顯示目前的狀態，不會互相蓋過去；寫完答案按「封存」後，對方那邊會馬上收到，兩人都回答完，兩邊的區塊會直接顯示彼此的內容。</p>
+        <p><b>各自的額度：</b>你們兩人各自都有「一次可以轉」的額度。封存一題之後，要等對方回信，你才會拿回下一次可以轉的額度；但這段等待期間，如果對方也傳了一題給你，「對方寄來的信」那一區隨時都可以直接回答，回答不會用掉你的額度。</p>
+      </div>
+    </details>
+  </header>
+
+  <div class="name-row">
+    你想讓對方看到的名字：
+    <input type="text" id="myName" maxlength="12" placeholder="輸入暱稱">
+  </div>
+
+  <section class="wheel-stage" id="wheelStage">
+    <div class="wheel-wrap">
+      <div class="pointer" aria-hidden="true"></div>
+      <svg viewBox="0 0 320 320" aria-hidden="true">
+        <g id="wheelGroup"></g>
+      </svg>
+      <button class="hub" id="hubBtn" type="button">轉動</button>
+    </div>
+    <span class="status-line" id="statusLine"></span>
+    <button class="incoming-alert" id="incomingAlert" type="button" hidden>
+      <span class="incoming-dot" aria-hidden="true"></span>對方有來信囉～點我看看
+    </button>
+    <div class="cat-picker" id="catPicker">
+      <span class="cat-picker-label">或直接挑主題：</span>
+    </div>
+  </section>
+
+  <div class="two-zone">
+    <section class="zone zone-mine">
+      <h3 class="zone-title">你寄出的信</h3>
+      <div class="zone-body" id="mySentArea"></div>
+    </section>
+    <section class="zone zone-theirs">
+      <h3 class="zone-title">對方寄來的信<span class="need-dot" id="theirsNeedDot" hidden aria-hidden="true"></span></h3>
+      <div class="zone-body" id="theirSentArea"></div>
+    </section>
+  </div>
+
+  <details class="drawer" id="memoDrawer">
+    <summary>回憶信箱 <span id="memoCount"></span><span class="arrow">▸</span></summary>
+    <div class="drawer-body" id="memoBody"><p class="empty-note">點開看看兩人聊過的題目。</p></div>
+  </details>
+
+  <footer id="pageFooter"></footer>
+
+</div>
+
+<div class="music-pill">
+  <button class="music-toggle" id="musicToggle" type="button" aria-label="播放背景音樂" aria-pressed="false">
+    <svg id="musicIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="6,4 20,12 6,20" fill="currentColor" stroke="none"></polygon>
+    </svg>
+  </button>
+  <input type="range" class="music-vol" id="musicVol" min="0" max="1" step="0.01" value="0.85">
+  <span class="music-label">療癒音樂</span>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import {
+  getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot,
+  query, orderBy, serverTimestamp, getDoc, setDoc, arrayUnion
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCIZbU9mNQI5sdU42EzWz5MbcgSxBaNNhU",
+  authDomain: "real-time-wheel.firebaseapp.com",
+  databaseURL: "https://real-time-wheel-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "real-time-wheel",
+  storageBucket: "real-time-wheel.firebasestorage.app",
+  messagingSenderId: "606314973403",
+  appId: "1:606314973403:web:05d3b2d187591b53f5e4fe"
+};
+
+const fbApp = initializeApp(firebaseConfig);
+const db = getFirestore(fbApp);
+const auth = getAuth(fbApp);
+
+(function(){
+  "use strict";
+
+  var CATS = [
+    {key:"daily",  label:"日常點滴", c:"coral"},
+    {key:"food",   label:"飲食喜好", c:"peach"},
+    {key:"style",  label:"穿搭風格", c:"butter"},
+    {key:"values", label:"生活態度", c:"sage"},
+    {key:"future", label:"未來奇想", c:"sky"},
+    {key:"world",  label:"世界視角", c:"lilac"},
+    {key:"games",  label:"遊戲玩心", c:"blush"},
+    {key:"music",  label:"音樂心事", c:"olive"},
+    {key:"travel", label:"風景旅途", c:"lime"},
+    {key:"memory", label:"童年記憶", c:"mint"},
+    {key:"hypo",   label:"假設世界", c:"jade"},
+    {key:"love",   label:"關係心事", c:"teal"},
+    {key:"art",    label:"美感觸動", c:"indigo"},
+    {key:"dream",  label:"夢想職業", c:"violet"},
+    {key:"money",  label:"金錢觀點", c:"orchid"},
+    {key:"family", label:"原生家庭", c:"magenta"},
+    {key:"boundary", label:"情緒邊界", c:"wine"}
+  ];
+
+  var Q = [
+    [0,"如果明天一早醒來，發現今天的行程全部清空，你最想先做的一件小事是什麼？",["泡一杯咖啡，假裝自己生活很有儀式感", "手機關靜音，眼不見為淨", "隨便亂晃，走到哪算哪", "直接倒回去續攤睡"]],
+    [0,"想像有一天你完全不用「演」給任何人看，你猜自己會露出什麼樣子？",["整個人鬆到像在放假", "講話會直接到有點嚇人", "話變超少，安靜到你以為我在生氣", "其實反而更吵，人來瘋模式全開"]],
+    [0,"如果今天的待辦清單可以刪掉一件事，你會刪掉哪一種？",["趕死線的通勤", "不得不出席、但心裡毫無波動的場合", "滑手機滑到腦袋當機的那段", "說真的今天還行，沒什麼想刪的"]],
+    [0,"假設你正準備出門，卻臨時被打亂了計畫，最常見的原因是？",["臨時被凹或被喊住", "自己拖延到最後一秒", "別人心情不好，你要負責善後", "老天爺就是要下雨，別無他法"]],
+    [0,"如果朋友一臉認真問你「這陣子有沒有好好照顧自己」，你會怎麼回？",[]],
+    [0,"回想最近一週，有沒有哪個瞬間讓你突然覺得「這樣其實也不錯」？當時在做什麼？",[]],
+    [0,"假設今天只能認真做好一件事，其他都可以擺爛，你會挑哪件？",["正事先 solve（工作或課業）", "把在乎的人聊到心裡有底", "把自己顧好，其他晚點再說", "做一件純粹好玩、零生產力的事"]],
+    [0,"如果可以自由決定作息，你覺得自己會是晨型人，還是夜貓子？",["晨型人，早起真的比較清醒", "夜貓子，靈感都半夜才報到", "兩者皆非，全看今天狀態", "很想當晨型人，但身體很誠實"]],
+    [0,"四季裡你最喜歡哪一個季節？是因為天氣本身，還是有什麼特別的回憶？",[]],
+    [0,"如果今天早上鬧鐘響的那一刻，你心裡冒出的第一句話通常是什麼？",[]],
+    [0,"假設你可以刪掉每天例行公事裡最無聊的一段，你會先刪哪一段？",["通勤，能傳送就傳送", "洗碗收拾，靈魂拷問時間", "回訊息，已讀焦慮製造機", "開會或報告，光用想的就累"]],
+    [0,"你比較常因為「捨不得睡」還是「捨不得起床」熬夜或賴床？",["捨不得睡，晚上才是我的時間", "捨不得起床，棉被裡有我的靈魂", "兩個都有，作息一團亂", "其實我作息意外正常，別懷疑"]],
+    [0,"如果今天什麼都不用做，你會先讓自己耍廢多久才會覺得不安？",[]],
+    [0,"你今天做的哪一件小事，其實是特地留給自己開心的？",[]],
+    [0,"假設每天只能保留一個「充電」的小習慣，你會留哪一個？",["一個人安靜喝點什麼", "運動流汗，把煩惱甩出去", "滑手機放空，腦袋暫時斷線", "找人聊天，講一講就活過來"]],
+    [0,"有沒有一件家事，你一直拖到不能再拖才會去做？",[]],
+    [0,"如果今天的心情是一種天氣預報，你會怎麼形容？",[]],
+    [0,"你比較常因為什麼小事，把原本不錯的心情搞砸？",["塞車或誤點，時間感被摧毀", "已讀不回，內心小劇場開演", "東西怎麼找都找不到", "休息到一半被打斷"]],
+    [0,"假設可以把今天重新排一次行程，你會把哪一件事挪到更前面？",[]],
+    [0,"你今天出門前，有沒有做什麼小小的儀式讓自己安心？",[]],
+    [0,"如果朋友問你「今天過得怎樣」，你通常會老實說，還是先說「還好」？",["老實說，藏不住", "先說還好，當作緩兵之計", "看是誰在問", "看今天心情夠不夠好"]],
+    [0,"你手機裡最常無意識點開的那個 App，最近讓你花最多時間的是什麼？",[]],
+    [0,"假設今天可以名正言順地擺爛半天，你會拿那半天做什麼？",[]],
+    [0,"你比較容易在什麼時間點覺得特別有精神？",["剛起床，戰鬥力全滿", "中午前後，吃飽突然開機", "傍晚，下班瞬間復活", "深夜，這才是我的主場"]],
+    [0,"有沒有一個生活小習慣，是你這幾年才養成、現在離不開的？",[]],
+    [0,"如果今天要用一種食物形容自己現在的狀態，你會選什麼？",[]],
+    [0,"你今天有沒有因為一件很小的事，被療癒到一下下？",[]],
+    [0,"假設今天的自己要打分數，滿分十分你會給幾分，為什麼？",[]],
+    [0,"你比較怕「事情太多做不完」，還是「太閒不知道要幹嘛」？",["怕爆炸多到做不完", "怕閒到開始胡思亂想", "都不怕，來多少接多少", "老實說兩種都會讓我焦慮"]],
+    [0,"有沒有哪個生活瑣事，其實你做的時候意外享受，卻常常被忽略？",[]],
+    [0,"如果今天可以跟「昨天的自己」說一句話，你會說什麼？",[]],
+    [0,"你今天有沒有因為別人一句話，整個心情被帶動起來？",[]],
+    [0,"假設今天可以合法請一天「情緒假」，你會拿來做什麼？",[]],
+    [0,"你比較容易在通勤、洗澡還是躺平時冒出好點子？",["通勤路上，腦袋突然開竅", "洗澡的時候，靈感跟水一起沖出來", "躺平放空時，廢到突然開竅", "老實說我腦袋通常一片空白"]],
+    [0,"有沒有一件很小的事，只要今天做了，你就會覺得這天沒有白過？",[]],
+    [0,"如果今天要為自己的心情選一首配樂，你會選什麼調性？",["輕快得像在跳舞", "平靜到像白噪音", "低落到需要字幕", "複雜到我自己都說不清"]],
+    [0,"你今天最想被誰、用什麼方式關心一下？",[]],
+    [0,"如果一天的行程只能保留幾件事、其他都取消，你會留下哪些？",["好好吃一頓飯", "動一動身體", "跟人說說話", "安靜獨處", "處理該完成的事", "單純休息"], true],
+    [0,"你比較習慣把每天的計畫寫下來，還是靠腦袋記著、走到哪算哪？",["會寫下來，清單就是安全感", "靠腦袋記，寫了也不會看", "混合，重要的寫、其他隨機應變", "常常忘記自己有計畫這回事"]],
+    [0,"一天裡，你最需要「安靜獨處」的時間通常落在什麼時候？",[]],
+    [0,"你覺得自己是那種容易在同一時間做很多件事、還是一次只能專心一件的人？",["一次做很多件，效率就是要多工", "一次一件，分心會整個亂掉", "看事情的難度，簡單的可以多工", "想一次一件，但常常被打斷"]],
+    [0,"有沒有一個「五分鐘就能做完」的小事，你卻拖了很久才處理？",[]],
+    [0,"你比較喜歡把家裡或房間整理得井井有條，還是覺得亂中有序也沒關係？",["整理得整整齊齊，亂會焦慮", "亂中有序，我找得到就好", "階段性整理，撐不住才會動手", "很想整齊，但常常輸給惰性"]],
+    [0,"如果今天要形容自己「社交電量」的狀態，你會怎麼形容？",[]],
+    [0,"你比較容易在「換場景」的時候（比如出門、進辦公室）重新調整心情，還是心情會一直帶著走？",["會重新調整，切換模式很快", "會一直帶著走，需要時間消化", "看那件事的份量，小事很快、大事很難", "通常沒發現自己在切換"]],
+    [0,"平日跟假日的你，感覺像同一個人，還是完全兩種模式？",["幾乎同一個人，作息差不多", "完全兩種模式，假日才是真正的我", "有點不同，但沒到誇張", "很想放假時徹底切換，但常常做不到"]],
+    [0,"你今天有沒有因為做完一件麻煩事，鬆了一口氣的瞬間？是哪件事？",[]],
+    [0,"你比較容易因為「環境太吵」還是「太安靜」而靜不下心？",["太吵，需要安靜才能專心", "太安靜，反而覺得不自在", "看做什麼事，各有適合的情境", "兩種其實都能適應"]],
+    [0,"如果今天的自己可以打包送給十年前的自己一句提醒，你會寫什麼？",[]],
+    [0,"你今天有沒有為了一件小事，跟自己「談判」了一下才願意去做？",[]],
+    [0,"你今天在腦中列的待辦事項裡，有沒有一件其實不是「必須」，卻讓你安心的小事？",[]],
+    [0,"你比較習慣把最難的事情放在一天的最前面先解決，還是留到最後才處理？",["最難的先做，早死早超生", "留到最後，先累積動力", "看那件事的難度而定", "看那天的精神狀況"]],
+    [0,"有沒有一個小小的習慣，是你會不自覺地在等待（等車、等人、排隊）時做的？",[]],
+    [0,"你今天有沒有因為一件計畫外的小事，意外地覺得今天變得更好？",[]],
+    [0,"你比較容易在轉換工作模式跟休息模式之間切換自如，還是常常「明明在休息，腦袋卻還在工作」？",["切換自如，該休息就休息", "常常放不下，腦袋一直轉", "看那陣子事情的份量", "正在練習怎麼真正放鬆"]],
+    [0,"如果要幫今天的自己打一個「今天做得不錯」的標籤，會是哪一件事？",[]],
+    [0,"你會不會有那種「明明很累卻還是想滑一下手機才肯睡」的習慣？",["會，滑手機是睡前儀式", "不太會，累了就直接睡", "看那天的情緒", "會，但滑完常常更累"]],
+    [0,"你今天有沒有主動對誰做了一件小小的善意舉動，即使很微不足道？",[]],
+    [0,"你比較容易在忙碌中忘記時間，還是特別容易一直看時間、有點焦慮？",["容易忘記時間，投入就渾然忘我", "特別容易看時間，會有點焦慮", "看那件事讓不讓我安心", "看那天有沒有重要的事在等我"]],
+    [0,"如果今天可以立刻多出一個小時、完全屬於自己，你會拿來做什麼？",[]],
+
+    [1,"如果只能用一種味道形容最近的你，會是？",["微辣，帶點小驚喜", "溫潤偏甜，很好哄", "清淡但層次藏在裡面", "說不上來，五味雜陳"]],
+    [1,"朋友問你「晚餐想吃什麼」，你通常會怎麼回答？",["直接報出那幾家愛店，沒有選擇障礙", "認真滑外送軟體，滑到最後還是選老樣子", "隨口說都可以，其實心裡很多意見", "反問對方想吃什麼，把球丟回去"]],
+    [1,"有沒有一道菜，只要吃到就會想起某個特定的人或時期？是哪一道、想起誰？",[]],
+    [1,"如果今晚只剩你自己一個人吃飯，你會覺得是難得的享受，還是有點將就？",["享受，終於能安靜獨處", "有點孤單但能接受", "能避免就避免，一個人吃有點可憐", "看那天心情，我很善變"]],
+    [1,"假設深夜十一點你突然很想吃東西，你猜自己其實在渴望什麼？",["純粹嘴饞，肚子在造反", "想被安慰、被填滿一下", "想找個人說說話，食物只是藉口", "想拖延該面對的事，先吃再說"]],
+    [1,"如果要幫自己辦一場只有五道菜、只請重要的人來的告別派對，你會怎麼設計菜單？",[]],
+    [1,"如果只能留下一個條件，「好好吃一頓飯」對你來說最不能少的是什麼？",["對的人比對的菜重要", "不趕時間、慢慢吃，別催我", "喜歡的食物本身就夠了", "安靜不被打擾，滑手機都不行"]],
+    [1,"假設現在要點一份深夜消夜，你會偏甜食收尾，還是鹹食才過癮？",["甜食收尾，罪惡感明天再說", "鹹食才過癮，甜的不算數", "兩個都要，不然不夠本", "看那天心情，隨緣"]],
+    [1,"有沒有一道你自己做的菜，是你會偷偷驕傲的拿手菜？",[]],
+    [1,"假設今天必須在「吃很飽但普通」跟「吃一半但驚艷」之間選，你選哪個？",["吃飽但普通，肚子要緊", "吃少但驚艷，值得", "要看那天心情，隨機應變", "兩個都不滿意，那就不吃了"]],
+    [1,"你會因為心情不好特別想吃某種食物嗎？那通常是什麼？",[]],
+    [1,"如果要用一餐飯跟很久沒見的朋友重新熟起來，你會選什麼樣的場合？",["熱炒配酒，話匣子容易開", "安靜的咖啡廳，適合說心事", "路邊小吃攤，接地氣不尷尬", "在家自己煮，最放鬆的版本"]],
+    [1,"有沒有一種食物，是你小時候討厭、長大卻愛上的？",[]],
+    [1,"假設你要為在乎的人煮一頓「療癒餐」，你會做什麼？",[]],
+    [1,"你比較享受一個人吃飯時滑手機、放空，還是專心吃？",["滑手機配飯，缺一不可", "專心吃，感受食物的存在", "看那天心情，隨性決定", "邊吃邊做別的事，一心多用"]],
+    [1,"有沒有一次踩雷的餐廳經驗，讓你到現在都還會想起來？",[]],
+    [1,"如果只能留下三種調味料活下去，你會選哪三個？",[]],
+    [1,"你對「隔夜菜」的態度是什麼？覺得越放越香，還是能不吃就不吃？",["越放越入味，隔夜是精華", "能不吃就不吃，寧願餓", "看是什麼菜，一視同仁不公平", "看誰煮的，家人的例外"]],
+    [1,"有沒有一種食物的味道，會讓你瞬間想起某個特定的地方？",[]],
+    [1,"假設今天可以任選一餐「最後的晚餐」，你會怎麼安排？",[]],
+    [1,"你比較常因為餓還是因為想犒賞自己而點外送？",["純粹餓了，別無選擇", "想犒賞自己，辛苦了嘛", "無聊隨手點，手滑而已", "很少點外送，錢包會哭"]],
+    [1,"有沒有一種食物你明明吃不太習慣，但為了某個人還是願意嘗試？",[]],
+    [1,"如果要用食物形容一段你正在經歷的關係，你會怎麼形容？",[]],
+    [1,"你會為了拍照而特地挑選餐廳，還是完全不在意？",["會特別挑，畫面要對", "完全不在意，好吃就好", "偶爾會，看那天有沒有興致", "看跟誰去，社交場合才拍"]],
+    [1,"有沒有一次自己下廚失敗到很誇張、卻意外變成美好回憶的經驗？",[]],
+    [1,"假設你只能吃辣、甜、酸、苦其中一種味道過完這輩子，你會選哪個？",["辣", "甜", "酸", "苦"]],
+    [1,"你覺得「一起吃飯」對你來說最重要的部分是什麼？",["聊天的內容，話題才是主餐", "彼此放鬆的氛圍，不用裝", "食物本身好不好吃，很現實", "單純有人陪，吃什麼都行"]],
+    [1,"有沒有一種味道，是你長大後才終於懂得欣賞的？",[]],
+    [1,"假設可以立刻擁有一種食物的無限供應，你會選什麼？",[]],
+    [1,"你在餐桌上比較常主動夾菜給別人，還是被夾菜的那個？",["主動夾給別人，照顧性格", "習慣被照顧，理所當然臉", "看場合，該表現時會表現", "兩個都不太做，各吃各的"]],
+    [1,"有沒有一次因為太忙而隨便亂吃，事後讓你有點後悔的經驗？",[]],
+    [1,"如果要用一種飲料代表你現在的人生階段，你會選什麼？",[]],
+    [1,"你對「吃到飽」這件事的態度是，一定要吃回本，還是隨意就好？",["一定要吃回本，不然虧大了", "隨意吃，開心就好", "很少去吃到飽，划不來的體質", "看跟誰去，氣氛比本重要"]],
+    [1,"有沒有一道家常菜，是只有你家、或只有某個人才會做的特別版本？",[]],
+    [1,"假設今天煮壞了一道菜，你會硬吃完，還是直接放棄重來？",["硬吃完，浪費食物有罪惡感", "放棄重來，人生苦短", "看浪費程度，理性評估", "叫外送救援，投降也沒關係"]],
+    [1,"你覺得自己是那種「為了氣氛吃」還是「為了味道吃」的人？",["為了氣氛，環境對了都好吃", "為了味道，難吃我會出戲", "兩個都很重要，缺一不可", "看場合，彈性很大"]],
+    [1,"如果正餐可以固定吃幾種食物、其他一律不吃，你會留下哪些？",["中式", "日式", "西式", "韓式", "東南亞式", "其實我都可以"], true],
+    [1,"你比較享受「吃得很快、效率優先」，還是「慢慢吃、把每一口都當一回事」？",["吃得快，效率至上", "慢慢吃，儀式感很重要", "看跟誰吃，一個人快、有人陪就慢", "看那道菜值不值得慢慢吃"]],
+    [1,"有沒有一種食物，你是為了健康或某個原因刻意戒掉、卻很想念的？",[]],
+    [1,"你會不會特地為了嘗鮮，去吃一種完全沒吃過的料理？",["會，新奇的東西一定要試試", "很少，習慣吃熟悉的比較安心", "看心情，偶爾想冒險", "會先做功課，確定好吃才敢嘗試"]],
+    [1,"有沒有一種食物，是你只在特定節日或場合才會吃、卻很期待的？",[]],
+    [1,"你比較常因為「想犒賞自己」還是「單純肚子餓」而特地煮一頓好料？",["想犒賞自己，值得被善待", "單純餓了，煮什麼都行", "兩個原因常常同時發生", "很少特地煮，能簡單解決就好"]],
+    [1,"吃飯時如果盤子裡剩下最後一口最喜歡的東西，你會先吃掉還是留到最後？",["先吃掉，好東西不留白", "留到最後，當作壓軸", "看那天心情決定", "會分給旁邊的人，自己吃不吃都好"]],
+    [1,"有沒有一種食物的氣味，一聞到就會讓你想起某個特定的季節或節日？",[]],
+    [1,"如果只能保留幾種你會主動想學做的料理方式、其他都不學了，你會留下哪些？",["中式熱炒", "西式烘焙", "湯品或燉煮", "涼拌或輕食", "麵食或麵包", "對下廚沒什麼興趣"], true],
+    [1,"你會不會因為捨不得浪費，硬把不太喜歡的食物吃完？",["會，浪費食物會有罪惡感", "不會，吃不下就是吃不下", "看份量多寡，一點點會硬撐", "會想辦法轉送別人，不浪費也不硬吃"]],
+    [1,"有沒有一次因為某種食物的味道，讓你瞬間紅了眼眶或特別感動？",[]],
+    [1,"你覺得自己是「甜點一定要留到最後」，還是「想吃就先吃，管它順序」的人？",["一定留到最後，壓軸登場", "想吃就先吃，順序不重要", "看場合，正式場合會照順序", "其實很少吃甜點"]],
+    [1,"有沒有一個你一直很想學會做、卻遲遲沒有踏出第一步的料理？",[]],
+    [1,"你的一天，通常是從有沒有喝到一杯咖啡或茶開始決定順不順的嗎？",[]],
+    [1,"你比較享受「大家一起吃合菜、共享每一道」，還是「各自點自己的、吃自己的」？",["喜歡合菜共享，熱鬧又能多嘗幾種", "喜歡各自點餐，不用顧慮別人喜好", "看跟誰吃，交情深淺決定", "看那家餐廳適合哪一種"]],
+    [1,"有沒有一種家鄉味，只有離開家之後才真正懂得想念？",[]],
+    [1,"你會不會因為一個人吃飯，反而更願意去嘗試平常不敢點的菜？",[]],
+    [1,"你比較習慣早餐吃得豐盛，還是隨便吃一點墊墊胃就好？",["豐盛，一天的活力來源", "簡單吃一點就好，不想花太多時間", "看那天有沒有時間", "常常直接跳過早餐"]],
+    [1,"有沒有一次你在完全陌生的地方，靠著比手畫腳點餐、卻意外點到很棒的一餐？",[]],
+    [1,"你覺得「吃辣的能力」對你來說，是某種驕傲，還是完全不care的事？",["有點驕傲，能吃辣是種身份象徵", "完全不care，能吃就吃、不能吃就不吃", "以前在意，現在看開了", "從來沒想過這是一件事"]],
+    [1,"有沒有一道你吃過最「奢侈」的一餐，讓你到現在還會想起那個味道？",[]],
+    [1,"你會不會特地為了慶祝一件小小的成就，用一頓喜歡的食物犒賞自己？",[]],
+
+    [2,"如果今天出門前只有三分鐘決定穿什麼，你會先想「想被看見的樣子」，還是「舒服的樣子」？",["想被看見的樣子，先聲奪人", "舒服自在最重要，別為難我", "兩者要一起兼顧，貪心一點", "看當天心情亂穿，隨緣時尚"]],
+    [2,"打開衣櫃，有沒有一件單品你捨不得丟卻很少穿？那背後是什麼故事？",[]],
+    [2,"如果今天的穿搭是一句無聲的宣言，你會想宣告什麼？",["我很穩，先別來煩我", "我在嘗試新的自己", "今天不想被定義", "我想被溫柔對待"]],
+    [2,"如果明天有一件很重要、需要勇氣的事要做，你會想穿上哪一種「戰袍」？",[]],
+    [2,"假設有一天你突然決定要徹底改變風格，最可能是什麼原因？",["感情或人生階段的轉變", "單純看膩了原本的自己", "被某個人或作品啟發", "我很少大幅改變風格，忠誠體質"]],
+    [2,"如果有人問你「穿搭對你來說是表達自己，還是一種保護色」，你會怎麼回答？",["表達真實的我", "用來武裝或隱藏自己", "看情境，兩者都有", "單純好看，沒想太多"]],
+    [2,"如果今天走在路上不會遇到任何認識的人，你想嘗試卻不敢穿出門的風格是什麼？",[]],
+    [2,"如果今天要出席一個完全陌生的場合，你會怎麼決定要穿什麼？",[]],
+    [2,"你比較常照著自己習慣的顏色穿搭，還是願意常常嘗試新配色？",["習慣固定色系，安全牌愛好者", "喜歡常常嘗試，喜新厭舊", "看季節，換季就換人設", "看心情，情緒穿搭學"]],
+    [2,"有沒有一件衣服，是別人送的、你其實不太喜歡卻一直留著？",[]],
+    [2,"假設可以只留十件衣服過一整年，你會怎麼挑？",[]],
+    [2,"你覺得自己的穿搭風格，跟五年前比起來變了多少？",[]],
+    [2,"有沒有一次穿搭被稱讚，讓你整天心情都特別好？",[]],
+    [2,"假設今天要去見很久沒見、有點在意的人，你會特別花多少時間打扮？",["幾乎不花時間，隨便抓一件", "稍微整理一下，基本尊重", "認真挑一套，這是戰場", "前一晚就開始準備，如臨大考"]],
+    [2,"你比較在意穿搭符合場合，還是忠於自己喜歡的樣子？",["符合場合最重要，做人要識相", "忠於自己，管他場合", "盡量兩者兼顧，貪心又想做自己", "看是什麼場合，彈性判斷"]],
+    [2,"有沒有一種配件（鞋子、包包、飾品），是你出門前一定要確認有帶的？",[]],
+    [2,"你會因為心情不好特地挑一套讓自己有安全感的衣服嗎？",[]],
+    [2,"假設有一天可以毫無顧忌地穿任何風格出門，你最想試哪一種？",[]],
+    [2,"你覺得自己買衣服比較常是「需要才買」，還是「看到喜歡就買」？",["需要才買，理性消費模範生", "看到喜歡就買，先衝再說", "兩者都有，看預算臉色", "很少主動買，衣櫃自產自銷"]],
+    [2,"有沒有一件衣服，你穿上就會覺得自己特別有自信？",[]],
+    [2,"你會在意別人怎麼看你的穿搭，還是完全只穿給自己開心？",["會在意別人眼光，社會人設維護中", "只穿給自己開心，管他的", "看場合而定，該收斂就收斂", "兩者都會想，糾結是日常"]],
+    [2,"假設要用一種穿搭風格代表你現在的心境，你會選什麼？",["俐落幹練", "隨性自在", "華麗張揚", "低調簡約"]],
+    [2,"有沒有一次因為穿搭不合宜，讓你當下很尷尬的經驗？",[]],
+    [2,"你對「第一印象靠穿搭決定」這件事，覺得公平嗎？",[]],
+    [2,"有沒有一位你會偷偷模仿穿搭風格的人（不管是朋友還是螢幕上的人）？",[]],
+    [2,"假設你可以設計自己的「制服」，每天穿同一套，你會怎麼設計？",[]],
+    [2,"你覺得自己現在的穿搭，比較接近哪個人生階段的自己？",[]],
+    [2,"有沒有哪件單品，只要穿上就會讓你想起某段特定的回憶？",[]],
+    [2,"你比較享受逛街試穿的過程，還是網購直接買熟悉的款式？",["喜歡逛街試穿，儀式感重要", "習慣網購，退貨戰士", "看心情決定，隨機應變", "很少主動買衣服，能穿就好"]],
+    [2,"假設今天可以毫無預算限制買一套「夢幻穿搭」，你會怎麼想像？",[]],
+    [2,"你會不會因為某個人的一句評論，從此改變自己的穿搭習慣？",[]],
+    [2,"有沒有一種顏色，是你這幾年才開始敢嘗試穿的？",[]],
+    [2,"你覺得穿搭對你來說，比較像是盔甲，還是像是心情日記？",["像盔甲，保護自己", "像日記，記錄心情", "兩者都是，缺一不可", "單純好看而已，別想太多"]],
+    [2,"假設你要送一件衣服給在乎的人，你會怎麼挑，想讓對方感受到什麼？",[]],
+    [2,"有沒有一次你穿得特別隨便出門，結果反而遇到很重要的場合？",[]],
+    [2,"你有沒有一套「只要穿上就會覺得今天狀態不錯」的固定組合？",[]],
+    [2,"如果可以請專業造型師幫你打造一個全新形象，你會想從哪個部分開始改？",["髮型", "衣服風格", "配件和細節", "整體氣場"]],
+    [2,"如果只能留下幾種穿搭風格陪你到老，你會留下哪些？",["簡約基本款", "休閒舒適風", "個性鮮明的風格", "正式優雅", "運動機能風", "沒有固定風格，跟著心情選"], true],
+    [2,"你有沒有一件衣服，其實不算好看，但因為某個特別的回憶，你還是很珍惜？",[]],
+    [2,"你比較容易因為天氣決定穿搭，還是因為心情決定穿搭？",["天氣優先，實用至上", "心情優先，感覺對了才行", "兩者都考慮，缺一不可", "通常隨手抓，沒想那麼多"]],
+    [2,"有沒有一種顏色，你幾乎不會買、卻默默很羨慕別人穿？",[]],
+    [2,"你會不會因為跟某個人感情變好，穿搭風格也漸漸受到對方影響？",[]],
+    [2,"如果要用一種季節形容你現在的穿搭心境，你會選哪一個？",["春天，正在慢慢展開", "夏天，鮮明又直接", "秋天，內斂又層次分明", "冬天，簡單但溫暖"]],
+    [2,"有沒有一件衣服，是別人穿起來普通、你穿起來特別有感覺的？",[]],
+    [2,"你會因為身邊的人稱讚某件衣服，之後就更常穿它嗎？",["會，稱讚是最好的動力", "不太會，我很有自己的節奏", "看是誰稱讚的", "會偷偷開心，但不一定常穿"]],
+    [2,"有沒有一次借別人衣服穿、或把衣服借給別人，讓你印象深刻的經驗？",[]],
+    [2,"你比較享受「跟風追流行」，還是「找到自己不受流行影響的風格」？",["喜歡跟上流行，新鮮感很重要", "有自己的風格，流行隨它去", "偶爾跟風，看喜不喜歡", "沒特別在意這件事"]],
+    [2,"有沒有一件長輩或家人給你的衣服，你意外地很喜歡？",[]],
+    [2,"你覺得一個人的穿搭，能看出多少關於他的個性？",[]],
+    [2,"如果要幫「現在的自己」挑一種代表色，你會選什麼顏色？",[]],
+    [2,"你比較容易因為一件衣服「穿了會被注意到」而猶豫，還是完全不在意會不會被看見？",["會猶豫，太顯眼有點有壓力", "完全不在意，想穿就穿", "看那天的心理狀態", "看場合，該低調就低調"]],
+    [2,"有沒有一種穿搭風格，是你這幾年開始接受、以前完全不敢碰的？",[]],
+    [2,"你會不會為了配合重要的人（伴侶、朋友、家人）調整自己的穿搭習慣？",[]],
+    [2,"你比較常在意「上半身」還是「下半身」的穿搭細節？",["上半身，視覺重點在這裡", "下半身，鞋子和褲子才是靈魂", "兩者一樣在意", "沒有特別分，整體感最重要"]],
+    [2,"有沒有一次穿搭跟平常反差很大，讓身邊的人嚇一跳？",[]],
+    [2,"你覺得自己買衣服比較容易被「材質觸感」還是「款式版型」吸引？",["觸感優先，摸起來對就先贏一半", "版型優先，好看比舒服重要", "兩者都重要，缺一不可", "價格才是真正的決定因素"]],
+    [2,"如果可以跟另一半或好朋友「穿情侶裝／閨蜜裝」一次，你會願意嗎？",["願意，很想試試看", "不太願意，還是想保留自己的風格", "看場合，特殊節日可以", "看對方怎麼想，跟隨大家意見"]],
+    [2,"有沒有一件衣服，你買的時候很猶豫，穿上後卻完全不後悔？",[]],
+
+    [3,"如果有人問你「長大是獲得比較多，還是失去比較多」，你會想到哪個具體時刻，讓你這樣覺得？",["獲得比較多","失去比較多","差不多，只是換了型態","還在體會中"]],
+    [3,"假設有一天你必須對一個很在乎的人完全誠實、坦白一件一直沒說的事，你覺得最難開口的部分會是什麼？",["對自己誠實","對親近的人誠實","承認自己其實一直在變","誠實地展現脆弱"]],
+    [3,"如果眼前有兩份工作，一份錢多但讓你不快樂、一份錢普通但很有意義，你會怎麼選？",["選快樂優先的那份","選意義優先的那份","想找兩者兼具的路","還沒想清楚"]],
+    [3,"回想一次你達成目標、大家都說你「成功了」的時刻，你心裡有沒有一絲空虛？那是什麼樣的感覺？",[]],
+    [3,"如果朋友和另一半只能有一個真正「懂你」，另一個只是喜歡你但不太懂，你會希望這兩個角色怎麼分？",["被理解，即使不被喜歡","被喜歡，理解太奢侈","兩個都想要，很難取捨","其實我更想理解別人"]],
+    [3,"如果一個很久不見的老朋友整個變了一個人，你會相信「人真的能徹底改變」，還是覺得「本性只是藏起來了」？",["相信人能徹底改變","覺得本性其實難移","要看有多想改變","我自己就是活生生的例子"]],
+    [3,"如果有人讓你選：完全沒有規則束縛的自由，或是可以自訂規則、但要遵守自己那套的自由，你會選哪個？",["完全沒有束縛","自己選擇要接受的束縛","兩者其實是同一件事","還在想這個問題"]],
+    [3,"如果有一天完全不用工作、也不用顧慮任何人的期待，你理想中最放鬆療癒的一天會怎麼過？",[]],
+    [3,"壓力大到快撐不住的時候，你通常會怎麼讓自己好過一點？",[]],
+    [3,"回想最近一次真正笑到停不下來，是在什麼情境下？",[]],
+    [3,"如果要說出生命中最感激的一個人或一件事，你會想到什麼？",[]],
+    [3,"你覺得「長大」這件事，讓你變得更柔軟，還是更有稜角？",["更柔軟","更有稜角","兩者交替出現","還在變化中"]],
+    [3,"如果要對十年前的自己說一句忠告，你會說什麼？",[]],
+    [3,"你比較相信「一切都有安排」，還是「一切都是隨機發生」？",["相信有安排","相信是隨機的","看事情的重量","不確定，會懷疑"]],
+    [3,"假設有一個決定你這輩子最後悔，你會希望它從沒發生過，還是仍然接受它塑造了現在的你？",["希望沒發生過","接受它是必要的","很矛盾，說不準","已經不在意了"]],
+    [3,"你覺得「原諒」這件事，比較是為了對方，還是為了自己？",["為了對方","為了自己","兩者都有","要看情況"]],
+    [3,"有沒有一個你曾經很堅持的原則，後來自己打破了？",[]],
+    [3,"你比較害怕「被誤解」，還是「被看透」？",["被誤解","被看透","都不太怕","看是被誰"]],
+    [3,"假設可以用金錢買回一段時間，你會想買回哪一段？",[]],
+    [3,"你覺得「公平」在這個世界上，比較常出現，還是比較少見？",[]],
+    [3,"有沒有一件事，你嘴上說看開了，心裡其實還沒有？",[]],
+    [3,"你比較認同「性格決定命運」，還是「環境決定命運」？",["性格決定","環境決定","兩者交互作用","命運本身就很難說"]],
+    [3,"如果生命只剩一年，你會先放下哪件現在很在意的事？",[]],
+    [3,"你覺得「成熟」最明顯的證明是什麼？",["能控制情緒","能對自己誠實","能承擔責任","能放下期待"]],
+    [3,"有沒有一個信念，是你這幾年徹底改變過的？",[]],
+    [3,"你比較容易因為別人的評價動搖，還是很少被影響？",["很容易動搖","幾乎不受影響","看是誰說的","看說的內容"]],
+    [3,"你覺得人跟人之間，理解真的可能發生嗎，還是永遠都有落差？",[]],
+    [3,"假設可以完全不用擔心別人怎麼看你，你會先做什麼改變？",[]],
+    [3,"你比較珍惜「被需要」，還是「被喜歡」？",["被需要","被喜歡","兩者一樣重要","其實都不太需要"]],
+    [3,"有沒有一次你明明知道會受傷，還是選擇往前走？",[]],
+    [3,"你覺得「犧牲」在一段關係或人生選擇裡，是必要的，還是應該盡量避免？",["必要且值得","應該盡量避免","看犧牲的東西","看是為了誰"]],
+    [3,"如果人生可以刪除一種情緒，你會選擇刪掉哪一種？",["嫉妒","恐懼","愧疚","憤怒"]],
+    [3,"你比較常後悔「做過的事」，還是「沒做的事」？",["做過的事","沒做的事","兩者差不多","很少後悔"]],
+    [3,"你覺得一個人真正的價值，是別人怎麼定義的，還是自己說了算？",[]],
+    [3,"有沒有一句話，是別人隨口說的，卻在你心裡留了很久？",[]],
+    [3,"你比較相信努力會被看見，還是很多時候努力其實是徒勞？",["努力終會被看見","很多時候是徒勞","看領域而定","要看運氣成分"]],
+    [3,"假設你能立刻知道自己這輩子會不會後悔現在的選擇，你會想知道嗎？",["想知道","不想知道","看是哪個選擇","很矛盾"]],
+    [3,"你覺得「活得真實」跟「活得讓大家都舒服」，能不能同時做到？",[]],
+    [3,"有沒有一個你曾經瞧不起的價值觀，後來自己也活成了那樣？",[]],
+    [3,"如果只能用幾個詞形容你現在的生活步調，你會選哪些？",["忙碌但充實", "悠閒但有點空虛", "剛剛好", "想放慢卻停不下來", "想更有目標感", "正在調整中"], true],
+    [3,"你覺得「活得心安理得」跟「活得很成功」，兩者一定能同時擁有嗎？",[]],
+    [3,"你比較容易因為「達不到自己設的標準」而苛責自己，還是很少對自己太嚴格？",["容易苛責自己，標準很高", "很少苛責，對自己還算寬容", "看是哪個領域", "說不出來，但心裡有數"]],
+    [3,"有沒有一個你曾經很看重的目標，後來發現其實沒那麼重要？",[]],
+    [3,"你覺得一個人「知足」跟「沒有企圖心」，兩者有什麼不同？",[]],
+    [3,"你比較容易在感覺「不夠好」的時候放棄，還是會逼自己撐過那段低潮？",["容易想放棄，需要別人拉一把", "會逼自己撐過去，習慣硬扛", "看那件事對我重不重要", "看那陣子的狀態，說不準"]],
+    [3,"有沒有一次，你原諒了自己一件一直很在意的事？",[]],
+    [3,"你覺得「界線」對你來說，是保護自己的方式，還是會讓你有點愧疚？",["是保護自己，設界線很自然", "會有點愧疚，還在練習中", "看對誰設界線", "以前會愧疚，現在比較坦然"]],
+    [3,"你比較常拿自己跟「過去的自己」比較，還是跟「別人」比較？",["跟過去的自己比較", "會不自覺跟別人比較", "兩者都有，看情況", "盡量都不比較，說是這樣說"]],
+    [3,"有沒有一件事，你花了很久才學會放過自己？",[]],
+    [3,"你覺得「感恩」對你來說，是一種天生的習慣，還是需要刻意練習的能力？",["天生就比較容易感恩", "需要刻意提醒自己", "看那陣子的心情狀態", "很少想到這個詞"]],
+    [3,"你比較害怕「讓別人失望」，還是「讓自己失望」？",["讓別人失望", "讓自己失望", "兩者都很怕", "已經比較看開了"]],
+    [3,"有沒有一個你堅持很久的習慣或原則，其實是為了證明什麼給誰看？",[]],
+    [3,"你覺得「耐心」是你身上比較明顯的特質，還是你一直在練習的功課？",["算是我的特質之一", "一直在練習，還沒到位", "對某些人有，對某些人沒有", "看事情的類型，因事而異"]],
+    [3,"有沒有一次，你因為太快下判斷，後來發現自己誤會了一個人或一件事？",[]],
+    [3,"你覺得一個人「脆弱的一面」，是應該藏起來，還是可以自在地讓人看見？",["盡量藏起來，習慣自己扛", "可以讓在乎的人看見", "看對象，不是誰都能給看", "還在學怎麼自在地展現脆弱"]],
+    [3,"有沒有一件事，你這幾年終於學會了「不用凡事都有答案」？",[]],
+    [3,"你比較容易被「一個人的行動」打動，還是被「一個人說的話」打動？",["行動，做到比說到重要", "話語，會被真誠的表達打動", "兩者都會，缺一不可", "要看是誰，信任感是關鍵"]],
+    [3,"你覺得「簡單的生活」對你來說，是一種理想，還是覺得沒那麼容易？",[]],
+    [3,"有沒有一個你曾經很想證明給某人看的心結，後來自己放下了？",[]],
+    [3,"你比較容易因為「小小的善意」被感動，還是需要比較大的事才會有感覺？",["小小的善意就會被打動", "需要比較明顯的事才有感覺", "看那陣子的心情狀態", "最近好像變得比較容易感動"]],
+
+    [4,"如果二十年後機器人能完全取代你現在的一種日常，你希望是哪一種？",["做家事，人生已經很累了", "通勤或開車，時間才是最貴的", "處理繁瑣的公文行政，拜託拜託", "其實我什麼都想自己來，控制狂末期"]],
+    [4,"你覺得未來的AI最應該被禁止做的一件事是什麼？",[]],
+    [4,"如果能和一個有自我意識的機器人交朋友，你最想問它的第一句話是什麼？",[]],
+    [4,"你比較期待，還是害怕「意識可以被上傳」的那個未來？",["期待，覺得是一種解脫", "害怕，總覺得哪裡怪怪的", "好奇，但會先讓別人試", "那樣還算不算是「我」，哲學警報"]],
+    [4,"如果未來世界機器人和人類真的要共存，你覺得最大的衝突點會是什麼？",[]],
+    [4,"你希望自己有生之年能看到哪一項科幻裡才有的科技成真？",["瞬間移動", "治癒所有疾病", "完全的虛擬實境", "星際旅行"]],
+    [4,"你覺得未來的人類，最容易因為科技而漸漸失去的是什麼能力？",["專注力", "面對面溝通的能力", "忍受無聊的能力", "方向感或記憶力"]],
+    [4,"如果每個人出生就能知道自己的死亡日期，你覺得這個世界會變得更好還是更糟？",["更好，會更珍惜時間", "更糟，會活得更焦慮", "看個人而定", "很難一概而論"]],
+    [4,"假設有一天 AI 完全能取代你現在的工作，你會想轉行做什麼？",[]],
+    [4,"你覺得未來人類談戀愛，會不會有一天普遍是人跟 AI 交往？",["會，很有可能", "不會，還是需要真人", "已經有點在發生了，別裝沒看到", "不確定，先觀察一下風向"]],
+    [4,"如果可以把自己的意識備份一份，你會想留給誰、留著做什麼？",[]],
+    [4,"你比較期待，還是害怕基因編輯技術能讓下一代「量身訂做」？",["期待，能減少痛苦", "害怕，會失去多樣性", "看用在什麼地方", "很矛盾，說不準"]],
+    [4,"假設有一天所有人的隱私都會被科技完全看穿，你會怎麼調整自己的生活？",[]],
+    [4,"你覺得未來人類最需要重新學習的一項能力是什麼？",["獨處的能力", "面對不確定的能力", "分辨真假資訊的能力", "建立深度關係的能力"]],
+    [4,"如果可以把記憶上傳、隨時重播，你會想重播哪一段人生片刻？",[]],
+    [4,"你希望自己能活到看見哪一項科技真正普及的那一天？",[]],
+    [4,"假設所有工作都被自動化、人類不再需要為了生存工作，你覺得人會變得更快樂嗎？",["會，能做真正想做的事", "不會，會失去意義感", "看每個人怎麼調適", "很難想像，先別自動化我的班"]],
+    [4,"你覺得未來的教育，最應該優先培養孩子的是什麼能力？",[]],
+    [4,"如果有一天能選擇「永生但世界持續變化」或「有限但熟悉的一生」，你會怎麼選？",["選永生", "選有限的一生", "要看永生的條件", "很難決定，先讓我緩緩"]],
+    [4,"你覺得社群媒體再過十年，會變得更真實，還是更虛假？",[]],
+    [4,"假設未來可以透過晶片直接輸入知識，你第一個想學的會是什麼？",[]],
+    [4,"你會擔心自己這一代人被未來的科技淘汰嗎？",["會，常常感覺到焦慮", "不太擔心，順其自然", "偶爾會，但不強烈", "反而很期待改變，愛刺激"]],
+    [4,"如果未來的城市可以重新設計，你希望人跟人之間的連結會變得更緊密，還是更獨立？",[]],
+    [4,"你覺得人類最終會不會因為太依賴科技，反而失去某種很重要的東西？",[]],
+    [4,"假設有一天機器人能完全理解、回應人類的情感，你會願意把心事說給它聽嗎？",["願意，可能更沒壓力", "不願意，還是想找真人", "看聊什麼內容", "會先觀望，再決定要不要交心"]],
+    [4,"你希望未來的自己，能因為科技變得更自由，還是更有紀律？",[]],
+    [4,"如果可以預先看到自己未來十年的一段生活片段，你會想看嗎？",["會，想先有心理準備", "不會，想保留未知", "看是好是壞的片段", "很猶豫，先讓我想想"]],
+    [4,"你覺得「數位分身」如果能代替你處理一部分生活瑣事，你最想它幫你處理什麼？",[]],
+    [4,"假設未來人類真的能移居到其他星球，你會想成為第一批去的人嗎？",["會，很想體驗未知", "不會，想留在熟悉的地方", "看條件而定，先給我合約細節", "要看跟誰一起去"]],
+    [4,"你覺得未來的孩子，會不會很難理解「等待」跟「無聊」是什麼感覺？",[]],
+    [4,"如果可以跟未來的自己視訊五分鐘，你最想問的一個問題是什麼？",[]],
+    [4,"你覺得未來的醫療如果能延長壽命一倍，你會想活得更久，還是覺得夠了就好？",["想活得更久", "現在的長度就夠了", "看生活品質而定", "很矛盾，還沒想清楚"]],
+    [4,"如果未來人與人的溝通不再需要語言、可以直接傳遞情感，你覺得這樣會更真誠，還是更可怕？",[]],
+    [4,"你會希望自己的孩子（或未來的孩子），成長在一個科技更發達、還是更簡樸的世界？",["更發達的世界", "更簡樸的世界", "希望能自己選擇", "還沒想過這個問題"]],
+    [4,"如果未來能把負面情緒像刪檔案一樣直接清除，你會想這麼做嗎？",[]],
+    [4,"你覺得再過二十年，人跟人之間見面聊天的方式，會變得更頻繁還是更稀少？",[]],
+    [4,"假設有一天可以把自己的價值觀直接複製給下一代，你會想複製哪一部分？",[]],
+    [4,"如果十年後的生活只能實現其中幾個願望，你會留下哪些？",["穩定的經濟基礎", "穩定而深刻的關係", "有意義感的工作", "健康的身心狀態", "自由運用的時間", "持續成長與學習"], true],
+    [4,"如果未來的交通工具可以完全取代開車、通勤變得毫不費力，你覺得人跟人見面會變多還是變少？",[]],
+    [4,"你覺得未來如果虛擬實境變得跟現實幾乎無法分辨，你會想長時間待在裡面嗎？",["會，那裡可能更自由", "不會，還是想活在真實裡", "偶爾體驗就好，不會沉迷", "要看虛擬世界裡有沒有在乎的人"]],
+    [4,"如果可以選擇讓自己的情緒被科技「調節」到剛剛好，你會想這麼做嗎？",[]],
+    [4,"你希望未來的城市，會更重視「效率」，還是更重視「人與人的溫度」？",["效率優先，生活才會輕鬆", "溫度優先，效率其次", "希望兩者能平衡", "還沒想過這麼大的問題"]],
+    [4,"如果有一天機器能完全模仿一個逝去的人的聲音和說話方式，你會想試著跟他說說話嗎？",[]],
+    [4,"你覺得未來的教育，會不會有一天完全不需要老師這個角色？",["會，AI 會取代大部分功能", "不會，人與人的連結無可取代", "老師的角色會變，但不會消失", "希望不會，也希望自己還有用武之地"]],
+    [4,"如果可以把自己此刻所有的知識和技能，直接下載給另一個人，你會想傳給誰？",[]],
+    [4,"你覺得未來的婚姻或伴侶關係，形式會變得更多元，還是會回歸傳統？",[]],
+    [4,"假設未來科技能讓人完全不需要睡眠，你會想擁有這種能力嗎？",["會，時間感覺賺到了", "不會，睡眠本身就是一種享受", "看能不能隨時開關這個功能", "光用想的就覺得很累"]],
+    [4,"你覺得未來的人類，會不會漸漸失去「忍受痛苦」的能力？",[]],
+    [4,"如果可以讓自己未來的孩子先體驗一次你曾經走過最辛苦的一段路，你會希望他經歷，還是想幫他避開？",["希望他也經歷，那是成長的養分", "想盡量幫他避開，能省則省", "看那段經歷帶來的意義大不大", "還沒認真想過這個問題"]],
+    [4,"你覺得未來如果人類壽命普遍延長到150歲，「人生規劃」這件事會變得更從容，還是更迷茫？",[]],
+    [4,"如果未來有一種科技，可以讓你精準知道自己適合做什麼工作，你會想用嗎？",["會，能少走很多冤枉路", "不會，探索的過程也很珍貴", "會參考，但不會完全照做", "有點怕知道答案跟想像的不一樣"]],
+    [4,"你希望未來的自己，會住在一個什麼樣的地方？（城市、鄉村、還是完全想像不到的地方）",[]],
+    [4,"如果未來科技能讓人「暫時體驗」自己十年後的生活，你會想試試看嗎？",["會，想先安心一點", "不會，想保留未知的驚喜", "要看能不能改變看到的結果", "很猶豫，怕看到後會焦慮"]],
+    [4,"你覺得未來的人跟人之間，「陪伴」這件事，會被科技取代，還是會變得更珍貴？",[]],
+    [4,"如果可以在未來世界裡挑一種全新的職業（現在還不存在的），你會想從事什麼樣的工作？",[]],
+    [4,"你希望未來的科技，能優先解決人類的哪一種「痛」？",["身體上的病痛", "心理上的孤獨", "資源分配不均的貧窮", "環境破壞帶來的災難"]],
+    [4,"如果未來人類能透過科技延續已逝親友的「意識片段」，你會想保留誰的？",[]],
+    [4,"你覺得再過幾十年，人類會不會找到一種「科技跟自然共存」的更好方式？",["會，人類終究會學會平衡", "不會，破壞的速度比修復快", "看每個世代願不願意改變", "希望會，但沒有把握"]],
+
+    [5,"如果能立刻解決一個全球性的問題，只能選一個，你會選哪個？",["氣候變遷","貧富差距","戰爭與衝突","資訊與假新聞氾濫"]],
+    [5,"如果要跟一個從十年前穿越來的人形容「現在的世界」，你會說是變得更好，還是更讓人擔心？",["變得更好","更令人擔心","好壞參半，看哪個面向","很難一概而論"]],
+    [5,"如果要向外星文明介紹地球，你會展示什麼，讓它們留下最好的印象？",[]],
+    [5,"假設你是一個新政策的決策者，這次公平和自由剛好衝突，你會偏向哪一邊？",["偏向公平","偏向自由","看是什麼樣的情境","沒有標準答案"]],
+    [5,"回想一個你立場曾經改變過的社會議題，當初是什麼事件或誰的一句話讓你轉變的？",[]],
+    [5,"面對那些你無力改變的壞消息，你通常怎麼安放自己的情緒？",["先關掉新聞保護自己","做點什麼讓自己有力量感","找人討論消化","允許自己暫時麻木一下"]],
+    [5,"如果你只能當一天老師，只能教全班一件「學校沒教過但你覺得很重要」的事，你會教什麼？",[]],
+    [5,"如果朋友問你對某個你很在意的社會議題怎麼看，你最常提起的是哪一個、為什麼？",[]],
+    [5,"你覺得這個世代普遍最焦慮的一件事是什麼？",[]],
+    [5,"如果可以立刻改變一個社會制度，你會先改哪一個？",[]],
+    [5,"你比較相信「個人的力量能改變世界」，還是「制度才是關鍵」？",["個人的力量","制度才是關鍵","兩者缺一不可","看議題而定"]],
+    [5,"有沒有一個你原本很堅持的立場，後來因為接觸不同的人而軟化了？",[]],
+    [5,"你覺得現在的資訊爆炸，讓人變得更有判斷力，還是更容易被誤導？",["更有判斷力","更容易被誤導","看個人習慣","兩者同時發生"]],
+    [5,"如果可以參與制定一條全新的法律，你會想立什麼法？",[]],
+    [5,"你覺得不同世代之間最大的誤解是什麼？",[]],
+    [5,"面對跟自己立場完全相反的人，你會選擇辯論、迴避，還是試著理解？",["會想辯論","傾向迴避","試著理解對方","看議題重不重要"]],
+    [5,"你覺得現在的教育系統，最該優先改掉的一件事是什麼？",[]],
+    [5,"如果可以無條件資助一個社會議題的解方，你會選擇資助哪一個方向？",[]],
+    [5,"你覺得「多數決」一定代表公平嗎？",[]],
+    [5,"有沒有一次你因為旅行或接觸不同文化，徹底改變了某個既定印象？",[]],
+    [5,"你覺得這個世界對「弱勢」的定義，是不是也在不斷改變？",[]],
+    [5,"如果可以問這個時代一個尖銳的問題，你會問什麼？",[]],
+    [5,"你覺得人跟人之間的信任，這幾年是變多了還是變少了？",["變多了","變少了","看群體而定","說不準"]],
+    [5,"你會不會擔心，自己其實活在一個「同溫層」裡而不自知？",[]],
+    [5,"你覺得快樂的能力，在這個時代是變得更容易，還是更難？",["更容易","更難","要看比較的對象","因人而異"]],
+    [5,"如果可以讓全世界的人只記住一個歷史教訓，你希望是哪一個？",[]],
+    [5,"你覺得「進步」對這個時代來說，一定是好事嗎？",[]],
+    [5,"面對假新聞跟資訊操弄，你覺得個人可以做的最有效的一件事是什麼？",[]],
+    [5,"你比較擔心貧富差距，還是世代之間的價值觀斷層？",["貧富差距","世代價值觀斷層","兩個一樣讓人擔心","都不算是我最擔心的"]],
+    [5,"你覺得一個理想的社會，人跟人之間應該更靠近，還是更尊重距離？",[]],
+    [5,"你覺得「善良」在這個時代，容易被當成優點，還是容易被當成弱點？",["容易被當成優點","容易被當成弱點","看情境而定","要看遇到什麼樣的人"]],
+    [5,"如果可以讓全世界的人都養成一個好習慣，你會希望是哪一個？",[]],
+    [5,"你比較擔心科技拉近人的距離，還是擔心它讓人更孤單？",["拉近距離是好事","其實讓人更孤單","兩者同時發生","看每個人怎麼使用"]],
+    [5,"有沒有一個你原本覺得理所當然的社會現象，後來發現其實對某些人並不公平？",[]],
+    [5,"你覺得「沉默」在面對不公平的事情時，算是一種選擇，還是一種逃避？",[]],
+    [5,"如果可以讓所有人先體驗一天別人的人生，你覺得這個世界會變得更有同理心嗎？",["會，理解會增加很多","不一定，理解不代表會改變","要看體驗到誰的人生","很難說"]],
+    [5,"你覺得這個時代，人們對「成功」的定義，是變得更多元，還是更單一？",[]],
+    [5,"如果只能為這個世界留下幾種特質，你會希望留下哪些？",["誠實", "善良", "公平", "自由", "勇氣", "包容"], true],
+    [5,"你覺得一個人如果對世界上的苦難都感同身受，會不會反而更難好好生活？",[]],
+    [5,"你比較相信「投票或參與公共事務能改變什麼」，還是覺得個人參與的效果有限？",["相信能改變，一票一票累積", "覺得效果有限，但還是會參與", "覺得效果有限，索性不太參與", "看議題大小而定"]],
+    [5,"有沒有一次你主動為一個陌生人或社會議題做了一件小事，讓你自己也很觸動？",[]],
+    [5,"你覺得「希望」在這個時代，是一種天真，還是一種必要的能力？",["有點天真，但還是需要", "是必要的能力，沒有它撐不下去", "看用在什麼事情上", "說不上來，但很想相信"]],
+    [5,"如果可以讓下一代對這個世界少一點誤解，你會希望他們從小就懂得什麼？",[]],
+    [5,"你覺得「歸屬感」對一個人來說，比較容易從家鄉來，還是從找到的一群人來？",["來自家鄉，血緣與土地的連結", "來自找到的一群人，心靈契合更重要", "兩者都可以，缺一也能活", "還在尋找中"]],
+    [5,"有沒有一個你原本很陌生的文化，後來因為某個契機開始喜歡上？",[]],
+    [5,"你覺得這個社會對「善良的人」，是保護得太少，還是剛剛好？",[]],
+    [5,"如果可以讓全世界的人多擁有一種「軟實力」，你會希望是什麼？",["同理心", "耐心", "幽默感", "誠實面對自己的能力"]],
+    [5,"你比較擔心地球環境的未來，還是覺得人類終究會找到解方？",["很擔心，覺得情況不樂觀", "相信人類最終會找到方法", "擔心歸擔心，但還是抱著希望", "看是哪個層面的環境問題"]],
+    [5,"有沒有一位歷史人物，你覺得如果生在現代，可能會是完全不同的角色？",[]],
+    [5,"你覺得一個社會如果太強調「效率」，最容易犧牲掉什麼？",[]],
+    [5,"你比較相信「陌生人之間的善意」，還是覺得人跟人之間本質上還是有戒心比較好？",["相信善意，願意先釋出", "還是保持一點戒心比較安全", "看場合跟地方而定", "看那天心情，說真的不一定"]],
+    [5,"如果可以讓這個世界上的教育資源變得完全公平，你覺得最先改變的會是什麼？",[]],
+    [5,"你覺得自己身處的世代，比上一代更幸運，還是更辛苦？",["更幸運，機會變多了", "更辛苦，挑戰變複雜了", "各有各的難，很難比較", "看是哪個面向"]],
+    [5,"有沒有一件社會新聞，讓你久久無法釋懷？",[]],
+    [5,"你覺得一個人願意「為陌生人挺身而出」的勇氣，是天生的，還是可以被教出來的？",[]],
+    [5,"如果可以讓某個弱勢群體的處境，被全世界看見一次，你會想選哪一群人？",[]],
+    [5,"你覺得「慢下來」對現在這個世界來說，是一種奢侈，還是一種必要？",["奢侈，多數人負擔不起", "必要，只是很多人還沒意識到", "看每個人的處境而定", "希望是必要的，正在努力做到"]],
+    [5,"如果可以讓這個世界多留住一種正在消失的東西（文化、語言、生活方式），你會想留住什麼？",[]],
+
+    [6,"如果人生是一款遊戲，你覺得自己現在在哪個階段？",["新手教學還沒結束", "卡關中的中期", "已解鎖隱藏地圖的老手", "重新刷一輪 New Game+"]],
+    [6,"玩遊戲的時候，你在意的其實是「贏」本身，還是想從「贏」裡得到別的東西？",["贏就是贏，單純想要那個結果", "其實想要的是被看見、被肯定", "比起輸贏，更在乎彼此的默契", "老實說我沒有很在乎，陪玩就好"]],
+    [6,"如果把自己的個性設計成一個遊戲角色，你的必殺技會是什麼？",[]],
+    [6,"小時候有沒有一款遊戲，到現在想起來都會微笑？",[]],
+    [6,"你是那種「照攻略走」，還是「喜歡自己亂試」的玩家？",["一定要查攻略才安心，風險太高受不了", "喜歡自己摸索犯錯，撞牆也是樂趣", "看遊戲類型決定", "兩種都會，看心情"]],
+    [6,"如果人生真的有存檔點，你會想回到哪個瞬間重新選擇？",[]],
+    [6,"團隊遊戲裡，你通常自然而然扮演什麼角色？",["指揮全局的隊長", "搞笑緩和氣氛的開心果", "默默把細節做好的支援", "隨遇而安，大家決定就好"]],
+    [6,"有沒有一款遊戲，是你這輩子玩最久、投入最深的？",[]],
+    [6,"你比較享受「破關的成就感」，還是「探索世界的過程」？",["破關的成就感，爽度優先", "探索世界的過程，走走停停都好", "兩者都要，貪心玩家", "單純圖個放鬆，別給我壓力"]],
+    [6,"假設可以把某個遊戲角色的能力帶到現實生活，你會選哪一個能力？",[]],
+    [6,"你在多人遊戲裡輸了會怎麼反應，容易生氣，還是笑笑就過？",["容易有點不甘心，嘴巴不說心裡有數", "笑笑就過去了，輸贏不重要", "會想檢討原因，這是專業", "看跟誰玩，對手不同心態不同"]],
+    [6,"有沒有一款童年玩過的遊戲，長大後重玩發現完全不是記憶中的樣子？",[]],
+    [6,"你覺得自己是靠運氣，還是靠策略取勝比較多的玩家？",["靠運氣居多，玄學信徒", "靠策略居多，走一步算三步", "兩者都需要，缺一不可", "純粹圖開心，不太計較"]],
+    [6,"如果要設計一款只屬於你跟在乎的人的遊戲，會是什麼玩法？",[]],
+    [6,"你比較喜歡合作型的遊戲，還是互相競爭的遊戲？",["合作型，一起打怪最有安全感", "互相競爭，刺激才好玩", "看心情", "兩種都愛，看場合"]],
+    [6,"有沒有一次玩遊戲玩到忘記時間，事後有點後悔浪費了一整天？",[]],
+    [6,"你會因為一款遊戲的劇情或角色，難過或感動很久嗎？",[]],
+    [6,"如果人生像一款開放世界遊戲，你覺得自己現在比較常主線任務，還是支線任務？",["專心跑主線，效率至上", "常常跑去支線，容易分心", "邊跑邊迷路，隨緣型玩家", "主線支線分不清，反正有玩到就好"]],
+    [6,"你比較喜歡桌遊時大家面對面的互動，還是線上遊戲的匿名感？",["桌遊的面對面，眼神交流無所遁形", "線上的匿名感，社恐福音", "各有各的樂趣，看場合", "都不太玩遊戲"]],
+    [6,"有沒有一款遊戲的音樂，你到現在還會不自覺哼出來？",[]],
+    [6,"你玩遊戲時，比較在意輸贏，還是在意過程好不好玩？",["在意輸贏，會小小燃燒", "在意過程好不好玩", "看是什麼遊戲", "看跟誰玩，對象決定認真程度"]],
+    [6,"如果可以進入一款遊戲住一個禮拜，你會選哪一款？",[]],
+    [6,"你比較容易因為一款遊戲跟朋友吵架，還是變得更要好？",["容易吵架，認真起來很可怕", "反而變更要好，革命情感", "要看那款遊戲", "不太會因為遊戲有情緒，很佛"]],
+    [6,"有沒有一個遊戲角色，讓你覺得跟自己的個性特別像？",[]],
+    [6,"你覺得「作弊」在遊戲裡，是完全不能接受，還是看情況？",["完全不能接受，原則問題", "看情況，有時無傷大雅", "對自己人特別在意公平", "很少計較這種事，開心就好"]],
+    [6,"如果要用一款遊戲的規則來解釋你的人生哲學，你會選哪一款？",[]],
+    [6,"有沒有一款遊戲，你玩到後來已經不是為了破關，而是純粹享受過程？",[]],
+    [6,"你在遊戲裡是喜歡「規則寫得清清楚楚」，還是「規則自己邊玩邊定義」？如果把這個習慣套到你現實生活的選擇上，會不會也是同一種傾向？舉個你生活中的例子。",[]],
+    [6,"假設要設計一款「兩人限定」的專屬遊戲，你會希望裡面有什麼機制？",[]],
+    [6,"有沒有一次玩遊戲玩到跟人建立了很深的信任或默契？",[]],
+    [6,"你在團隊遊戲裡輸了之後，比較容易檢討自己，還是檢討隊友？",["先檢討自己，習慣往內歸因", "忍不住檢討隊友，隊友是原罪", "看輸得多慘，慘到一定程度才檢討", "很快就翻篇不糾結"]],
+    [6,"有沒有一款遊戲的結局，讓你久久回不過神來？",[]],
+    [6,"你覺得「破關之後」的空虛感，你會怎麼調適？",[]],
+    [6,"假設可以跟任何一個虛構的遊戲角色當朋友，你會選誰？",[]],
+    [6,"你比較享受從頭練起、慢慢變強的過程，還是喜歡直接挑戰高難度？",["喜歡慢慢練起，累積感踏實", "喜歡直接挑戰高難度，刺激感優先", "看那款遊戲", "看那天的心情"]],
+    [6,"有沒有一次因為太投入遊戲，而忽略了身邊的人，讓你有點愧疚？",[]],
+    [6,"你覺得「輸不起」跟「太隨便」，你自己比較偏向哪一種玩家？",["輸不起，會偷偷難過一下", "比較隨便，開心就好", "看是什麼遊戲，事關尊嚴的認真", "看跟誰玩，對手不同標準不同"]],
+    [6,"如果只能留下幾種放鬆方式、其他都取消，你會留下哪些？",["打電動", "看劇或看電影", "運動", "跟朋友出去", "獨自安靜地做一件事", "單純休息"], true],
+    [6,"你比較享受「破解謎題」的成就感，還是「動作反應」帶來的刺激感？",["解謎的成就感，燒腦但滿足", "動作反應的刺激感，腎上腺素優先", "兩者都愛，看那天想要哪種", "玩得很隨性，不追求刺激"]],
+    [6,"有沒有一款遊戲，你買了卻一直沒時間好好玩，放在那裡有點愧疚？",[]],
+    [6,"你會不會為了達成某個遊戲成就或全收集，花掉遠超預期的時間？",["會，完成度是我的堅持", "不太會，能玩開心就好", "看那款遊戲值不值得", "以前會，現在時間有限就放過自己"]],
+    [6,"有沒有一次因為一款遊戲，跟很久沒聯絡的朋友重新聯繫上？",[]],
+    [6,"你比較喜歡手機遊戲的隨時上手，還是主機／電腦遊戲的沉浸體驗？",["手機遊戲，方便隨時玩", "主機或電腦，沉浸感更重要", "兩者都玩，看場合", "現在很少玩遊戲了"]],
+    [6,"有沒有一款遊戲的世界觀，讓你覺得比現實更吸引你？",[]],
+    [6,"你會不會因為壓力大，特地找一款遊戲來發洩情緒？",["會，打遊戲是我的紓壓管道", "不太會，壓力大反而玩不下去", "看是什麼壓力，有時候有效", "會找別的方式紓壓，遊戲不是首選"]],
+    [6,"有沒有一個遊戲裡的NPC或配角，讓你比主角還要念念不忘？",[]],
+    [6,"你覺得「花錢課金」買遊戲道具，對你來說是合理的娛樂消費，還是能省則省？",["合理消費，值得的東西該花就花", "能省則省，寧願花時間換取", "看那款遊戲的誠意", "很少玩需要課金的遊戲"]],
+    [6,"有沒有一次因為堅持不用攻略，卡關卡了很久，卻在破關那刻特別有成就感？",[]],
+    [6,"你覺得遊戲裡的「失敗」跟現實生活裡的「失敗」，帶給你的感覺一樣嗎？",[]],
+    [6,"如果可以邀請一位遊戲設計師，跟你聊聊他為什麼設計某個機制，你會想問哪一款遊戲的問題？",[]],
+    [6,"你比較享受一個人默默解謎、還是跟朋友一起邊吵邊玩的過程？",["一個人安靜解謎，效率至上", "跟朋友邊吵邊玩，鬧哄哄才好玩", "看那款遊戲的性質", "看那天想要熱鬧還是安靜"]],
+    [6,"有沒有一次因為隊友（不管認識或不認識）的一句鼓勵，讓你重新有動力繼續玩下去？",[]],
+    [6,"你會不會特地重玩小時候玩過的遊戲，找回當時的感覺？",["會，重玩是一種懷舊儀式", "不太會，比較想玩新的", "偶爾心血來潮會回去玩", "重玩後常常發現跟記憶不一樣"]],
+    [6,"有沒有一款遊戲的結局讓你捨不得破關，想一直停留在那個世界裡？",[]],
+    [6,"你覺得自己玩遊戲時展現出來的個性，跟現實中的自己像不像？",[]],
+    [6,"如果要用一款遊戲類型形容你現在的人生階段，你會選哪一種？",["養成類，一步步培養實力", "生存類，先求活下來", "解謎類，正在找方向", "休閒類，想好好喘口氣"]],
+    [6,"有沒有一次你在遊戲裡幫助了一個完全不認識的玩家，讓你自己也很開心？",[]],
+    [6,"你比較容易因為一款遊戲的畫面美術，還是因為劇情，而決定要不要繼續玩下去？",["畫面美術，第一眼很重要", "劇情，故事夠好才留得住我", "兩者都重要，缺一不可", "操作手感才是重點，其他都其次"]],
+
+    [7,"有沒有一首歌，是你心情不好時的專屬解藥？",[]],
+    [7,"如果用一首歌的調性代表你現在的人生階段，會是？",["輕快帶點俏皮", "低沉緩慢的醞釀", "澎湃激昂", "安靜的純音樂"]],
+    [7,"你比較容易被歌詞打動，還是被旋律和節奏打動？",["歌詞", "旋律和節奏", "兩者缺一不可", "看那首歌，見一個愛一個"]],
+    [7,"有沒有一首歌你明明很喜歡，卻不敢在別人面前聽，因為太赤裸？",[]],
+    [7,"如果要挑一首歌，讓完全不認識你的人聽了就能懂你三分，你會選哪種類型？",[]],
+    [7,"有沒有一首歌連結著特定回憶，前奏一下你就秒回那個時空？",[]],
+    [7,"如果可以參加一場已故音樂人的復刻演唱會，你最想去看誰？",[]],
+    [7,"有沒有一首歌，只要一開頭前奏，你整個人的狀態就會瞬間切換？",[]],
+    [7,"你比較常主動找新歌來聽，還是習慣重複聽固定的歌單？",["常常挖新歌，探索體質", "習慣聽固定歌單，忠誠體質", "看心情", "偶爾會問朋友推薦，帶點社交"]],
+    [7,"有沒有一首歌，是你跟某個特定的人之間才懂的暗號或回憶？",[]],
+    [7,"你覺得自己聽歌的品味，這幾年變了很多嗎？",[]],
+    [7,"如果要為自己接下來的人生階段選一首「主題曲」，你會選哪一首？",[]],
+    [7,"你比較容易在難過的時候聽悲傷的歌，還是刻意避開？",["會聽悲傷的歌，以毒攻毒", "刻意避開，聽開心一點的", "看那次難過的程度", "會直接聽沒有歌詞的音樂，情緒中立"]],
+    [7,"有沒有一次演唱會或音樂現場，讓你到現在都還會起雞皮疙瘩？",[]],
+    [7,"你比較享受安靜無聲，還是身邊隨時有音樂陪伴？",["喜歡安靜無聲", "隨時想要有音樂，人體背景音樂機", "看在做什麼事", "看當下心情"]],
+    [7,"有沒有一首歌，你原本沒特別感覺，卻在某個時刻突然聽懂了歌詞？",[]],
+    [7,"你會不會因為一首歌，想起一段已經過去、卻捨不得完全忘記的關係？",[]],
+    [7,"如果讓你只能保留十首歌聽一輩子，你會怎麼挑？",[]],
+    [7,"你比較喜歡現場聽演唱會的震撼，還是自己一個人靜靜聽歌？",["現場的震撼感", "一個人靜靜聽", "兩種都想要，貪心一點", "比較少主動聽演唱會"]],
+    [7,"有沒有一種樂器的聲音，特別容易讓你情緒被牽動？",[]],
+    [7,"你會用音樂陪自己走過低潮嗎？那通常是什麼類型的歌？",[]],
+    [7,"如果可以讓某一位音樂人幫你寫一首專屬的歌，你會希望歌詞裡寫些什麼？",[]],
+    [7,"你覺得自己是那種聽一次就記住旋律的人，還是要聽很多次才會喜歡上一首歌？",["聽一次就記住，過耳不忘體質", "要聽很多次才會喜歡", "看那首歌對不對胃口", "很少主動記歌"]],
+    [7,"有沒有一首歌，明明歌詞很悲傷，你卻覺得聽起來很療癒？",[]],
+    [7,"你會因為跟誰在一起，而特別想放某種類型的音樂嗎？",[]],
+    [7,"你會不會特地為了某個人做一份歌單，把心情藏在裡面？",[]],
+    [7,"有沒有一種曲風，是你以前討厭、現在卻聽得很上癮的？",[]],
+    [7,"你覺得音樂節現場的氛圍，跟一個人戴耳機聽歌，哪個更能讓你感動？",["現場的集體氛圍", "一個人戴耳機的沉浸感", "兩種感動不太一樣，都珍貴", "比較少特別感動"]],
+    [7,"有沒有一首歌詞，精準寫出了你曾經想講卻講不出口的感受？",[]],
+    [7,"你比較喜歡循環播放同一首歌到膩，還是每次都想聽點不一樣的？",["會循環到膩為止", "喜歡常常換新歌", "看那首歌的黏著度", "看當下的心情"]],
+    [7,"如果可以擁有一種樂器的天賦，不用練習就會彈，你會選哪一種？",[]],
+    [7,"有沒有一次你因為聽到某首歌，突然理解了一段過去發生的事？",[]],
+    [7,"你會不會因為跟某個人一起去過一場演唱會，那個歌手的歌從此對你有特別的意義？",[]],
+    [7,"你覺得自己聽歌時，比較容易被主唱的聲音吸引，還是被編曲吸引？",["主唱的聲音", "整體的編曲", "歌詞的內容", "說不上來，是感覺，別逼我分析"]],
+    [7,"有沒有一首歌，你私心覺得寫得很好，卻沒什麼人知道？",[]],
+    [7,"你在心情最低落的時候，會想聽歌，還是反而完全不想聽任何聲音？",["會想聽歌療癒自己", "完全不想聽任何聲音", "看低落的程度", "想找人陪，音樂其次"]],
+    [7,"假設可以送給在乎的人一首歌當禮物，你會怎麼選、怎麼說明原因？",[]],
+    [7,"如果只能留下幾種聽音樂的時刻、其他都取消，你會留下哪些？",["通勤或移動時", "獨處放空時", "運動或做家事時", "睡前", "心情低落時", "慶祝或開心時"], true],
+    [7,"你會不會在唱KTV時，特別想點一首能表達心情、卻沒人知道背後原因的歌？",[]],
+    [7,"你覺得自己的音樂品味，跟家人或從小生活的環境比起來，差異大嗎？",[]],
+    [7,"如果要組一支只屬於自己的播放清單送給未來的自己，你會想放進什麼樣的歌？",[]],
+    [7,"你比較享受唱歌給別人聽，還是純粹自己享受唱歌的過程？",["喜歡唱給別人聽，有觀眾更有動力", "純粹自己享受，害怕被聽到", "看場合和心情", "很少主動唱歌"]],
+    [7,"有沒有一首歌，是你會在心情很好的時候，特地拿出來慶祝的？",[]],
+    [7,"你比較喜歡聽原唱版本，還是喜歡聽別人重新詮釋的翻唱版本？",["原唱最有味道", "喜歡聽不同的翻唱詮釋", "看那首歌適不適合翻唱", "沒特別比較過"]],
+    [7,"有沒有一次因為一首歌，讓你在公開場合差點掉眼淚，只能硬憋住？",[]],
+    [7,"你會不會特地為了某個重要的日子（生日、紀念日），挑一首歌當作背景音樂？",[]],
+    [7,"你覺得音樂對你來說，比較像是陪伴，還是像是逃避現實的出口？",["像陪伴，讓我不孤單", "像出口，能暫時逃離現實", "兩者都是，看那陣子的狀態", "單純享受，沒想那麼多"]],
+    [7,"有沒有一種樂器，是你這輩子很想學、卻一直沒有真正開始的？",[]],
+    [7,"你會因為跟某個人一起聽過某種類型的音樂，之後聽到就會想起他嗎？",[]],
+    [7,"你比較容易在工作或讀書時放音樂當背景，還是完全安靜才能專心？",["需要背景音樂才有效率", "完全安靜才能專心", "看做什麼事", "看那天的專注力狀態"]],
+    [7,"有沒有一次因為算法推薦，意外挖到一首你現在很愛的歌？",[]],
+    [7,"你會不會收藏實體的音樂周邊（黑膠、CD、演唱會周邊），即使很少真的拿出來用？",[]],
+    [7,"你覺得自己聽音樂的習慣，是屬於「重質不重量」，還是「來者不拒、什麼都聽」？",["重質不重量，反覆咀嚼喜歡的", "來者不拒，什麼類型都想試", "看那陣子的心情", "介於兩者之間"]],
+    [7,"有沒有一首歌，是你跟某段已經結束的關係「專屬」的，現在聽到還是會有點五味雜陳？",[]],
+    [7,"你比較喜歡即興、帶點意外的音樂演出，還是編排精準、完美無瑕的演出？",["即興演出，意外感最迷人", "精準完美的演出，穩定感更重要", "兩種都吸引我", "看是什麼類型的表演"]],
+    [7,"有沒有一次你聽到一首完全陌生語言的歌，卻還是被打動了？",[]],
+    [7,"你會不會特地跟著音樂節奏擺動身體，還是聽歌時整個人是靜止的？",["會不自覺跟著節奏動", "整個人很靜止地聽", "看那首歌的節奏感", "看場合，人多會忍住"]],
+    [7,"有沒有一種音樂類型，是你曾經很排斥、後來因為某個人才開始接觸的？",[]],
+    [7,"你覺得「懂音樂」這件事，對你來說重要嗎？還是純粹喜歡就好，不需要懂理論？",[]],
+
+    [8,"你比較容易被哪一種風景打動？",["遼闊的大海或天空", "靜謐的森林山林", "熱鬧有生命力的城市街景", "帶點荒涼感的地方"]],
+    [8,"如果可以立刻傳送到世界任何地方待一小時，你會選哪裡？",[]],
+    [8,"旅行時，你是喜歡照計畫走，還是喜歡迷路然後隨機應變？",["照計畫走比較安心，我需要藍圖", "喜歡迷路隨機應變，刺激感up", "前面排一半後面隨意，走一步算一步", "看跟誰一起去，隊友決定風格"]],
+    [8,"有沒有一個地方，你去過一次就一直很想再回去？是什麼讓你念念不忘？",[]],
+    [8,"對你來說，「家」比較接近一個地方，還是一種感覺、一群人？",["一個具體的地方", "一種感覺", "一群特定的人", "還在尋找答案"]],
+    [8,"如果可以選一種天氣代表你現在的心境，你會選？",["剛放晴的午後", "起霧看不清方向", "溫柔的細雨", "晴朗但有點風"]],
+    [8,"有沒有哪一種景色，是你看了會突然很想哭或很想大喊的？",[]],
+    [8,"如果現在可以列一張這輩子最想去的旅行清單，前三名會是哪裡？",[]],
+    [8,"你比較容易在旅行中放鬆，還是旅行本身也讓你有點緊張焦慮？",["很容易放鬆，切換模式很快", "其實也會緊張，行前焦慮體質", "看是跟誰去", "看行程安排的方式"]],
+    [8,"有沒有一次旅行途中發生的意外，後來反而變成最難忘的回憶？",[]],
+    [8,"你覺得「在地生活感」跟「觀光打卡」，哪一種比較貼近你旅行的方式？",["喜歡在地生活感，融入才過癮", "喜歡觀光打卡熱門景點，到此一遊主義", "兩者都想體驗", "看去哪個地方"]],
+    [8,"如果只能選一種交通方式旅行一輩子，你會選哪一種？",["火車", "開車自駕", "走路健行", "搭船"]],
+    [8,"有沒有一個地方，你去之前想像的樣子跟實際去了完全不一樣？",[]],
+    [8,"你比較喜歡計畫周全的旅行，還是說走就走的即興？",["計畫周全比較安心，行程表是信仰", "說走就走比較刺激，隨性主義", "前面計畫，中間隨性，混合型玩家", "要看去哪裡"]],
+    [8,"有沒有一次獨自旅行的經驗，讓你對自己有新的認識？",[]],
+    [8,"你覺得回到家的那一刻，通常會有什麼樣的感覺？",["鬆一口氣的安心感，家最棒", "有點失落，捨不得旅程結束", "很快就切回日常模式，效率型", "五味雜陳，說不清楚"]],
+    [8,"如果可以跟一個歷史人物一起去旅行，你會選誰、去哪裡？",[]],
+    [8,"你比較喜歡旅行時什麼都不做、放空發呆，還是把行程排得滿滿的？",["喜歡放空發呆，行程留白", "喜歡把行程排滿，時間不能浪費", "前鬆後緊或前緊後鬆，戰術型", "看跟誰一起去"]],
+    [8,"有沒有一次旅行途中跟同行的人吵架、後來又和好的經驗？",[]],
+    [8,"你覺得旅行最珍貴的部分，是看到的風景，還是遇到的人？",["看到的風景", "遇到的人", "兩者都很珍貴", "旅行本身的心境轉換"]],
+    [8,"如果有一個地方你這輩子只能再去一次，你會選哪裡？",[]],
+    [8,"你比較容易在旅行時想家，還是完全捨不得離開新的地方？",["容易想家，家的引力很強", "捨不得離開，樂不思蜀", "看去多久", "要看跟誰去"]],
+    [8,"有沒有一個你原本抗拒去、後來卻意外喜歡上的地方？",[]],
+    [8,"你會不會特別喜歡收集旅行中的某種小東西（票根、明信片、紀念品）？",[]],
+    [8,"如果可以用旅行的方式療癒自己，你會想去什麼樣的地方？",["寧靜的海邊", "熱鬧的異國城市", "人煙稀少的山林", "熟悉又陌生的老地方"]],
+    [8,"有沒有一次因為語言不通，卻意外有很溫暖互動的旅行經驗？",[]],
+    [8,"你覺得旅伴對一趟旅行的影響有多大？",["影響非常大，隊友能拯救或毀掉旅行", "還好，行程更重要", "看旅行的目的", "兩者一樣重要"]],
+    [8,"你會不會特地為了某個人規劃一趟旅行，想讓對方留下難忘的回憶？",[]],
+    [8,"有沒有一次旅途中遇到的陌生人，讓你到現在還會想起他？",[]],
+    [8,"你比較喜歡計畫已久的長途旅行，還是臨時起意的小旅行？",["計畫已久最踏實，期待感是一種享受", "臨時起意最有味道，說走就走", "兩種都愛，貪心玩家", "看那陣子的心情"]],
+    [8,"如果只能選一種天氣陪你旅行，你會選哪一種？",["晴朗無雲", "下著小雨", "起霧朦朧", "涼爽帶風"]],
+    [8,"有沒有一次旅行的經驗，讓你對「家」這個字有了不一樣的理解？",[]],
+    [8,"你覺得旅行結束後，帶回來的東西裡，什麼最珍貴？",["照片和影像", "紀念品", "心裡的體會", "跟旅伴之間的默契"]],
+    [8,"有沒有一個景點，是大家都說很美、你去了卻沒什麼特別感覺的？",[]],
+    [8,"你比較享受出發前的期待，還是旅程正在發生的當下？",["出發前的期待感", "旅程進行時的當下", "回來後回味的時刻", "三個都很享受"]],
+    [8,"如果可以帶一個從沒出過遠門的人去一個地方，你會想帶他去哪裡？",[]],
+    [8,"有沒有一次旅行讓你重新認識了同行的那個人？",[]],
+    [8,"如果一趟旅行只能保留幾個部分、其他都可以省略，你會留下哪些？",["精心安排的行程", "隨興發揮的空白時間", "美食探索", "拍照與紀錄美景", "跟旅伴相處的時光", "純粹的休息放空"], true],
+    [8,"你比較喜歡自己一個人規劃行程的自由，還是喜歡有旅伴一起討論、分擔決定？",["喜歡自己規劃，全都我說了算", "喜歡一起討論，分擔決定比較安心", "看去哪裡，短程自己來、長程找伴", "都可以，隨遇而安"]],
+    [8,"有沒有一次旅行你堅持要住得舒服一點，捨不得省的是哪個部分？",[]],
+    [8,"你旅行時比較容易融入當地，跟陌生人聊起來，還是習慣待在自己熟悉的小圈子裡？",["很容易融入，跟陌生人聊得起來", "習慣待在熟悉的圈子裡", "看那個地方讓不讓人安心", "要看那趟旅行的心情"]],
+    [8,"有沒有一次因為在異地生病或受傷，讓你特別想家的經驗？",[]],
+    [8,"你會不會刻意在旅行時完全不看手機、不回訊息，讓自己徹底斷線？",["會，斷線才是真正的休息", "不太會，還是會忍不住看一下", "看那趟旅行的目的", "很想做到，但常常做不到"]],
+    [8,"如果可以帶著現在的自己回到小時候去過的某個地方，你會想重新去哪裡看看？",[]],
+    [8,"你打包行李時，是那種寧可多帶、有備無患的人，還是盡量精簡、輕裝上陣？",["寧可多帶，安全感優先", "盡量精簡，輕便才自由", "看去幾天、去哪裡", "每次都帶太多，一直在檢討"]],
+    [8,"有沒有一次你在旅途中，因為某個陌生人的一個舉動，重新對人性有了信心？",[]],
+    [8,"你會不會特地為了某個特定的原因（美食、演唱會、賞花）安排一整趟旅行？",[]],
+    [8,"你覺得「露營」或親近大自然的旅行方式，對你來說是享受，還是有點勉強自己？",["很享受，接近自然特別療癒", "有點勉強，還是喜歡有床有冷氣", "偶爾想嘗試，但不是常態", "還沒真正體驗過"]],
+    [8,"有沒有一次你為了省錢而選擇比較克難的交通或住宿，後來卻意外變成很棒的回憶？",[]],
+    [8,"你比較享受規劃旅行前查資料、做功課的過程，還是完全交給別人安排比較輕鬆？",["喜歡自己查資料，做功課是樂趣之一", "交給別人安排，我負責享受就好", "會稍微看一下，不會太深入", "看是誰要負責，通常是我"]],
+    [8,"有沒有一個你長大後才真正看懂、看見不一樣風景的家鄉角落？",[]],
+    [8,"你會不會在旅行時特地買一份禮物，只為了帶回去給某個特定的人？",[]],
+    [8,"你比較享受長時間深度探索一個地方，還是短時間內跑很多不同的地方？",["深度探索一個地方，慢慢認識它", "多跑幾個地方，體驗越多越好", "看那趟旅行有多少天", "看跟誰一起去，配合對方步調"]],
+    [8,"有沒有一次旅行結束後，你花了好一陣子才走出「旅行後的失落感」？",[]],
+    [8,"你會不會特地選在人少的時段或季節出發，避開人潮？",["會，人少的時候體驗更好", "不太在意，人多也沒差", "看那個景點值不值得避開人潮", "常常是被時間綁住，沒得選"]],
+    [8,"有沒有一次你在旅途中，因為看到某個陌生人的生活方式，重新思考了自己的人生？",[]],
+    [8,"你比較喜歡透過美食認識一個地方，還是透過歷史和建築？",["美食，胃比腦袋誠實", "歷史建築，喜歡了解脈絡", "兩者一樣重要", "透過當地人的生活方式更多"]],
+    [8,"有沒有一次旅行讓你發現，自己其實比想像中更能適應陌生環境？",[]],
+    [8,"你覺得旅行對你來說，是為了「離開」現在的生活，還是為了「更了解」自己的生活？",["為了暫時離開，換個空氣", "為了更了解自己，換個角度看生活", "兩者常常同時發生", "沒想那麼深，純粹好玩"]],
+
+    [9,"有沒有一個很小的童年畫面，到現在都記得很清楚，卻說不出為什麼特別？",[]],
+    [9,"小時候的你，如果看到現在的你，會覺得驚喜還是失望？",["會覺得驚喜","大概會有點失望","又驚又喜參半","他大概認不出我"]],
+    [9,"你覺得自己身上，哪個特質是從小到大都沒變過的？",[]],
+    [9,"有沒有一個曾經很重要、後來淡出你生活的人，偶爾還是會想起？",[]],
+    [9,"有沒有一種味道或聲音，會瞬間把你拉回某個童年片刻？",[]],
+    [9,"你記憶中第一次感覺到「原來大人的世界沒那麼簡單」，是什麼時候？",[]],
+    [9,"如果可以回去抱一下小時候的自己，你想跟他說什麼？",[]],
+    [9,"小時候有沒有做過什麼事，現在回想起來超糗，但當下你可是無比認真？",[]],
+    [9,"小時候你比較怕惹爸爸生氣，還是比較怕惹媽媽生氣（或是其他把你帶大的人）？",["比較怕爸爸","比較怕媽媽","兩個都不太怕","看情況，各有各的怕"]],
+    [9,"如果可以偷偷回到童年的某一天重新過一次，你會選哪一天？",[]],
+    [9,"你記憶中第一個交到的朋友，現在還有聯絡嗎？",[]],
+    [9,"有沒有一個小時候堅信不疑的事情，長大後才發現完全不是那樣？",[]],
+    [9,"你小時候最喜歡的一個玩具或物品，後來去哪裡了？",[]],
+    [9,"有沒有一次被誤會、卻不知道該怎麼解釋的童年經驗，到現在還記得？",[]],
+    [9,"你記憶中，家裡誰最會逗你笑？",[]],
+    [9,"有沒有一個童年的暑假，讓你到現在想起來都覺得特別漫長、特別自由？",[]],
+    [9,"你小時候有沒有幻想過長大要成為什麼樣的人？跟現在的自己像嗎？",[]],
+    [9,"有沒有一種懲罰或責罵方式，是你小時候特別害怕、到現在都記得的？",[]],
+    [9,"你記憶中第一次覺得「原來我可以自己解決問題」，是什麼時候？",[]],
+    [9,"有沒有一個小時候的鄰居或玩伴，你偶爾還是會想起來？",[]],
+    [9,"你小時候在班上比較是安靜觀察型，還是活躍主動型？",["安靜觀察型","活躍主動型","看班級氛圍","兩者都有經歷過"]],
+    [9,"有沒有一次生日，讓你到現在都印象深刻？",[]],
+    [9,"你記憶中最早的一次「說謊」，是為了什麼原因？",[]],
+    [9,"有沒有一個地方（房間、學校角落、秘密基地），是你小時候特別有安全感的？",[]],
+    [9,"你小時候比較黏爸爸媽媽哪一邊，還是誰都不特別黏？",["比較黏爸爸","比較黏媽媽","都很黏","誰都不特別黏"]],
+    [9,"有沒有一次跟兄弟姊妹（或很要好的朋友）大吵一架，後來又和好如初的記憶？",[]],
+    [9,"你小時候最害怕的東西是什麼？現在還會怕嗎？",[]],
+    [9,"有沒有一句大人隨口說的話，你一直記到現在？",[]],
+    [9,"你記憶中第一次感受到「失去」是什麼時候？",[]],
+    [9,"有沒有一個童年的興趣，你一直保留到現在？",[]],
+    [9,"你小時候的夢想職業，跟現在做的事情差多少？",[]],
+    [9,"有沒有一次因為闖禍，讓你到現在想起來還是會臉紅的童年回憶？",[]],
+    [9,"有沒有一個童年時期的節日，你到現在還是特別期待？",[]],
+    [9,"你小時候有沒有一個「幻想朋友」或很入迷的角色，陪你度過了一段日子？",[]],
+    [9,"你記憶中，家裡吵架時你通常會怎麼反應？躲起來，還是想辦法緩和氣氛？",["躲起來自己消化","想辦法緩和氣氛","假裝沒事發生","記不太清楚了"]],
+    [9,"有沒有一次因為考試或表現不好，讓你印象深刻的童年經驗？",[]],
+    [9,"你小時候最喜歡的一本書或一部卡通，現在回想起來對你有什麼影響？",[]],
+    [9,"小時候，你最常用什麼方式打發時間？",["看電視或卡通", "看書", "跟朋友出去玩", "自己一個人玩", "做才藝或運動類的活動"]],
+    [9,"你小時候家裡有養寵物嗎？那隻寵物在你心裡留下了什麼樣的回憶？",[]],
+    [9,"你小時候有沒有固定要做的家事或任務？現在回想起來是什麼感覺？",[]],
+    [9,"你記憶中，第一次自己完成一件很有成就感的小事，是什麼時候？",[]],
+    [9,"小時候你的房間或睡覺的角落，長什麼樣子？現在還記得嗎？",[]],
+    [9,"你記得自己第一次接觸電腦、電視遊樂器或平板的畫面嗎？",[]],
+    [9,"有沒有一次全家出遊，是你到現在都還記得細節的？",[]],
+    [9,"你小時候有沒有一個特別崇拜、想要成為他那樣的大人？",[]],
+    [9,"你記憶中，家裡誰做的一道菜，是專屬於「家的味道」？",[]],
+    [9,"有沒有一位老師，說過的一句話，你到現在都還記得？",[]],
+    [9,"你小時候有沒有一個只有自己知道的小祕密，一直沒有告訴任何人？",[]],
+    [9,"你記得自己第一次上台表演或發言時，是緊張到爆，還是意外地享受？",["緊張到爆，腦袋一片空白", "意外地享受，很喜歡被看見", "看是什麼場合", "已經記不清楚那種感覺了"]],
+    [9,"小時候的零用錢，你是存起來，還是拿到手就花光？",["會存起來，小小理財家", "拿到就花光，及時行樂", "看那筆錢的用途", "根本沒什麼零用錢可以花"]],
+    [9,"你記憶中，家裡有沒有一個大家都要遵守、但你一直不太懂為什麼的規矩？",[]],
+    [9,"有沒有一次你小時候跟兄弟姊妹（或表堂親戚）玩到忘我，現在想起來還會笑？",[]],
+    [9,"你小時候最喜歡玩什麼樣的扮家家酒或角色扮演遊戲？",[]],
+    [9,"你記得跟阿公阿嬤（或其他長輩）之間，有沒有一個特別的相處回憶？",[]],
+    [9,"小時候下雨天或颱風天，你們家通常都在做什麼？",[]],
+    [9,"你記憶中第一次意識到「原來爸媽也會累、也會脆弱」，是什麼時候？",[]],
+    [9,"有沒有一次你小時候的作品（畫畫、勞作、作文）被特別稱讚，讓你印象很深？",[]],
+    [9,"你小時候比較喜歡自己一個人安靜玩，還是一定要有人陪才玩得起來？",["喜歡自己安靜玩，很能自得其樂", "一定要有人陪，一個人會無聊", "看那天的心情", "看是玩什麼"]],
+    [9,"你記憶中，小時候家裡過節的氣氛，是熱鬧忙碌，還是簡單安靜？",["熱鬧忙碌，親戚都會聚在一起", "簡單安靜，一家人過就好", "看是哪個節日", "每年都不太一樣"]],
+
+    [10,"如果明天一覺醒來，全世界的人都能讀到你心裡的想法，你會慌張，還是鬆一口氣？",["會慌張，我藏了不少事","鬆一口氣，不用解釋了","好奇會發生什麼事","那個世界會更誠實"]],
+    [10,"如果可以擁有一種超能力，但代價是失去一項現有的能力，你會怎麼選？",[]],
+    [10,"如果能跟十年後的自己通一次電話，只能問一個問題，你會問什麼？",[]],
+    [10,"如果整個世界只剩一種顏色可以存在，你希望是哪一種？",[]],
+    [10,"如果每個人一生只能說一次「完全真心不修飾」的話，其他時間都得客套，你會把那次機會留給誰、或什麼場合？",[]],
+    [10,"假設有一種藥，吃了會讓你忘記一段記憶，但也失去從中學到的東西，你會想吃嗎？",["會，有些痛不值得留著","不會，連學到的都不想失去","要看是哪一段記憶","猶豫，但大概不會"]],
+    [10,"如果可以跟任何一個已經不在世上的人再吃一頓飯，你會選誰？",[]],
+    [10,"如果突然有一筆花不完的巨款匯進你的戶頭，你會先做的第一件事是什麼？",[]],
+    [10,"假設有一天你一覺醒來，發現自己變成了一隻鳥，你會怎麼安排接下來的生活？",[]],
+    [10,"如果只能擁有一種超能力，你會選哪一種？",["瞬間移動","讀心術","隱形","時間暫停"]],
+    [10,"如果可以無條件跟任何一個人交換身分過一天，你會選誰？",[]],
+    [10,"假設你醒來發現全世界只剩你一個人，你會先做什麼？",[]],
+    [10,"如果可以許三個願望，但其中一個一定會產生意想不到的副作用，你還是會許嗎？",["會，願意冒險","不會，太危險了","看願望的重要性","會先想清楚再決定"]],
+    [10,"假設有一天你發現自己其實活在別人的夢裡，你會想怎麼做？",[]],
+    [10,"如果可以在任何一個歷史時刻穿越回去待一天，你會選哪個時刻？",[]],
+    [10,"假設有一顆按鈕，按下去可以重來一次今天，但會失去今天所有的記憶，你會按嗎？",["會按","不會按","看今天過得好不好","要考慮一下"]],
+    [10,"如果每個人身上會浮現一句「內心真心話」給別人看，你猜自己身上會寫什麼？",[]],
+    [10,"假設你可以瞬間變成任何一種動物一天，你會選哪一種？",["貓","鳥","狗","隨便你想像的其他動物"]],
+    [10,"如果可以無痛拿掉一段記憶，卻永遠不知道自己拿掉了什麼，你會願意嗎？",["願意","不願意","要看那段記憶的重量","很猶豫"]],
+    [10,"假設有一天全世界的人都能看到彼此的年齡歸零倒數，你覺得世界會變得更好還是更亂？",[]],
+    [10,"如果可以跟另一個平行時空的自己見面，你最想問他什麼？",[]],
+    [10,"假設你可以擁有讀心術，但代價是別人也能讀到你的心，你還會想要嗎？",["想要，願意付出代價","不想要，太可怕了","看能不能控制開關","很猶豫"]],
+    [10,"如果整個世界忽然安靜下來，所有聲音都消失了，你猜自己會先注意到什麼？",[]],
+    [10,"假設你可以把自己的其中一個記憶，直接分享給另一個人體驗，你會分享哪一段？",[]],
+    [10,"如果可以立刻精通一種語言，你會選哪一種？為什麼？",[]],
+    [10,"假設你發現明天太陽不會升起，這是你「有記憶」的最後一天，你會怎麼度過？",[]],
+    [10,"如果可以擁有一台能倒轉時間五分鐘的機器，但一天只能用一次，你會怎麼用它？",[]],
+    [10,"假設你能瞬間看穿一個人是不是在說謊，你會想擁有這個能力嗎？",["想要","不想要，有些謊言是善意的","看用在誰身上","要看能不能自己控制"]],
+    [10,"如果可以把自己這輩子活過的一天完整重播給別人看，你會選哪一天？",[]],
+    [10,"假設你可以把自己的其中一項才能，直接送給一個你在乎的人，你會送出哪一項？",[]],
+    [10,"如果可以瞬間交換一天的人生，你會想跟誰交換？",[]],
+    [10,"假設每個人都能選擇自己出生的年代，你會想活在哪個年代？",[]],
+    [10,"如果全世界的人有一天突然都變得非常誠實，你覺得會發生什麼事？",[]],
+    [10,"假設你可以擁有一種「暫停時間、只有你能動」的能力，你會用來做什麼？",[]],
+    [10,"如果可以把自己此刻的心情，變成一個具體的物品，你猜那會是什麼？",[]],
+    [10,"假設你可以無限重來今天一次，直到滿意為止，你覺得自己會重來幾次？",["一次就好，接受結果","會重來到完美為止","看今天發生了什麼事","可能根本不會想重來"]],
+    [10,"如果可以跟未出生的下一代（你的孩子或晚輩）先視訊一次，你會想跟他說什麼？",[]],
+    [10,"如果可以擁有其中幾種特殊能力、其他都不行，你會留下哪些？",["讀懂別人的心情", "預知一件事的結果", "瞬間移動到任何地方", "暫停時間", "跟動植物溝通", "看見別人的過去"], true],
+    [10,"如果可以讓時間在某個特定的一天永遠暫停、你可以自由活動，你會選哪一天，想做什麼？",[]],
+    [10,"假設你可以把自己此刻的年紀「凍結」，不再變老，你會想停在幾歲？",[]],
+    [10,"如果全世界的貨幣突然變成同一種，你覺得人跟人之間的關係會變得更單純，還是更複雜？",[]],
+    [10,"假設你能瞬間學會任何一種運動並達到職業水準，你會選哪一項？",[]],
+    [10,"如果可以拿掉自己身上一個「習慣性的反應模式」，你會想拿掉哪一個？",[]],
+    [10,"假設你能無限次重新選擇自己的名字，你會想改成什麼？",[]],
+    [10,"如果每個人一生只能保留五個人的聯絡方式，其他都會自動消失，你會留下誰？",[]],
+    [10,"假設有一天你發現自己其實一直活在別人設計的劇本裡，你會想繼續照著演，還是想打破它？",["繼續照著演，至少安穩", "想打破它，奪回主導權", "先觀察一陣子再決定", "要看那個劇本寫得好不好"]],
+    [10,"如果可以讓自己完全不需要吃飯或睡覺、卻不影響健康，你會想擁有這種體質嗎？",["會，時間感覺瞬間變多", "不會，吃飯睡覺是生活的樂趣", "看能不能隨時切換", "光用想的就覺得空虛"]],
+    [10,"假設有一天你能聽懂動物說話，你最想先跟哪一種動物聊聊？",[]],
+    [10,"如果可以立刻擁有一項讓所有人都會喜歡你的特質，你會選什麼？",[]],
+    [10,"假設你可以把自己人生中最痛苦的一段經歷，完全刪除，你會願意嗎？即使代價是也會失去因此變得更強大的自己？",["會刪除，痛苦不值得留著", "不會，那段經歷造就了現在的我", "看那段經歷有多重", "很矛盾，還沒想清楚"]],
+    [10,"如果可以擁有一個完全屬於自己、別人進不去的秘密空間，你會希望它長什麼樣子？",[]],
+    [10,"假設有一天，你發現自己說出的每一句話都會在24小時後成真，你會怎麼調整自己說話的方式？",[]],
+    [10,"如果可以讓自己徹底不怕某一件事（不管是什麼），你會選擇不再害怕什麼？",[]],
+    [10,"假設你可以把世界上所有語言變成同一種，你覺得人與人之間會更容易理解彼此，還是反而少了什麼？",["更容易理解，隔閡會變少", "會少了什麼，每種語言都是獨特的視角", "看失去的跟得到的怎麼衡量", "沒想過這個問題"]],
+    [10,"如果可以把自己此刻正在煩惱的一件事，直接說給十年後的自己聽，你猜他會怎麼回答你？",[]],
+    [10,"假設有一天你能選擇活在任何一部電影或小說的世界觀裡度過餘生，你會選哪一個？",[]],
+    [10,"如果可以讓自己擁有「無限的勇氣」去做一件事，但只能用一次，你會用在哪裡？",[]],
+    [10,"假設整個世界的人明天都會忘記今天發生的一切，只有你記得，你會想做什麼？",[]],
+    [10,"如果可以跟自己的另一個「可能人生」版本（沒有走上現在這條路的自己）見一面，你會想問他什麼？",[]],
+
+    [11,"如果有人問你「懂你的人最重要的特質是什麼」，你會怎麼回答？",["不用解釋太多就懂","願意包容我的糟糕面","會誠實跟我說真話","讓我能放鬆做自己"]],
+    [11,"假設你正在一段關係裡覺得很累，那個累通常來自哪裡？",[]],
+    [11,"如果今天要跟一個人說一件很脆弱的事，你會比較容易對很親近的人說，還是對陌生人反而更自在？",["對親近的人更敢","對陌生人反而更自在","兩種情況都很難","兩種情況都很容易"]],
+    [11,"回想最近一次，有什麼小舉動讓你瞬間感覺到「這個人真的在乎我」？",[]],
+    [11,"如果你和在乎的人吵了一架，你會覺得那是傷害，還是必要的溝通？",["是必要的溝通","盡量能不吵就不吵","看吵架的方式","兩者都是，看那段關係"]],
+    [11,"假設友情或感情真的有保存期限，你會希望被提前告知，還是寧願不知道？",["想提前知道，好好準備","寧願不知道，活在當下","看是哪一段關係","沒想過這個問題"]],
+    [11,"在你現在的關係裡，你比較常扮演照顧別人的角色，還是被照顧的角色？",["照顧別人的角色","被照顧的角色","看跟誰在一起","兩種角色常常互換"]],
+    [11,"假設你正在跟在乎的人吵架、情緒都上來了，你會希望對方當下怎麼做？",["先冷靜聽我說完","給我一點自己的空間","主動抱抱我或牽著我","直接跟我一起把問題解決掉"]],
+    [11,"你覺得一段關係裡，「習慣」跟「熱情」哪個比較難維持？",["習慣比較難維持","熱情比較難維持","兩個一樣難","看那段關係的階段"]],
+    [11,"有沒有一次你明明很想主動聯絡對方，卻因為面子而忍住了？",[]],
+    [11,"你在關係裡比較容易先低頭道歉，還是習慣等對方先開口？",["會先低頭","習慣等對方開口","看誰理虧","看那段關係"]],
+    [11,"有沒有一句話，你很想對某個人說，卻一直沒說出口？",[]],
+    [11,"你覺得「愛」跟「喜歡」對你來說，最大的差別是什麼？",[]],
+    [11,"假設你發現在乎的人有事瞞著你，你會選擇直接問，還是等對方主動說？",["直接問清楚","等對方主動說","先旁敲側擊","看瞞著的事情有多重要"]],
+    [11,"你比較容易在關係裡表達脆弱，還是習慣把自己武裝起來？",["容易表達脆弱","習慣武裝自己","看對象","看關係的階段"]],
+    [11,"有沒有一次你以為自己已經放下了，卻在某個瞬間發現其實還沒有？",[]],
+    [11,"你覺得兩個人相處久了，會不會反而更難把心裡話說出口？",[]],
+    [11,"有沒有一種對方的小習慣，你一開始不喜歡，後來卻變得很珍惜？",[]],
+    [11,"你在關係裡比較需要「空間」，還是需要「時刻黏在一起的安全感」？",["需要自己的空間","需要黏在一起的安全感","看當下的狀態","兩者都需要，看比例"]],
+    [11,"有沒有一次你原諒了一件很難原諒的事，事後覺得值得，還是後悔？",[]],
+    [11,"你覺得一段關係要走得長久，最不能缺少的一項是什麼？",["信任","溝通","共同成長","單純喜歡對方"]],
+    [11,"有沒有一次因為誤會，差點失去一段你很在乎的關係？",[]],
+    [11,"你比較容易在關係裡「付出比較多」，還是「接受比較多」？",["付出比較多","接受比較多","盡量維持平衡","看跟誰在一起"]],
+    [11,"有沒有一種被對方對待的方式，是你發誓以後絕對不會用在別人身上的？",[]],
+    [11,"你覺得「距離」對一段關係來說，是考驗，還是能讓感情更深？",["是很大的考驗","能讓感情更深","看兩個人怎麼經營","要看距離多遠"]],
+    [11,"有沒有一次你明明在乎，卻故意表現得不在乎？",[]],
+    [11,"你比較希望在關係裡被了解，還是被崇拜？",["希望被了解","希望被崇拜","被了解比較踏實","兩者都想要一點"]],
+    [11,"你覺得一段關係裡，「被理解」跟「被陪伴」，哪一個你更渴望？",["被理解","被陪伴","兩者一樣重要","看當下最缺的是哪一個"]],
+    [11,"有沒有一次你很想聽到對方說一句話，卻一直等不到？",[]],
+    [11,"你比較容易在關係裡主動示弱，還是習慣自己扛？",["會主動示弱","習慣自己扛","看跟誰在一起","要看事情的嚴重程度"]],
+    [11,"有沒有一種相處方式，你原本覺得理所當然，後來才發現其實是對方特別包容你？",[]],
+    [11,"你覺得兩個人吵架後，比較需要先冷靜，還是趁熱把話說開？",["先各自冷靜","趁熱把話說開","看吵架的原因","看那個人的個性"]],
+    [11,"有沒有一次你在關係裡感覺特別安心，那個瞬間發生了什麼？",[]],
+    [11,"你比較害怕在關係裡「失去自我」，還是「太過獨立而疏遠對方」？",["害怕失去自我","害怕太獨立疏遠對方","兩者都會擔心","目前沒有特別的擔心"]],
+    [11,"有沒有一件事，你希望在乎的人不用你說，就能自己發現？",[]],
+    [11,"你覺得一段關係裡的「安全感」，主要是對方給的，還是自己給自己的？",["主要是對方給的","主要是自己給自己的","兩者缺一不可","還在學習怎麼給自己安全感"]],
+    [11,"有沒有一次因為對方的一個小動作，讓你重新對這段關係有了信心？",[]],
+    [11,"如果一段關係只能留下幾個重要的元素、其他都可以缺少，你會留下哪些？",["彼此信任", "願意好好溝通", "相近的價值觀", "親密感", "各自保有的空間", "一起成長的感覺"], true],
+    [11,"你在關係裡比較需要被「說出口的肯定」，還是「實際的行動證明」？",["需要聽到明確的肯定", "需要看到實際的行動", "兩者都需要，缺一不可", "看那陣子比較缺哪一種"]],
+    [11,"有沒有一次，你因為對方的一句玩笑話，心裡默默受傷了、卻沒有說出來？",[]],
+    [11,"你覺得兩個人在一起久了，「浪漫」這件事會自然消失，還是需要刻意經營？",["會自然變淡，是必經過程", "需要刻意經營，不會自己維持", "看兩個人願不願意花心思", "還沒有經歷過很長久的關係"]],
+    [11,"有沒有一種對方表達在乎你的方式，是你一開始沒發現、後來才懂的？",[]],
+    [11,"你比較容易在關係裡「假裝沒事」，還是會讓情緒明顯寫在臉上？",["容易假裝沒事，習慣先忍著", "情緒藏不住，一看就知道", "看跟誰在一起，有的人面前藏不住", "看那件事的嚴重程度"]],
+    [11,"有沒有一次你們吵完架後，是用一個很小的舉動而不是道歉，重新和好的？",[]],
+    [11,"你覺得「被在乎的人記得一個小細節」，對你來說重要嗎？那通常是什麼樣的細節？",[]],
+    [11,"你比較容易主動製造兩人之間的小驚喜、小儀式，還是覺得平淡穩定就很好？",["喜歡製造小驚喜，儀式感很重要", "平淡穩定就很好，不用刻意", "看那段時間的心情", "希望自己能多做一點，但常常忘記"]],
+    [11,"有沒有一次因為距離（不管是實際的還是心理的），讓你重新體會到自己有多在乎對方？",[]],
+    [11,"你覺得一段關係裡，「意見不合」跟「價值觀不合」，哪一種比較難跨過去？",["意見不合，磨合就好", "價值觀不合，比較根本", "看是哪個層面的不合", "還沒遇過真正難跨過去的"]],
+    [11,"有沒有一次你發現自己在關係裡，不自覺地想控制某些事，後來意識到了才調整？",[]],
+    [11,"你比較容易在關係好的時候安心享受，還是忍不住會擔心「這樣的好會不會消失」？",["會安心享受當下", "忍不住會擔心會不會消失", "看那段關係的階段", "看那陣子自己的狀態"]],
+    [11,"有沒有一種在關係裡被對方「接住」的經驗，讓你到現在想起來都很感激？",[]],
+    [11,"你覺得兩個人一起經歷過的低潮，事後回頭看，比較容易讓感情變深，還是留下疙瘩？",[]],
+    [11,"有沒有一次，你發現自己其實把對「完美關係」的想像，投射到了對方身上？",[]],
+    [11,"你比較容易因為對方的成就而替他開心，還是偶爾會有一點點不容易說出口的比較心理？",["會單純替對方開心", "偶爾會有一點點比較心理，但不會說出口", "看那件事的性質", "說真的沒認真想過這個問題"]],
+    [11,"有沒有一件很小的日常習慣，是你希望能跟在乎的人一起持續下去的？",[]],
+    [11,"你覺得自己在關係裡，比較容易先發現問題，還是常常後知後覺？",["容易先發現，敏感度比較高", "常常後知後覺，事後才意識到", "看是什麼類型的問題", "看那段關係的親密程度"]],
+    [11,"有沒有一次，你們兩個人明明沒有多說什麼，卻靠一個眼神或動作就懂了彼此？",[]],
+    [11,"你覺得一段關係如果失去了「新鮮感」，還剩下什麼會讓你想繼續走下去？",[]],
+    [11,"有沒有一次，你主動為了維繫一段關係，做出了讓自己有點委屈、但覺得值得的選擇？",[]],
+
+    [12,"如果要推薦一件作品（畫、電影、小說都算）給剛認識的朋友，讓對方第一次接觸就愣住，你會選哪個？",[]],
+    [12,"假設你要幫一件作品打分數，你會比較欣賞工整完美的，還是帶點缺陷和意外的？",["工整完美","帶點缺陷和意外","兩者要並存才耐看","沒有固定標準"]],
+    [12,"如果可以走進任何一部電影或小說的世界待一天，你會選哪一個？",[]],
+    [12,"假設同時有一場音樂會、一場畫展、一本新書發表會可以去，你會先選哪一個？",["視覺（畫展）","聲音（音樂會）","文字（新書發表會）","看當天心情，都可能"]],
+    [12,"如果有一天你可以放下工作，專心學一種創作形式，你會選哪一種？",[]],
+    [12,"假設你正在創作一個作品，你覺得那個過程對你來說，是在表達自己，還是在逃離自己？",["表達自己","逃離自己","兩者常常同時發生","我沒有在創作"]],
+    [12,"有沒有一本書或一部作品，讓你看完之後，看世界的角度悄悄變了？",[]],
+    [12,"有沒有一幅畫或一張照片，讓你光看著就會覺得心裡很安靜？",[]],
+    [12,"你比較容易被視覺上的美感動，還是被文字裡的意境感動？",["視覺上的美","文字裡的意境","聲音或音樂","都會，看那個作品"]],
+    [12,"如果可以把自己此刻的心情畫成一幅畫，你會怎麼構圖、用什麼顏色？",[]],
+    [12,"有沒有一次走進一個空間（建築、展覽、風景），讓你瞬間說不出話？",[]],
+    [12,"你覺得「美」對你來說，比較接近規則工整，還是不完美的真實？",["規則工整","不完美的真實","要看場合","兩者交融最美"]],
+    [12,"有沒有一部電影的畫面，多年後你還會不自覺想起來？",[]],
+    [12,"你比較容易被誇張華麗的美打動，還是安靜低調的美？",["誇張華麗的美","安靜低調的美","看那天心情","兩者都欣賞"]],
+    [12,"有沒有一個創作者（畫家、導演、作家、音樂人），是你會一直關注的？",[]],
+    [12,"你覺得自己有沒有能力創作出美的東西，還是比較擅長欣賞別人的作品？",["自己也會創作","比較擅長欣賞","偶爾有靈感就做","很少覺得自己有這方面天分"]],
+    [12,"有沒有一件手作的東西（不管是誰做的），因為帶著心意而讓你特別珍惜？",[]],
+    [12,"你覺得美這件事，可以被教出來，還是天生的感受力？",[]],
+    [12,"有沒有一次因為一件藝術品或一段音樂，讓你突然理解了某個一直說不清的情緒？",[]],
+    [12,"你比較喜歡光線明亮、色彩飽滿的畫面，還是低彩度、帶點陰影的氛圍？",["明亮飽滿","低彩度帶陰影","看主題","兩種都會欣賞"]],
+    [12,"有沒有一次你把一個空間佈置成自己喜歡的樣子，過程讓你特別有成就感？",[]],
+    [12,"你覺得日常生活裡，最容易被忽略卻其實很美的東西是什麼？",[]],
+    [12,"有沒有一首詩、一句歌詞，或一段文字，讓你反覆讀了很多次？",[]],
+    [12,"你會不會因為一個人品味獨特，而對這個人多留意一些？",[]],
+    [12,"你會不會特地為了欣賞某個作品，專程跑到很遠的地方？",[]],
+    [12,"有沒有一種顏色的組合，只要看到就會讓你心情變好？",[]],
+    [12,"你比較容易被「刻意設計過」的美打動，還是「渾然天成」的美打動？",["刻意設計過的美","渾然天成的美","兩者都能欣賞","很難分辨差別"]],
+    [12,"有沒有一件生活用品，因為設計得特別好，讓你用起來就覺得開心？",[]],
+    [12,"你覺得美感這件事，有沒有辦法透過後天訓練培養出來？",[]],
+    [12,"有沒有一次你被某個建築或空間的光線深深吸引？",[]],
+    [12,"你比較喜歡對稱工整的畫面，還是帶點隨機、不規則的畫面？",["對稱工整","不規則隨機","看主題和氛圍","兩種都吸引我"]],
+    [12,"有沒有一種材質（布料、木頭、金屬……）的觸感，特別能讓你感覺安心？",[]],
+    [12,"你會不會因為喜歡某個作品的美術風格，而特地去了解創作者的其他作品？",[]],
+    [12,"有沒有一次你嘗試自己創作（畫畫、寫字、拍照），過程比結果更讓你享受？",[]],
+    [12,"你覺得「醜」這個字，對你來說是很主觀的評價，還是有一些客觀標準？",[]],
+    [12,"有沒有一種聲音（不是音樂），像是雨聲、翻書聲，會讓你覺得特別療癒？",[]],
+    [12,"如果可以把自己的房間佈置成一件藝術品，你會想呈現什麼樣的氛圍？",["溫暖懷舊","極簡俐落","繽紛熱鬧","寧靜自然"]],
+    [12,"如果只能留下幾種能觸動你美感的事物、其他都拿掉，你會留下哪些？",["自然風景", "音樂", "文字或詩句", "視覺藝術（畫作、攝影等）", "建築或空間", "人與人之間的瞬間"], true],
+    [12,"你會不會特地去逛美術館或展覽，即使不特別懂藝術理論？",["會，單純享受被作品包圍的感覺", "不太會，總覺得要先做功課才敢去", "會，但通常是被朋友拉去的", "很少主動接觸這類場合"]],
+    [12,"有沒有一個很日常的物品，因為設計或造型特別美，讓你捨不得替換掉？",[]],
+    [12,"你覺得自己的字跡，有沒有反映出你的個性？",[]],
+    [12,"有沒有一部電影，讓你覺得畫面本身比劇情更讓你著迷？",[]],
+    [12,"你比較容易被「大自然的美」打動，還是被「人親手做出來的美」打動？",["大自然的美，渾然天成最動人", "人親手做的美，有溫度和心意", "兩者都會，各有各的感動", "看那天的心情比較容易被哪一種打動"]],
+    [12,"有沒有一次你去某個城市，單純因為街道或建築的樣子，就愛上了那個地方？",[]],
+    [12,"你覺得留白或安靜的部分，在一件作品裡，有沒有它自己的美？",[]],
+    [12,"有沒有一道菜的擺盤或呈現方式，讓你捨不得馬上吃下去？",[]],
+    [12,"你比較容易被完全對稱的美打動，還是帶點不對稱、意外感的美打動？",["對稱的美，穩定又舒服", "不對稱的美，意外感更迷人", "看那個作品的主題", "兩種都會欣賞"]],
+    [12,"有沒有一次，你因為別人不欣賞你喜歡的作品，而有點難過或想為它辯護？",[]],
+    [12,"你覺得數位創作（電繪、修圖、剪輯）跟傳統手作的美，帶給你的感覺一樣嗎？",[]],
+    [12,"有沒有一個小時候接觸過的藝術活動（美術課、才藝班），現在回想起來意外地影響了你的美感？",[]],
+    [12,"你會不會透過整理或佈置一個空間，來處理自己的情緒？",["會，佈置空間是我紓壓的方式", "不太會，比較少想到這個方法", "偶爾會，看那陣子的狀態", "沒特別注意過這個習慣"]],
+    [12,"有沒有一次你送禮物給別人，特別花心思在「呈現方式」上，而不只是禮物本身？",[]],
+    [12,"你覺得一件作品裡的「瑕疵」或「不完美」，有時候反而是它最打動你的地方嗎？",[]],
+    [12,"有沒有一種街頭巷尾隨處可見、卻被大家忽略的畫面，你自己覺得特別美？",[]],
+    [12,"你比較容易被安靜緩慢的作品打動，還是節奏強烈、情緒張力大的作品？",["安靜緩慢，需要細細品味", "節奏強烈，張力直接衝擊", "看那天想要哪一種感受", "兩種都能被打動"]],
+    [12,"有沒有一次你把自己的房間或某個角落，佈置成完全屬於自己風格的樣子，過程讓你很享受？",[]],
+    [12,"你會因為一個人的審美品味很像你，就更想跟他當朋友嗎？",[]],
+    [12,"有沒有一種光線（清晨、黃昏、雨天的光），是你特別著迷、會特地留意的？",[]],
+    [12,"你覺得「美」對你來說，比較容易在安靜獨處時被感受到，還是在跟人分享的當下更強烈？",["獨處時比較容易感受到", "跟人分享時感受更強烈", "兩種感受不太一樣，都珍貴", "很少特別去想這件事"]],
+
+    [13,"如果中了一筆錢，多到這輩子不用再為錢工作，你會想做什麼工作（或完全不工作）？",[]],
+    [13,"假設你要在「熱愛的事」和「擅長的事」之間選一個當正職，你現在會選哪一邊？",["熱愛的事","擅長的事","剛好是同一件事","兩者都還沒找到"]],
+    [13,"如果有一天重新遇到那個曾經很想做卻放棄的夢想，擺在你面前，你會是可惜，還是釋然？",["有點可惜","現在覺得釋然","偶爾還是會想","慶幸當初放棄了"]],
+    [13,"假設有人問你「工作對你的意義是什麼」，你會怎麼回答？",["自我實現","換取生活資源的手段","兩者都要","還在尋找答案"]],
+    [13,"如果可以立刻精通一項技能，不用練習，你會選哪一項？",[]],
+    [13,"如果要用一天來代表你理想中「成功的一天」，那一天大概會怎麼過？",[]],
+    [13,"如果十年後有人要用一句話介紹你，你希望那句話是什麼？",[]],
+    [13,"如果錢不是問題，你會想花多少時間投入現在做的工作？",["全職投入","保留一半時間","偶爾接觸就好","完全不會再做"]],
+    [13,"你覺得「被看見」跟「把事情做好」，哪一個對你來說比較重要？",["被看見","把事情做好","兩者一樣重要","看是什麼工作"]],
+    [13,"有沒有一個職業，是你小時候完全沒想過，長大後卻莫名嚮往的？",[]],
+    [13,"假設你可以立刻成為某個領域的頂尖高手，你會選哪個領域？",[]],
+    [13,"你比較嚮往穩定但重複的工作，還是不穩定但充滿變化的工作？",["穩定但重複","不穩定但有變化","希望兩者兼顧","還在摸索理想的平衡"]],
+    [13,"有沒有一位前輩或老師，深深影響了你現在對工作的想法？",[]],
+    [13,"你覺得「做喜歡的事」跟「賺得到錢」，這兩件事對你來說衝突大嗎？",["常常感覺衝突","目前還算能兼顧","已經找到平衡","還在努力調整中"]],
+    [13,"假設十年後回頭看，你希望那時候的自己在做什麼樣的工作？",[]],
+    [13,"你有沒有想過完全轉行，去做一件跟現在完全不一樣的事？",[]],
+    [13,"你覺得成就感對你來說，比較常來自「被肯定」，還是「自己知道做得好」？",["被別人肯定","自己知道就夠了","兩者都需要","看那件事的重要性"]],
+    [13,"如果可以擁有一個「隱藏副業」，完全不用擔心收入，你會想做什麼？",[]],
+    [13,"你希望自己的工作，未來能不能留下一些超越自己的影響？",[]],
+    [13,"有沒有一次你在工作上遇到瓶頸，後來是怎麼撐過去的？",[]],
+    [13,"你比較羨慕「很早就知道自己要什麼」的人，還是覺得「慢慢摸索」也很好？",["羨慕很早就確定方向的人","覺得慢慢摸索也不錯","看階段而定","兩種各有各的辛苦"]],
+    [13,"如果可以立刻獲得一項能大幅提升工作效率的技能，你會選哪一項？",[]],
+    [13,"你覺得退休後的自己，理想的生活狀態會是什麼樣子？",[]],
+    [13,"有沒有一個你放棄過的夢想，偶爾還是會想「如果當初繼續走下去會怎樣」？",[]],
+    [13,"你覺得「工作」跟「志業」對你來說，是同一件事，還是完全分開？",["希望是同一件事","分開比較健康","目前是分開的，正在努力靠近","還沒想清楚"]],
+    [13,"有沒有一項技能，你希望花時間好好練到專業等級？",[]],
+    [13,"你比較希望自己的工作被記住，還是希望工作只是生活的一部分、不用被特別記住？",["希望被記住","工作是生活的一部分就好","看是什麼樣的工作","還沒想過這個問題"]],
+    [13,"假設可以立刻擁有一間屬於自己的店或工作室，你會想開什麼樣的？",[]],
+    [13,"你覺得自己現在的工作，五年後還會是同一份嗎？",[]],
+    [13,"有沒有一次工作上的挫折，讓你重新思考自己要的是什麼？",[]],
+    [13,"你比較享受帶領團隊完成一件事，還是自己一個人專心把事情做好？",["喜歡帶領團隊","喜歡自己專心做","看那件事的性質","兩種都想嘗試"]],
+    [13,"如果可以擁有一份完全不需要對外證明什麼的工作，你會想做什麼？",[]],
+    [13,"你覺得「熱情」對工作來說，是一開始就要有，還是可以慢慢培養出來的？",["一開始就要有","可以慢慢培養","要看是什麼類型的工作","兩者都需要一點"]],
+    [13,"有沒有一個你欽佩的職人或專業人士，讓你想成為那樣的人？",[]],
+    [13,"你希望自己在工作上留下的名聲，是「很厲害」，還是「很值得信任」？",["很厲害","很值得信任","兩者一樣重要","希望被記住的是別的特質"]],
+    [13,"假設可以立刻獲得同業的認可，你最想在哪個方面被看見？",[]],
+    [13,"你覺得理想的工作生活比例，應該是工作優先，還是生活優先？",["工作優先一點","生活優先一點","盡量對半","看人生的階段而定"]],
+    [13,"如果選擇工作只能考慮其中幾個條件、其他都不列入考量，你會留下哪些？",["穩定的收入", "有成就感", "能發揮專長", "彈性的時間", "良好的人際氛圍", "能持續學習成長"], true],
+    [13,"你比較享受在一個熟悉、有安全感的團隊裡工作，還是喜歡常常接觸新的人和挑戰？",["熟悉的團隊比較安心", "喜歡常常接觸新挑戰", "看那份工作的性質", "希望兩者都能兼顧"]],
+    [13,"有沒有一次工作上得到的稱讚，讓你意外地比想像中更在意？",[]],
+    [13,"你覺得自己面對工作上的批評指教，比較容易虛心接受，還是容易先有情緒反應？",["比較容易虛心接受", "會先有點情緒，之後才能消化", "看是誰給的意見", "要看那天的心理狀態"]],
+    [13,"有沒有一個跟你工作領域完全無關的興趣，你其實私下投入得很認真？",[]],
+    [13,"你比較希望工作上的成果被具體看見，還是更在意過程中自己有沒有成長？",["希望成果被看見，那是肯定", "更在意自己有沒有成長", "兩者一樣重要", "看是什麼樣的工作內容"]],
+    [13,"有沒有一位曾經帶過你、指導過你的人，讓你到現在都很感激？",[]],
+    [13,"你覺得「準時下班」對你來說，是理所當然，還是常常覺得有點愧疚？",["理所當然，工作歸工作", "會有點愧疚，覺得沒做完", "看那份工作的文化", "看那陣子事情多不多"]],
+    [13,"有沒有一次你因為害怕自己「其實沒那麼厲害」，而不敢承接一個機會？",[]],
+    [13,"你比較喜歡在固定的工作場所工作，還是喜歡可以自由選擇地點的彈性？",["固定場所比較有安全感", "喜歡自由選擇地點的彈性", "看那份工作的性質", "還沒真正體驗過彈性工作"]],
+    [13,"有沒有一項技能，是你出社會後才發現自己意外擅長的？",[]],
+    [13,"你會不會擔心，自己現在的工作跟身邊同齡的人比起來，走得比較慢？",["會，偶爾會有這種焦慮", "不太會，我有自己的步調", "看跟誰比較，有時候會有時候不會", "以前會，現在比較看開了"]],
+    [13,"有沒有一次因為工作太累，讓你重新思考自己想要的生活方式？",[]],
+    [13,"你覺得「年紀」對於學習一項全新的技能，會是限制，還是完全不影響？",["會有點限制，體力和時間都不同了", "完全不影響，任何時候開始都可以", "看是什麼樣的技能", "還沒真正想學什麼新東西"]],
+    [13,"有沒有一個你很想嘗試、卻因為現實考量一直沒踏出去的職涯轉彎？",[]],
+    [13,"你比較容易因為「做完一件事」而有成就感，還是需要「別人明確肯定」才會覺得踏實？",["做完就有成就感，不太需要別人肯定", "需要明確被肯定，才會覺得踏實", "兩者都需要", "看那件事對我的意義有多大"]],
+    [13,"有沒有一次你在工作以外的地方（社團、志工、興趣圈），意外找到了成就感？",[]],
+    [13,"你覺得家人對你職業的期待，跟你自己真正想要的，一致嗎？",[]],
+    [13,"有沒有一次你因為堅持自己的做事方式，跟團隊或主管有過摩擦？",[]],
+    [13,"你比較享受從零開始建立一件事，還是接手已經上軌道的事情、把它做得更好？",["喜歡從零開始，創造感最迷人", "喜歡接手優化，穩紮穩打", "兩種都想嘗試", "看那件事的規模而定"]],
+    [13,"有沒有一個跟你完全不同領域的人，他的工作態度讓你很佩服？",[]],
+    [13,"你覺得自己現在對工作的態度，跟剛出社會時比起來，變得更務實，還是更有理想？",["更務實了，現實會磨人", "還是保有當初的理想", "務實跟理想找到了新的平衡", "還在摸索中"]],
+    [14,"如果有人問你「你對金錢真正的不安全感來自哪裡」，你會怎麼回答？",[]],
+    [14,"假設你跟很在乎的人，一個人存錢很拚命、一個人及時行樂，你們要怎麼一起生活？",[]],
+    [14,"你覺得自己現在賺錢的方式，比較是為了「安全感」，還是為了「自由」？",["為了安全感，怕沒有退路", "為了自由，能做想做的事", "兩者都要，缺一不可", "還沒想清楚，先賺了再說"]],
+    [14,"小時候家裡對錢的態度（緊繃、大方、很少提），你覺得對現在的你影響有多大？",[]],
+    [14,"如果你發現自己開始用「花錢」來處理情緒（壓力大就買東西），你會怎麼看待這件事？",[]],
+    [14,"假設你跟另一半（或很親密的朋友）收入差很多，你覺得誰該多出、怎麼出，才不會有人覺得委屈？",[]],
+    [14,"你比較怕「窮到被看不起」，還是「有錢卻變成自己討厭的樣子」？",["怕被看不起", "怕變成討厭的自己", "兩個都怕", "都不太怕"]],
+    [14,"有沒有一次，你因為捨不得花錢，錯過了一個其實很想要的東西或經驗？",[]],
+    [14,"你覺得「月光」跟「存到焦慮」，你比較靠近哪一種？中間有沒有一個你想要的平衡點？",["容易月光", "存到會焦慮", "中間找平衡", "看那個月狀況"]],
+    [14,"假設你已經有足夠的錢過一輩子，你會第一個放棄現在生活裡的哪個部分？",[]],
+    [14,"你會不會刻意不讓在乎的人知道自己真實的收入或存款？為什麼？",[]],
+    [14,"你覺得「用錢衡量一個人的價值」這件事，你自己有沒有偷偷這樣做過？",[]],
+    [14,"如果要形容你家從小對「談錢」這件事的氛圍，你會怎麼形容？（避諱、坦誠、緊張、隨便……）",[]],
+    [14,"你比較容易因為「划算」而買不需要的東西，還是因為「喜歡」而買超出預算的東西？",["划算陷阱體質", "喜歡至上，預算是參考", "兩種都會中招", "我對這兩種都有抵抗力"]],
+    [14,"有沒有一種花錢方式，是你長大後才理解「這其實是在投資自己」？",[]],
+    [14,"假設你跟伴侶或好友在金錢上發生過一次不愉快，那次讓你學到什麼？",[]],
+    [14,"你覺得「請客」這件事，對你來說代表什麼？（面子、心意、習慣、負擔……）",[]],
+    [14,"如果你的收入突然砍半，你覺得自己心裡最先崩潰的會是哪一塊？",[]],
+    [14,"你比較容易羨慕「很會賺錢」的人，還是「很會生活」的人？",["很會賺錢的人", "很會生活的人", "兩種都羨慕", "很少羨慕別人"]],
+    [14,"你有沒有一次，明明手頭不寬裕，還是硬要請客或出手大方，只為了不想讓人看出來？",[]],
+    [14,"假設金錢完全不是問題，你猜自己會不會變得更慷慨，還是其實沒差？",[]],
+    [14,"你覺得自己對「欠人錢」或「欠人情」，哪一種比較有壓力？",["欠錢比較有壓力", "欠人情比較有壓力", "兩個都很有壓力", "都還好，欠就欠了"]],
+    [14,"有沒有一件很貴的東西，你買下去之後才發現，你要的其實不是那個東西本身？",[]],
+    [14,"你會不會用「存款數字」來偷偷評斷自己過得好不好？",[]],
+    [14,"假設你跟很要好的朋友，其中一個人突然變得很有錢，你覺得這段關係最先受影響的會是什麼？",[]],
+    [14,"你比較容易對「自己」大方，還是對「在乎的人」大方？",["對自己大方", "對在乎的人大方", "兩者都捨得", "兩者都有點小氣，先說好"]],
+    [14,"你有沒有想過，如果完全不用為錢煩惱，你會變成一個怎樣的人？跟現在的你會差很多嗎？",[]],
+    [14,"你覺得「貧窮」對一個人心理最長遠的影響，會是什麼？",[]],
+    [14,"有沒有一次，你為了幫助某個人，做了一個在金錢上其實不太理性的決定？",[]],
+    [14,"你比較認同「有錢人更容易快樂」，還是覺得快樂跟錢的關係沒那麼直接？",[]],
+    [14,"如果金錢只能用來滿足其中幾種需求、其他都先放一邊，你會留下哪些？",["安全感與保障", "自由選擇的權利", "能幫助在乎的人", "體驗與享受生活", "學習與成長的機會", "留給未來的準備"], true],
+    [14,"你會不會因為想對某個人好，花錢花得比對自己還大方？",[]],
+    [14,"你比較容易因為「省了一筆錢」而開心，還是因為「花錢買到好東西」而開心？",["省錢比較有成就感", "花對地方比較開心", "兩種都會讓我開心", "看那筆錢的金額大小"]],
+    [14,"有沒有一次因為一時衝動花了錢，事後完全不後悔？",[]],
+    [14,"你覺得自己現在的金錢觀，比較像是從家人身上學來的，還是刻意活成不一樣的樣子？",[]],
+    [14,"你比較願意花錢在「體驗」（旅行、活動、學習），還是「實體的東西」上？",["體驗優先，回憶比東西珍貴", "實體的東西，摸得到比較踏實", "兩者都會花，看那陣子的心情", "看那筆預算能負擔哪一種"]],
+    [14,"跟朋友分帳時，你比較容易主動計較清楚，還是懶得算、差不多就好？",["會主動算清楚，公平最重要", "懶得算，差不多就好", "看是跟誰、金額多大", "希望對方主動提，我不好意思說"]],
+    [14,"有沒有一次你因為捨得花一筆錢投資自己，後來覺得非常值得？",[]],
+    [14,"你會不會特地比價、找優惠，即使要花不少時間才能省下一點點錢？",["會，省下來的都是賺到", "不太會，時間比較珍貴", "看那筆金額大不大", "看那陣子有沒有空"]],
+    [14,"你覺得「大方」跟「不會理財」之間，界線在哪裡？",[]],
+    [14,"有沒有一次你因為捐款或幫助別人，事後那種感覺比自己花錢買東西還開心？",[]],
+    [14,"你會不會習慣性地把「想要」跟「需要」分得很清楚，才決定要不要花這筆錢？",["會，先問自己是想要還需要", "不太會，喜歡就買了再說", "看那筆金額的大小", "看那陣子的心情，標準會鬆一點"]],
+    [14,"有沒有一次你發現自己因為壓力大而花錢，事後才意識到那其實是在紓壓？",[]],
+    [14,"你比較容易對「花在別人身上的錢」感到值得，還是「花在自己身上的錢」？",["花在別人身上更值得", "花在自己身上更值得", "兩者一樣值得", "看那筆錢背後的意義"]],
+    [14,"你會不會定期檢查自己有哪些訂閱服務或小額扣款，還是常常忘記自己訂閱了什麼？",["會定期檢查，掌控每一筆錢", "常常忘記，發現時已經扣了好幾個月", "偶爾想到才會查", "訂閱的東西不多，比較好掌握"]],
+    [14,"你覺得談論金錢這件事，在你跟朋友之間，是很自然的話題，還是有點尷尬？",[]],
+    [14,"有沒有一次你為了一個未來的目標存錢，過程讓你意外地享受，而不是覺得痛苦？",[]],
+    [14,"你比較容易羨慕「花錢很有品味」的人，還是「很會存錢」的人？",["很有品味的人，花得漂亮也是本事", "很會存錢的人，自律讓人佩服", "兩種都佩服", "很少去羨慕別人這方面"]],
+    [14,"你會不會因為某個東西「打折」，而買下原本沒有很想要的東西？",["會，折扣很難抵抗", "不太會，沒有需要就不會買", "看折扣有多誘人", "常常事後後悔，但當下擋不住"]],
+    [14,"你覺得自己對「未來的財務規劃」，是很有想法、按部就班，還是走一步算一步？",[]],
+    [14,"有沒有一次你把一筆原本要花在自己身上的錢，臨時改成花在幫助別人？",[]],
+    [14,"你比較容易因為「賺到錢」而快樂，還是因為「花錢讓別人快樂」而快樂？",["賺到錢本身就很有成就感", "看到別人因為我花的錢而開心，更快樂", "兩種快樂不太一樣，都需要", "很少想過這個問題"]],
+    [14,"你覺得自己面對「未知的財務風險」（生病、失業、意外），心裡準備得夠不夠？",[]],
+    [14,"有沒有一次你在異地旅行時，因為太在意價格，而錯過了一個難得的體驗？",[]],
+    [14,"你會不會刻意避免讓「錢」影響一段感情或友情，即使有時候很難完全做到？",[]],
+    [14,"你覺得「有沒有錢」跟「一個人快不快樂」，這兩件事在你身邊的人身上，是成正比的嗎？",[]],
+    [14,"有沒有一次你發現自己對「便宜」這個詞的敏感度，跟小時候家裡的環境有關？",[]],
+    [14,"你比較容易把多出來的錢立刻花掉，還是習慣先存起來、之後再決定怎麼用？",["立刻花掉，及時享受", "先存起來，之後再說", "看那筆錢的來源和金額", "會先存一部分，剩下的花掉"]],
+    [14,"如果可以送給在乎的人一份完全不考慮價格、只考慮心意的禮物，你會想送什麼？",[]],
+    [15,"你覺得自己處理衝突的方式，比較像是從家裡學來的，還是刻意活成家裡的反面？",[]],
+    [15,"小時候在家裡，你比較常扮演「照顧氣氛的人」，還是「被照顧的人」？",["照顧氣氛的人", "被照顧的人", "看誰在家、角色會換", "家裡氣氛一直都還算平穩"]],
+    [15,"有沒有一句家人常說的話，你長大後才發現自己也常常這樣說？",[]],
+    [15,"你覺得自己跟家人之間，最難開口聊的話題是什麼？",[]],
+    [15,"如果要用一種天氣形容你家庭的氛圍，你會怎麼形容？",[]],
+    [15,"你覺得自己成年後，跟家人的關係比小時候更靠近，還是更有距離？",["更靠近了", "更有距離了", "忽近忽遠，不太固定", "差不多，沒什麼改變"]],
+    [15,"有沒有一個你家裡「心照不宣、不會拿出來講」的話題？",[]],
+    [15,"你覺得自己在感情或友情裡遇到的某些反覆出現的模式，會不會跟原生家庭有關？",[]],
+    [15,"小時候，家裡誰的情緒你最會提前「讀空氣」去察覺？",[]],
+    [15,"你覺得自己現在的「愛的表達方式」，跟家裡教你的一樣，還是完全不一樣？",["幾乎一樣，很自然沿用", "完全不一樣，是我自己練出來的", "一半一半", "還在摸索自己的方式"]],
+    [15,"有沒有一件事，是你成年後才慢慢理解「原來那時候家人是那樣想的」？",[]],
+    [15,"你會不會覺得，自己在某些時刻，活成了小時候發誓「絕對不要變成」的那個樣子？",[]],
+    [15,"你覺得自己家裡，誰是那個「默默付出最多、卻最少被感謝」的人？",[]],
+    [15,"如果可以重新設計一次自己的成長環境，你會想保留哪一部分、改掉哪一部分？",[]],
+    [15,"你覺得「家人」對你來說，是無條件的支持，還是也夾雜著很多說不出口的期待？",["幾乎是無條件支持", "夾雜不少期待和壓力", "兩者都有，看是哪件事", "看是哪個家人"]],
+    [15,"有沒有一次，你終於對家人說出一句憋了很久的話？後來怎麼樣了？",[]],
+    [15,"你覺得自己現在對「家」的定義，跟小時候比起來，有沒有變得不一樣？",[]],
+    [15,"小時候家裡發生衝突時，你記得自己通常站在誰那邊，還是誰都不站？",[]],
+    [15,"你會不會覺得，自己對家人的某些行為，其實比對外人更沒耐心？為什麼？",[]],
+    [15,"你覺得自己身上，哪個習慣或反應，一看就知道是「家裡的影子」？",[]],
+    [15,"有沒有一個你很想從家人那裡得到、卻始終沒得到的東西（不一定是具體的）？",[]],
+    [15,"你覺得長大後，你跟家人之間的「界線」，是變得更清楚，還是還是很模糊？",["變得更清楚了", "還是很模糊", "正在努力練習", "從來沒想過這件事"]],
+    [15,"如果可以讓家人看見你現在真實的樣子（不是他們印象中的你），你希望他們先看到哪一部分？",[]],
+    [15,"你覺得自己成為現在這個大人，家庭給你的影響，弊大於利，還是利大於弊？",[]],
+    [15,"有沒有一次，你發現自己在教訓或安慰別人時，說出的話跟家人講過的一模一樣？",[]],
+    [15,"你會不會刻意在朋友或伴侶面前，隱藏跟家人相處時的某一面自己？",[]],
+    [15,"你覺得自己這一生，有沒有可能真的「活出跟家庭不一樣的版本」，還是某種程度注定會重複？",[]],
+    [15,"有沒有一句話，你一直想跟家人說，但覺得說出口會很尷尬或很難？",[]],
+    [15,"你覺得「孝順」這個詞，對你來說，是心甘情願，還是帶著一點壓力？",["心甘情願", "帶著一點壓力", "看是哪件事", "很少去想這個詞"]],
+    [15,"你覺得自己現在最想從家人那裡得到的，是理解、認可，還是單純多一點陪伴？",["理解", "認可", "多一點陪伴", "其實我什麼都不缺"]],
+    [15,"如果只能從原生家庭那裡留下幾種影響、其他都可以放下，你會留下哪些？",["面對困難的韌性", "表達情感的方式", "對家的定義", "價值觀與原則", "跟人相處的習慣", "其實很難分開哪些是好的影響"], true],
+    [15,"你家裡有沒有一個每年都會重複的小傳統或儀式，讓你覺得那才是真正的過節？",[]],
+    [15,"你覺得自己家裡的幽默感（如果有的話），跟你現在跟朋友相處的幽默感，像不像？",[]],
+    [15,"有沒有一件關於家人的事，是你長大後才知道、當下讓你很驚訝的？",[]],
+    [15,"你小時候會不會被拿來跟兄弟姊妹或親戚比較？那種感覺你現在還記得嗎？",[]],
+    [15,"你覺得看著父母（或養育你的人）漸漸變老，對你來說是什麼樣的心情？",[]],
+    [15,"你家人之間，比較習慣用電話聯絡，還是用文字訊息？這個習慣讓你覺得自在嗎？",["習慣打電話，比較有溫度", "習慣傳訊息，比較不會有壓力", "看是跟誰聯絡", "很少主動聯絡，習慣被動"]],
+    [15,"有沒有一次過節，你選擇不回家、留在自己的生活裡，那個決定讓你有什麼感受？",[]],
+    [15,"你覺得家人對你人生選擇的期待，這幾年有沒有變得比較能放手？",[]],
+    [15,"有沒有一次你在外面被稱讚，是因為身上帶著家人教你的某個特質？",[]],
+    [15,"你家裡吵完架之後，通常是怎麼「和好」的？（道歉、假裝沒事、送個東西……）",[]],
+    [15,"你覺得自己在感情裡表達愛的方式，跟家人愛你的方式，是同一種語言嗎？",["幾乎一樣，很自然延續", "完全不一樣，得自己重新學", "有一部分像，一部分不像", "還在觀察和學習中"]],
+    [15,"有沒有一件家裡傳下來的物品，對你來說有特別的意義？",[]],
+    [15,"你覺得自己現在照顧自己的方式，有沒有受到小時候被照顧的方式影響？",[]],
+    [15,"家裡有沒有一個大家常常提起的「傳說故事」或趣事，一講再講都不膩？",[]],
+    [15,"你比較容易在家人面前展現脆弱的一面，還是習慣在外人面前才願意鬆懈？",["在家人面前比較容易脆弱", "反而在外人面前更容易放鬆", "看是哪個家人", "在誰面前都不太容易展現脆弱"]],
+    [15,"你覺得跟家人保持一點地理上的距離，對你們的關係來說，是好事還是有點遺憾？",["是好事，距離讓關係更舒服", "有點遺憾，希望能更常見面", "看那陣子彼此的狀態", "還沒認真想過這個問題"]],
+    [15,"有沒有一次你主動關心家人的方式，其實是你以前希望被關心的方式？",[]],
+    [15,"你覺得家裡誰最了解真正的你？還是其實沒有人真正了解？",[]],
+    [15,"有沒有一次因為家人的支持，讓你撐過了一段很難熬的時期？",[]],
+    [15,"你覺得自己現在建立的生活圈或朋友圈，某種程度上是不是在補足原生家庭沒給你的東西？",[]],
+    [15,"你比較容易記得家人做過讓你感激的事，還是記得讓你受傷的事？",["比較容易記得感激的事", "比較容易記得受傷的事", "兩種都記得很清楚", "隨著時間慢慢在淡化"]],
+    [15,"有沒有一句家人常掛在嘴邊的口頭禪，你自己有時候也會不自覺說出來？",[]],
+    [15,"你覺得自己在做重大決定時，會不會不自覺地想到家人會怎麼看？",[]],
+    [15,"有沒有一次你發現，自己其實比想像中更渴望得到家人的肯定？",[]],
+    [15,"你覺得長大後才自己組成的「生活圈」（朋友、伴侶），跟原生家庭給你的感覺，哪一個更接近「家」？",["原生家庭還是最接近家的感覺", "後來的生活圈更接近家的感覺", "兩者加起來才完整", "還在尋找那種感覺"]],
+    [15,"有沒有一件事，你曾經很想改變家人的想法，後來選擇了尊重、不再堅持？",[]],
+    [15,"你覺得自己這一生，有沒有一句話，是特別想聽某位家人親口對你說的？",[]],
+    [15,"你會不會覺得，隨著年紀增長，你反而越來越理解當年家人做的某些選擇？",[]],
+    [16,"你比較容易在關係裡「先妥協」，還是「先講清楚自己的底線」？",["先妥協，之後再說", "先講清楚底線", "看跟誰、看什麼事", "很少想清楚就先妥協了"]],
+    [16,"有沒有一次，你明明很不舒服，卻因為怕破壞氣氛而沒說出來？",[]],
+    [16,"你覺得「拒絕別人」對你來說難不難？最難拒絕的通常是哪一種要求？",[]],
+    [16,"如果有人一直越界（不管是言語還是行為），你通常會直接說，還是慢慢疏遠？",["直接說出我的不舒服", "慢慢疏遠，不想正面衝突", "先觀察，忍到極限才爆發", "看那個人對我重不重要"]],
+    [16,"你有沒有一次事後很後悔「當下沒有為自己說話」的經驗？",[]],
+    [16,"你覺得自己吵架時，比較容易「說出真心話」，還是「說出傷人的話」？",["容易說出真心話", "容易說出傷人的話", "兩者都會，看多生氣", "我很少真的吵起來"]],
+    [16,"有沒有一種「界線」，是你花了很久才學會替自己劃出來的？",[]],
+    [16,"你覺得跟人起衝突之後，你需要多久才能真正恢復平靜？",[]],
+    [16,"你比較容易因為「不想讓對方失望」，而答應自己其實不願意的事？",[]],
+    [16,"如果在乎的人一直重複做讓你不舒服的事，你會選擇繼續忍耐、明說，還是漸漸降低期待？",["繼續忍耐，觀察看看", "直接明說我的感受", "漸漸降低期待，保護自己", "看事情的嚴重程度"]],
+    [16,"你覺得自己是那種「吵完架就忘了」的人，還是「會記很久」的人？",["吵完就忘，過去就過去", "會記很久，反覆想", "看那件事傷到我多深", "看是被誰弄的"]],
+    [16,"有沒有一次，你為了避免衝突，選擇了「表面和平」，但心裡其實一直不舒服？",[]],
+    [16,"你覺得「生氣」對你來說，是一種需要藏起來的情緒，還是可以自然表達的？",["盡量藏起來", "可以自然表達", "看場合和對象", "看是對誰生氣"]],
+    [16,"有沒有一個人，你花了很長時間才終於學會對他說「不」？",[]],
+    [16,"你會不會覺得，自己對陌生人比對親近的人更容易劃清界線？",[]],
+    [16,"如果朋友一直佔用你的時間或精力，讓你覺得疲憊，你會怎麼開口？",[]],
+    [16,"你覺得「衝突」一定是壞事嗎，還是有時候反而讓關係更靠近？",[]],
+    [16,"有沒有一次，你為了保護自己，主動結束了一段讓你消耗的關係（友情、感情都算）？",[]],
+    [16,"你比較害怕「讓別人生氣」，還是「讓自己委屈」？",["害怕讓別人生氣", "害怕讓自己委屈", "兩個都怕", "現在比較不怕了"]],
+    [16,"你覺得自己現在劃界線的能力，跟幾年前比起來，有沒有變強？",[]],
+    [16,"有沒有一種要求，不管是誰提出，你都會直接拒絕、完全沒有猶豫？",[]],
+    [16,"你會不會因為太習慣照顧別人的感受，反而忘記照顧自己的？",[]],
+    [16,"如果兩個人吵架，一個沉默、一個想馬上講清楚，你會希望對方怎麼配合你？",["給我一點時間冷靜再談", "希望能馬上講清楚", "看那天彼此的狀態", "兩種方式都能接受"]],
+    [16,"你覺得「堅持自己的立場」跟「固執」，那條界線在哪裡？",[]],
+    [16,"有沒有一次，你事後才發現自己當下的「退讓」，其實是不甘願的？",[]],
+    [16,"你比較容易在關係一開始就講清楚界線，還是等到真的被踩線才反應？",["一開始就講清楚", "等被踩線才反應", "慢慢在相處中調整", "很少特別想過這件事"]],
+    [16,"你覺得一段關係裡，兩個人吵架的「方式」，比吵架的「內容」更重要嗎？",[]],
+    [16,"有沒有一個你一直想設立、卻始終沒有勇氣說出口的界線？",[]],
+    [16,"你會不會因為害怕被討厭，而很少真正表達不同意見？",[]],
+    [16,"你覺得，真正在乎你的人，會不會反而更能接住你設下的界線？",[]],
+    [16,"如果只能留下幾種保護自己情緒的方式、其他都拿掉，你會留下哪些？",["直接說出感受", "先讓自己冷靜再回應", "適時拒絕或說不", "找信任的人聊聊", "給自己一些獨處時間", "把感受寫下來整理"], true],
+    [16,"你會不會因為看不下去某個群組訊息一直響，乾脆直接靜音或退出？",["會，該斷就斷，保護自己的專注力", "不太會，退出感覺不太好意思", "看是什麼樣的群組", "會先靜音觀察，很少真的退出"]],
+    [16,"你比較容易對「別人的情緒」感同身受到自己也跟著低落，還是能保持一點距離？",["很容易被感染，別人難過我也難過", "能保持一點距離，情緒不容易被牽動", "看跟那個人的關係多親近", "看那陣子自己的狀態穩不穩"]],
+    [16,"有沒有一次你答應了一個你其實沒有心力去做的請求，事後覺得有點委屈自己？",[]],
+    [16,"你覺得自己對「陌生人給的意見或評論」，比較容易放在心上，還是很快就能過濾掉？",["容易放在心上，會反覆想", "很快就能過濾，不太受影響", "看那個評論說中了什麼", "看那天心情夠不夠穩"]],
+    [16,"你會不會給自己設立「今天不想聊這件事」的界線，並且真的說出口？",[]],
+    [16,"有沒有一次你發現，自己花了太多力氣在照顧別人的情緒，卻沒人問過你過得好不好？",[]],
+    [16,"你比較容易對「熟人」還是「陌生人」更難拒絕請求？",["對熟人更難拒絕，人情壓力大", "對陌生人更難拒絕，不好意思當面說不", "兩種都不容易", "現在兩種都比較能拒絕了"]],
+    [16,"你會不會刻意保留一段獨處的時間，不讓任何人打擾，即使身邊的人可能會不理解？",["會，那是我不能妥協的時間", "不太會，很難拒絕別人的邀約", "會盡量爭取，但常常被打斷", "還在學怎麼爭取這樣的時間"]],
+    [16,"有沒有一次你因為「不想讓場面尷尬」，而假裝同意了自己其實不認同的事？",[]],
+    [16,"你覺得自己在跟上司、長輩這類「有權力落差」的關係裡，設界線的難度，跟平輩比起來差多少？",[]],
+    [16,"有沒有一次你察覺到，某個人一直用讓你愧疚的方式，讓你答應他的要求？",[]],
+    [16,"你比較容易在吵架後很快就想找對方談，還是需要獨處消化一陣子才能開口？",["很快就想找對方談清楚", "需要自己先消化一陣子", "看那次衝突的嚴重程度", "看是跟誰吵，方式不太一樣"]],
+    [16,"你會不會因為擔心被貼上「難搞」的標籤，而不敢明確地說出自己的界線？",[]],
+    [16,"有沒有一次，你對自己「不夠好」的念頭，其實比別人對你的批評還要嚴厲？",[]],
+    [16,"你覺得「劃界線」跟「冷漠」，這兩者的差別，你分得清楚嗎？",[]],
+    [16,"有沒有一次你分享了一件私事後，後來覺得後悔、希望自己沒有說出口？",[]],
+    [16,"你比較容易對自己溫柔，還是常常在心裡對自己說一些很嚴厲的話？",["對自己算溫柔，會體諒自己", "常常對自己很嚴厲，標準很高", "看是哪個部分的自己", "正在練習對自己更溫柔一點"]],
+    [16,"你會不會發現，自己在某段關係裡，已經習慣把別人的需求排在自己前面到失衡的程度？",[]],
+    [16,"有沒有一次你成功地為自己劃了一條界線，事後覺得非常值得，即使當下有點難開口？",[]],
+    [16,"你比較容易因為「怕對方生氣」而退讓，還是因為「怕自己後悔」而堅持？",["怕對方生氣，容易先退讓", "怕自己後悔，會盡量堅持立場", "看那件事對我重不重要", "看是跟誰的關係"]],
+    [16,"你會不會因為一整天都在照顧別人的情緒，晚上一個人的時候特別想放空、什麼都不想面對？",[]],
+    [16,"你覺得自己現在比較能分辨「這是我的情緒」還是「我不小心接收了別人的情緒」嗎？",[]],
+    [16,"有沒有一次，你因為對方沒有尊重你先前設下的界線，而選擇再次明確地重申一次？",[]],
+    [16,"你比較容易在一段新關係剛開始時就設好界線，還是通常會等關係熟了之後才慢慢調整？",["剛開始就設好，先講清楚比較安心", "熟了之後才慢慢調整", "看跟對方的相處感覺", "常常沒想過要先設界線"]],
+    [16,"有沒有一種「善意的建議」，其實讓你覺得有點被冒犯，卻不知道怎麼表達？",[]],
+    [16,"你會不會發現，自己劃出界線之後，反而更喜歡跟那個人相處了？",[]],
+    [16,"你覺得自己現在對「情緒界線」的意識，是這幾年才慢慢建立起來的，還是一直都有？",["這幾年才慢慢建立起來", "一直都有，算是天生的", "還在建立的過程中", "老實說還沒有很清楚的意識"]],
+    [16,"如果要對正在學著設立界線的自己說一句鼓勵的話，你會想說什麼？",[]],
+  ];
+
+  var MOOD_WORDS = ["躲一下也沒關係","有點低落","偏灰灰的","普普通通","還算平穩","暖暖的","輕快","閃閃發光","飽滿有勁","幸福洋溢"];
+  var MOOD_EMOJI = ["🙈","😔","😕","😐","🙂","🥰","😄","✨","💪","🥹"];
+  var MOOD_KEY = "soulwheel_lastmood";
+
+  function $(id){return document.getElementById(id);}
+  function el(tag, cls){var e=document.createElement(tag); if(cls) e.className=cls; return e;}
+  function fmtTime(ts){
+    var d = new Date(ts);
+    return d.toLocaleDateString("zh-TW") + " " + d.toLocaleTimeString("zh-TW",{hour:"2-digit",minute:"2-digit"});
+  }
+  function ls_get(key, fallback){
+    try{ var v = localStorage.getItem(key); return v===null ? fallback : JSON.parse(v); }catch(e){ return fallback; }
+  }
+  function ls_set(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){} }
+
+  var myNameInput = $("myName");
+  myNameInput.value = ls_get("soulwheel_name","");
+  myNameInput.addEventListener("input", function(){ ls_set("soulwheel_name", myNameInput.value); });
+  function myName(){ return (myNameInput.value||"").trim() || "我"; }
+
+  function myClientId(){
+    var id = ls_get("soulwheel_clientid", null);
+    if(!id){ id = "c"+Date.now().toString(36)+Math.random().toString(36).slice(2,8); ls_set("soulwheel_clientid", id); }
+    return id;
+  }
+
+  // ---------- 輪盤繪製 ----------
+  var NS = "http://www.w3.org/2000/svg";
+  var wheelGroup = $("wheelGroup");
+  var CX=160, CY=160, R=140, LABEL_R=96;
+  function polar(angleDeg, radius){
+    var rad = angleDeg*Math.PI/180;
+    return { x: CX + radius*Math.sin(rad), y: CY - radius*Math.cos(rad) };
+  }
+  (function buildWheel(){
+    var n = CATS.length, seg = 360/n;
+    for(var i=0;i<n;i++){
+      var a0=i*seg, a1=(i+1)*seg;
+      var p0=polar(a0,R), p1=polar(a1,R);
+      var path = document.createElementNS(NS,"path");
+      var d = "M"+CX+","+CY+" L"+p0.x.toFixed(2)+","+p0.y.toFixed(2)+" A"+R+","+R+" 0 0,1 "+p1.x.toFixed(2)+","+p1.y.toFixed(2)+" Z";
+      path.setAttribute("d", d);
+      path.setAttribute("fill", "var(--"+CATS[i].c+(i%2? "-soft":"")+")");
+      path.setAttribute("stroke", "var(--paper)");
+      path.setAttribute("stroke-width","2");
+      wheelGroup.appendChild(path);
+
+      var mid = a0+seg/2;
+      var lp = polar(mid, LABEL_R);
+      var rot = mid; if(rot>90 && rot<270) rot += 180;
+      var text = document.createElementNS(NS,"text");
+      text.setAttribute("x", lp.x.toFixed(2));
+      text.setAttribute("y", lp.y.toFixed(2));
+      text.setAttribute("text-anchor","middle");
+      text.setAttribute("dominant-baseline","middle");
+      text.setAttribute("transform","rotate("+rot.toFixed(2)+" "+lp.x.toFixed(2)+" "+lp.y.toFixed(2)+")");
+      text.setAttribute("font-family","'Noto Sans TC',sans-serif");
+      text.setAttribute("font-weight","700");
+      text.setAttribute("font-size","11");
+      text.setAttribute("fill", i%2 ? "var(--ink)" : "#fff");
+      text.textContent = CATS[i].label;
+      wheelGroup.appendChild(text);
+    }
+  })();
+
+  var rotation = 0;
+  var spinning = false;
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hubBtn = $("hubBtn");
+  var statusLine = $("statusLine");
+
+  function animateWheelTo(targetCat, callback){
+    if(spinning){ callback && callback(); return; }
+    spinning = true; hubBtn.setAttribute("aria-disabled","true");
+    var n=CATS.length, seg=360/n;
+    var centerAngle = targetCat*seg+seg/2;
+    var currentMod = ((rotation%360)+360)%360;
+    var needed = ((360-centerAngle)-currentMod+720)%360;
+    var extraSpins = (5+Math.floor(Math.random()*2))*360;
+    rotation += extraSpins+needed;
+    if(reduceMotion){
+      wheelGroup.style.transition="none";
+      wheelGroup.style.transform="rotate("+rotation+"deg)";
+      spinning=false; hubBtn.removeAttribute("aria-disabled");
+      callback && callback();
+      return;
+    }
+    wheelGroup.style.transition="transform 3.6s cubic-bezier(.13,.66,.18,1)";
+    wheelGroup.style.transform="rotate("+rotation+"deg)";
+    var handled=false;
+    function onEnd(e){
+      if(e.propertyName!=="transform"||handled) return;
+      handled=true;
+      wheelGroup.removeEventListener("transitionend",onEnd);
+      spinning=false; hubBtn.removeAttribute("aria-disabled");
+      callback && callback();
+    }
+    wheelGroup.addEventListener("transitionend", onEnd);
+  }
+
+  // 抽題時排除「這個聊天室已經問過」的題目（不分是誰問的），同一類別的題目
+  // 要全部問過一輪之後才會重新開放抽到——用聊天室裡實際的歷史紀錄判斷，
+  // 而不是只記在瀏覽器裡，所以重新整理頁面、或換成對方在抽，都還是算數。
+  function nextQuestionInCat(cat, excludeIdxs){
+    var exclude = excludeIdxs || [];
+    var idxs = [];
+    for(var i=0;i<Q.length;i++){ if(Q[i][0]===cat && exclude.indexOf(i)===-1) idxs.push(i); }
+    if(idxs.length===0){
+      for(var i=0;i<Q.length;i++){ if(Q[i][0]===cat) idxs.push(i); }
+    }
+    return idxs[Math.floor(Math.random()*idxs.length)];
+  }
+
+  var mySentArea = $("mySentArea");
+  var theirSentArea = $("theirSentArea");
+  var theirsNeedDot = $("theirsNeedDot");
+  var incomingAlert = $("incomingAlert");
+  incomingAlert.addEventListener("click", function(){
+    var target = $("theirSentArea");
+    if(target && target.scrollIntoView) target.scrollIntoView({behavior:"smooth", block:"center"});
+  });
+
+  function setStatus(text){ statusLine.textContent = text || ""; }
+  var catChips = [];
+  function setHubEnabled(on){
+    if(on) hubBtn.removeAttribute("aria-disabled");
+    else hubBtn.setAttribute("aria-disabled","true");
+    catChips.forEach(function(chip){
+      if(on) chip.removeAttribute("aria-disabled");
+      else chip.setAttribute("aria-disabled","true");
+    });
+  }
+
+  (function buildCatPicker(){
+    var picker = $("catPicker");
+    CATS.forEach(function(cat){
+      var chip = el("button","cat-chip"); chip.type="button"; chip.textContent = cat.label;
+      chip.style.background = "var(--"+cat.c+"-soft)";
+      picker.appendChild(chip);
+      catChips.push(chip);
+    });
+  })();
+
+  // ---------- 共用 UI 片段 ----------
+  function moodWidget(container, initial){
+    var wrap = el("div","mood-row");
+    var moodLabel = el("span","field-label"); moodLabel.textContent = "此刻心情：";
+    wrap.appendChild(moodLabel);
+    var top = el("div","mood-top");
+    var word = el("span","mood-word");
+    var num = el("span","mood-num");
+    top.appendChild(word); top.appendChild(num);
+    var range = document.createElement("input");
+    range.type="range"; range.min="1"; range.max="10"; range.step="1"; range.value = initial || ls_get(MOOD_KEY, 6);
+    wrap.appendChild(top); wrap.appendChild(range);
+    container.appendChild(wrap);
+    function refresh(){ var v=parseInt(range.value,10); word.textContent=MOOD_EMOJI[v-1]+" "+MOOD_WORDS[v-1]; num.textContent=v+" / 10"; ls_set(MOOD_KEY, v); }
+    range.addEventListener("input", refresh);
+    refresh();
+    return range;
+  }
+
+  function renderQuestionHeader(container, qi){
+    var item = Q[qi];
+    var cat = CATS[item[0]];
+    var tag = el("span","tag");
+    tag.style.setProperty("--tagsoft","var(--"+cat.c+"-soft)");
+    tag.style.setProperty("--tagcolor","var(--"+cat.c+")");
+    tag.appendChild(el("span","tag-dot"));
+    tag.appendChild(document.createTextNode(cat.label));
+    container.appendChild(tag);
+    var h2 = el("h2"); h2.textContent = item[1];
+    container.appendChild(h2);
+  }
+
+  function optionsWidget(container, qi){
+    var item = Q[qi];
+    var opts = item[2];
+    var multi = !!item[3]; // 第4個欄位標記這題是否允許複選
+    var choice = null;     // 單選：字串或 null
+    var picked = [];       // 複選：字串陣列
+    if(opts.length){
+      var hint = el("p","opt-hint");
+      hint.textContent = multi ? "可以選不只一個，組成你的組合：" : "有點像的話，可以先點一個：";
+      container.appendChild(hint);
+      var wrap = el("div","options");
+      opts.forEach(function(label){
+        var b = el("button","opt"); b.type="button"; b.textContent=label;
+        var cat = CATS[item[0]];
+        b.style.setProperty("--tagsoft","var(--"+cat.c+"-soft)");
+        b.style.setProperty("--tagcolor","var(--"+cat.c+")");
+        b.addEventListener("click", function(){
+          var already = b.classList.contains("selected");
+          if(multi){
+            if(already){ b.classList.remove("selected"); picked = picked.filter(function(x){return x!==label;}); }
+            else{ b.classList.add("selected"); picked.push(label); }
+          } else {
+            Array.prototype.forEach.call(wrap.children, function(c){c.classList.remove("selected");});
+            choice = already ? null : label;
+            if(!already) b.classList.add("selected");
+          }
+        });
+        wrap.appendChild(b);
+      });
+      container.appendChild(wrap);
+    }
+    var label = el("span","field-label");
+    label.textContent = opts.length ? "或者，直接說給TA聽：" : "用你自己的話說說看：";
+    container.appendChild(label);
+    var ta = el("textarea"); ta.placeholder = "寫下你真正的想法……";
+    container.appendChild(ta);
+    return {
+      getChoice:function(){ return multi ? (picked.length ? picked.join("、") : null) : choice; },
+      getText:function(){return ta.value.trim();}
+    };
+  }
+
+  function bubbleFor(side, kind){
+    var b = el("div","bubble "+kind);
+    var head = el("div","bubble-head");
+    var av = el("div","avatar"); av.textContent = (side.name||"?").slice(0,1);
+    var nm = el("span","bubble-name"); nm.textContent = side.name || "";
+    var md = el("span","bubble-mood"); md.textContent = MOOD_EMOJI[(side.mood||6)-1]+" "+MOOD_WORDS[(side.mood||6)-1];
+    head.appendChild(av); head.appendChild(nm); head.appendChild(md);
+    b.appendChild(head);
+    if(side.choice){ var ch=el("div","bubble-choice"); ch.textContent=side.choice; b.appendChild(ch); }
+    if(side.note){ var nt=el("div","bubble-note"); nt.textContent=side.note; b.appendChild(nt); }
+    if(!side.choice && !side.note){ var nt2=el("div","bubble-note"); nt2.textContent="（沒有留下文字）"; b.appendChild(nt2); }
+    if(side.daily){
+      var dl = el("div","bubble-daily");
+      var dlLabel = el("b"); dlLabel.textContent = "今天的小插曲：";
+      dl.appendChild(dlLabel);
+      dl.appendChild(document.createTextNode(side.daily));
+      b.appendChild(dl);
+    }
+    return b;
+  }
+
+  function answerForm(qi, submitLabel, onSubmit){
+    var card = el("section","letter appear");
+    renderQuestionHeader(card, qi);
+    var opt = optionsWidget(card, qi);
+    var moodRange = moodWidget(card);
+    var noteLabel = el("span","field-label");
+    noteLabel.textContent = "今天有沒有什麼小插曲或煩惱，想順便告訴對方？（沒有也沒關係）";
+    card.appendChild(noteLabel);
+    var noteTa = el("textarea"); noteTa.placeholder = "今天發生的事、心裡的小疙瘩……都可以寫";
+    card.appendChild(noteTa);
+    var btnRow = el("div","btn-row");
+    var sealBtn = el("button","btn primary"); sealBtn.type="button"; sealBtn.textContent=submitLabel;
+    var hintSpan = el("span","hint");
+    btnRow.appendChild(sealBtn); btnRow.appendChild(hintSpan);
+    card.appendChild(btnRow);
+    sealBtn.addEventListener("click", function(){
+      var choice = opt.getChoice(), text = opt.getText();
+      var daily = noteTa.value.trim();
+      if(!choice && !text){ hintSpan.textContent = "選一個選項，或寫幾句話再封存喔"; return; }
+      sealBtn.disabled = true;
+      onSubmit({ name: myName(), choice: choice, note: text, daily: daily, mood: parseInt(moodRange.value,10), ts: Date.now() }, function(errMsg){
+        sealBtn.disabled = false;
+        if(errMsg) hintSpan.textContent = errMsg;
+      });
+    });
+    return card;
+  }
+
+  // ================= 音樂：溫暖的鋼琴輕音樂（生成式，無外部音檔）=================
+  (function musicModule(){
+    var audioCtx=null, masterGain=null, dry=null, wet=null, convolver=null, compressor=null;
+    var playing=false, chordTimer=null, chordIdx=0;
+    var beatSec = 0.64;
+
+    var SEMI = {C:0,"C#":1,D:2,"D#":3,E:4,F:5,"F#":6,G:7,"G#":8,A:9,"A#":10,B:11};
+    function hz(name, octave){ return 16.3516 * Math.pow(2, (SEMI[name]+octave*12)/12); }
+
+    // F大調、溫暖略帶懷舊的和聲進行，仿照一首歌的結構分成「主歌」「副歌」「尾奏」再循環，
+    // 而不是同一種彈法一直重複：主歌节奏放慢、比較安靜；副歌換一組更明亮的和弦、
+    // 疊上一條會唱歌的旋律線、音量也稍微推高，帶出「副歌」該有的抒情感；
+    // 尾奏再慢下來、和弦幾乎同時響起，收在一個安穩的句點，然後才回到主歌重新循環。
+    // （琶音排列 up：由低到高／down：由高到低／upDown：上去再下來／
+    // roll：跳著彈／sustain：和弦音幾乎同時響起／waltz：帶點三拍子的呼吸感）
+    var VERSE = [
+      { bass:["F",2],  notes:[["F",3],["A",3],["C",4],["E",4]],           pattern:"up",      beatMul:2.0 },
+      { bass:["E",2],  notes:[["E",3],["G",3],["C",4],["E",4]],           pattern:"up",      beatMul:2.0 },
+      { bass:["D",2],  notes:[["D",3],["F",3],["A",3],["C",4]],           pattern:"roll",    beatMul:1.8 },
+      { bass:["A#",2], notes:[["A#",3],["D",4],["F",4],["A",4]],          pattern:"upDown",  beatMul:2.0 }
+    ];
+    var CHORUS = [
+      { bass:["G",2],  notes:[["G",3],["A#",3],["D",4],["F",4]],  melody:["D",5], pattern:"roll",  beatMul:1.3 },
+      { bass:["C",2],  notes:[["C",3],["E",3],["G",3],["A#",3]],  melody:["E",5], pattern:"waltz", beatMul:1.3 },
+      { bass:["F",2],  notes:[["F",3],["A",3],["C",4],["E",4]],   melody:["A",5], pattern:"up",    beatMul:1.3 },
+      { bass:["A",2],  notes:[["A",3],["C",4],["E",4],["G",4]],   melody:["G",5], pattern:"down",  beatMul:1.3 }
+    ];
+    var OUTRO = [
+      { bass:["A#",2], notes:[["A#",3],["D",4],["F",4],["A",4]],          pattern:"sustain", beatMul:2.2 },
+      { bass:["C",2],  notes:[["C",3],["E",3],["G",3],["C",4]],           pattern:"sustain", beatMul:2.2 },
+      { bass:["F",2],  notes:[["F",3],["A",3],["C",4],["E",4]],           pattern:"up",      beatMul:2.6 }
+    ];
+    var ALL_CHORDS = VERSE.concat(CHORUS, OUTRO);
+    function noteOrderForPattern(notes, pattern){
+      if(pattern==="down") return notes.slice().reverse();
+      if(pattern==="upDown") return notes.concat(notes.slice(0,-1).reverse());
+      if(pattern==="roll"){
+        var idx=[0,2,1,3].filter(function(i){ return i<notes.length; });
+        return idx.map(function(i){ return notes[i]; });
+      }
+      return notes;
+    }
+
+    function buildImpulse(ctx){
+      var rate=ctx.sampleRate, seconds=1.7, len=Math.floor(rate*seconds);
+      var buf=ctx.createBuffer(2,len,rate);
+      for(var ch=0; ch<2; ch++){
+        var data=buf.getChannelData(ch);
+        for(var i=0;i<len;i++){ data[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.6); }
+      }
+      return buf;
+    }
+    function ensureCtx(){
+      if(audioCtx) return;
+      audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+      masterGain = audioCtx.createGain(); masterGain.gain.value = parseFloat($("musicVol").value||"0.85");
+      dry = audioCtx.createGain(); dry.gain.value=1.15;
+      wet = audioCtx.createGain(); wet.gain.value=0.26;
+      convolver = audioCtx.createConvolver(); convolver.buffer = buildImpulse(audioCtx);
+      compressor = audioCtx.createDynamicsCompressor();
+      compressor.threshold.value=-18; compressor.knee.value=22; compressor.ratio.value=3.2;
+      compressor.attack.value=0.01; compressor.release.value=0.28;
+      dry.connect(compressor);
+      convolver.connect(wet); wet.connect(compressor);
+      compressor.connect(masterGain);
+      masterGain.connect(audioCtx.destination);
+    }
+    // 鋼琴音色：三角波為主 + 淡淡的高倍泛音，快速起音、緩慢自然衰減（像按下延音踏板）
+    function playPiano(freq, start, dur, vel){
+      var o1 = audioCtx.createOscillator(); o1.type="triangle"; o1.frequency.value=freq;
+      var o2 = audioCtx.createOscillator(); o2.type="sine"; o2.frequency.value=freq*2.003;
+      var g2 = audioCtx.createGain(); g2.gain.value=0.16;
+      var amp = audioCtx.createGain();
+      amp.gain.setValueAtTime(0, start);
+      amp.gain.linearRampToValueAtTime(vel, start+0.012);
+      amp.gain.exponentialRampToValueAtTime(Math.max(vel*0.0015,0.0004), start+dur);
+      var filt = audioCtx.createBiquadFilter(); filt.type="lowpass"; filt.frequency.value=2800;
+      o1.connect(filt);
+      o2.connect(g2); g2.connect(filt);
+      filt.connect(amp);
+      amp.connect(dry); amp.connect(convolver);
+      o1.start(start); o1.stop(start+dur+0.05);
+      o2.start(start); o2.stop(start+dur+0.05);
+    }
+    function playBass(freq, start, dur, vel){
+      var o = audioCtx.createOscillator(); o.type="sine"; o.frequency.value=freq;
+      var amp = audioCtx.createGain();
+      amp.gain.setValueAtTime(0, start);
+      amp.gain.linearRampToValueAtTime(vel, start+0.06);
+      amp.gain.exponentialRampToValueAtTime(Math.max(vel*0.0015,0.0003), start+dur);
+      o.connect(amp); amp.connect(dry); amp.connect(convolver);
+      o.start(start); o.stop(start+dur+0.05);
+    }
+    function scheduleChordArp(){
+      if(!playing) return;
+      var chord = ALL_CHORDS[chordIdx % ALL_CHORDS.length];
+      var mul = chord.beatMul || 1;
+      var dur4 = beatSec*4*mul;
+      var now = audioCtx.currentTime;
+      playBass(hz(chord.bass[0],chord.bass[1]), now+0.02, dur4*0.95, 0.15);
+
+      var order = noteOrderForPattern(chord.notes, chord.pattern);
+
+      if(chord.pattern==="sustain"){
+        order.forEach(function(n,i){
+          var f = hz(n[0], n[1]);
+          var t = now + 0.18 + i*beatSec*0.14;
+          playPiano(f, t, dur4*0.82, 0.1);
+        });
+      } else if(chord.pattern==="waltz"){
+        order.forEach(function(n,i){
+          var f = hz(n[0], n[1]);
+          var t = now + 0.16 + (i+1)*beatSec*0.82;
+          playPiano(f, t, 1.9, 0.11);
+        });
+      } else {
+        order.forEach(function(n,i){
+          var f = hz(n[0], n[1]);
+          var t = now + 0.16 + i*beatSec*0.66;
+          playPiano(f, t, 2.0, 0.115);
+        });
+        if(Math.random()<0.5){
+          var n2 = order[Math.floor(Math.random()*order.length)];
+          var f2 = hz(n2[0], n2[1]+1);
+          playPiano(f2, now + beatSec*2.7*mul, 1.6, 0.07);
+        }
+      }
+      // 副歌的旋律線：一條更明亮、更持續的主旋律音，讓副歌聽起來像在「唱歌」
+      if(chord.melody){
+        var mf = hz(chord.melody[0], chord.melody[1]);
+        playPiano(mf, now + beatSec*0.9, dur4*0.78, 0.135);
+      }
+      chordIdx++;
+      chordTimer = setTimeout(scheduleChordArp, dur4*1000);
+    }
+    function start(){
+      ensureCtx();
+      if(audioCtx.state==="suspended") audioCtx.resume();
+      if(playing) return;
+      playing=true; chordIdx=0;
+      scheduleChordArp();
+    }
+    function stop(){
+      playing=false;
+      if(chordTimer) clearTimeout(chordTimer);
+    }
+    function setVol(v){ if(masterGain) masterGain.gain.value = v; }
+
+    var toggle = $("musicToggle"), icon = $("musicIcon"), vol = $("musicVol");
+    var PLAY_PATH = '<polygon points="6,4 20,12 6,20" fill="currentColor" stroke="none"></polygon>';
+    var PAUSE_PATH = '<rect x="5" y="4" width="5" height="16" fill="currentColor" stroke="none"></rect><rect x="14" y="4" width="5" height="16" fill="currentColor" stroke="none"></rect>';
+    function setPlayingUI(on){
+      if(on){ toggle.classList.add("on"); toggle.setAttribute("aria-pressed","true"); icon.innerHTML=PAUSE_PATH; }
+      else { toggle.classList.remove("on"); toggle.setAttribute("aria-pressed","false"); icon.innerHTML=PLAY_PATH; }
+    }
+    toggle.addEventListener("click", function(){
+      if(!playing){ start(); setPlayingUI(true); }
+      else { stop(); setPlayingUI(false); }
+    });
+    vol.addEventListener("input", function(){ setVol(parseFloat(vol.value)); });
+
+    // 進站就自動播放，除非瀏覽器擋自動播放的聲音——那就在使用者第一次點擊／操作頁面時
+    // 悄悄把聲音接上，使用者完全不用另外按播放，只有想關掉時才需要手動按暫停。
+    start();
+    setPlayingUI(true);
+    if(audioCtx && audioCtx.state==="suspended"){
+      var unlock = function(){
+        if(audioCtx.state==="suspended"){ audioCtx.resume().catch(function(){}); }
+        document.removeEventListener("pointerdown", unlock);
+        document.removeEventListener("keydown", unlock);
+      };
+      document.addEventListener("pointerdown", unlock, {once:true});
+      document.addEventListener("keydown", unlock, {once:true});
+    }
+  })();
+
+  // ================= 主流程：Firestore 聊天室即時同步 =================
+  // 說明：兩人先各自打開這個房面、共用同一個「聊天室代碼」，之後所有動作
+  // （抽題、封存、回信）都直接寫進 Firestore，對方的頁面透過 onSnapshot
+  // 即時監聽、自動更新——不需要再互相傳連結。
+  var ROOM_KEY = "soulwheel_room_v1";
+
+  function randomRoomId(){
+    var chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // 避開容易看錯的字元
+    var out = "";
+    for(var i=0;i<8;i++) out += chars[Math.floor(Math.random()*chars.length)];
+    return out;
+  }
+  function roomJoinLink(roomId){
+    var u = new URL(location.href);
+    u.hash = "";
+    u.search = "";
+    u.searchParams.set("room", roomId);
+    return u.toString();
+  }
+
+  function copyText(text, btn){
+    function done(){ var old=btn.textContent; btn.textContent="已複製"; setTimeout(function(){btn.textContent=old;},1800); }
+    try{
+      navigator.clipboard.writeText(text).then(done).catch(function(){ fallbackCopy(text); done(); });
+    }catch(e){ fallbackCopy(text); done(); }
+  }
+  function fallbackCopy(text){
+    var ta=document.createElement("textarea"); ta.value=text; ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand("copy"); }catch(e){}
+    document.body.removeChild(ta);
+  }
+
+  // ---------- 聊天室人數限制：最多兩人 ----------
+  // 用 rooms/{roomId} 這份文件記錄 members（一份最多兩個 uid）。
+  // 第一個打開聊天室的人會建立這份文件；第二個人加入時被加進 members；
+  // 第三個人（uid 不在 members 裡、且 members 已經有兩個）就會被擋下來。
+  // 注意：這是「在畫面上」擋住，Firestore 規則本身沒有另外鎖，所以擋的是
+  // 不小心把連結傳給第三個人的情況，不是防範刻意繞過網頁的技術行為。
+  function checkMembership(roomId, uid, callback){
+    var ref = doc(db, "rooms", roomId);
+    getDoc(ref).then(function(snap){
+      if(!snap.exists()){
+        setDoc(ref, { members: [uid], createdAt: serverTimestamp() })
+          .then(function(){ callback(true); })
+          .catch(function(){ callback(false, "error"); });
+        return;
+      }
+      var members = (snap.data() && snap.data().members) || [];
+      if(members.indexOf(uid) !== -1){ callback(true); return; }
+      if(members.length < 2){
+        updateDoc(ref, { members: arrayUnion(uid) })
+          .then(function(){ callback(true); })
+          .catch(function(){ callback(false, "error"); });
+        return;
+      }
+      callback(false, "full");
+    }).catch(function(){ callback(false, "error"); });
+  }
+
+  function initApp(roomId, myUid){
+    $("pageFooter").innerHTML = "這個聊天室只有知道聊天室代碼／連結的人看得到；換瀏覽器或清除資料會忘記這個聊天室，記得先把聊天室連結存起來。";
+
+    var memoBody = $("memoBody"), memoCount = $("memoCount");
+
+    var threads = [];
+    var draftingMine = false;   // 正在抽新題、還沒封存——這段期間不要讓資料更新蓋掉「你寄出的信」那一區
+    var draftingTheirs = false; // 正在回覆對方的信、還沒封存——這段期間不要讓資料更新蓋掉「對方寄來的信」那一區
+
+    var threadsCol = collection(db, "rooms", roomId, "threads");
+
+    // ---------- 聊天室資訊列 ----------
+    var joinLink = roomJoinLink(roomId);
+    var connNote = $("connNote");
+    connNote.textContent = "";
+    var roomInfo = el("div","room-info");
+    var codeSpan = document.createElement("span"); codeSpan.textContent = "聊天室代碼："+roomId;
+    var inviteBtn = document.createElement("button"); inviteBtn.type="button"; inviteBtn.textContent="複製邀請連結";
+    inviteBtn.addEventListener("click", function(){ copyText(joinLink, inviteBtn); });
+    var leaveBtn = document.createElement("button"); leaveBtn.type="button"; leaveBtn.textContent="離開聊天室";
+    leaveBtn.addEventListener("click", function(){
+      if(confirm("確定要離開這個聊天室嗎？下次要再輸入聊天室代碼或連結才能回來。")){
+        ls_set(ROOM_KEY, null);
+        location.href = location.pathname;
+      }
+    });
+    roomInfo.appendChild(codeSpan); roomInfo.appendChild(inviteBtn); roomInfo.appendChild(leaveBtn);
+    connNote.appendChild(roomInfo);
+
+    // ---------- Firestore 讀寫 ----------
+    function startNewThread(qi, payload){
+      return addDoc(threadsCol, {
+        qi: qi,
+        starterUid: myUid,
+        starterName: payload.name,
+        starterChoice: payload.choice,
+        starterNote: payload.note,
+        starterDaily: payload.daily || null,
+        starterMood: payload.mood,
+        starterTs: payload.ts,
+        responderUid: null,
+        responderName: null,
+        responderChoice: null,
+        responderNote: null,
+        responderDaily: null,
+        responderMood: null,
+        responderTs: null,
+        status: "pending",
+        createdAt: serverTimestamp()
+      });
+    }
+    function answerThread(threadId, payload){
+      return updateDoc(doc(db,"rooms",roomId,"threads",threadId), {
+        responderUid: myUid,
+        responderName: payload.name,
+        responderChoice: payload.choice,
+        responderNote: payload.note,
+        responderDaily: payload.daily || null,
+        responderMood: payload.mood,
+        responderTs: payload.ts,
+        status: "done"
+      });
+    }
+
+    // ---------- 由目前資料推導出的狀態 ----------
+    function myOutgoing(){
+      return threads.find(function(t){ return t.starterUid===myUid && t.status==="pending"; }) || null;
+    }
+    function myIncoming(){
+      return threads.find(function(t){ return t.starterUid!==myUid && t.status==="pending"; }) || null;
+    }
+    function latestDoneStarter(){ // 我寄出、對方已回答的最近一輪
+      var mine = threads.filter(function(t){ return t.starterUid===myUid && t.status==="done"; });
+      if(mine.length===0) return null;
+      mine.sort(function(a,b){ return (b.responderTs||0)-(a.responderTs||0); });
+      return mine[0];
+    }
+    function latestDoneResponder(){ // 對方寄來、我已回答的最近一輪
+      var theirs = threads.filter(function(t){ return t.starterUid!==myUid && t.status==="done"; });
+      if(theirs.length===0) return null;
+      theirs.sort(function(a,b){ return (b.responderTs||0)-(a.responderTs||0); });
+      return theirs[0];
+    }
+    function creditAvailable(){ return !myOutgoing(); }
+
+    function updateHubUI(){
+      var can = creditAvailable();
+      setHubEnabled(can);
+      hubBtn.textContent = can ? "轉動" : "等信中";
+      var inc = !!myIncoming();
+      theirsNeedDot.hidden = !inc;
+      incomingAlert.hidden = !inc;
+    }
+
+    // ---------- 畫面：固定分成「你寄出的信」跟「對方寄來的信」兩區，各自獨立更新 ----------
+    function bubbleSide(t, who){
+      return { name: t[who+"Name"], choice: t[who+"Choice"], note: t[who+"Note"], daily: t[who+"Daily"], mood: t[who+"Mood"] };
+    }
+    function buildRevealCard(thread){
+      var card = el("section","letter appear");
+      renderQuestionHeader(card, thread.qi);
+      card.appendChild(bubbleFor(bubbleSide(thread,"starter"), "starter"));
+      card.appendChild(bubbleFor(bubbleSide(thread,"responder"), "responder"));
+      return card;
+    }
+
+    // 提醒節奏：封存滿4天提醒一次，滿7天再一次，之後每7天循環（4、7、11、14、18、21…）
+    function isNudgeDay(days){
+      if(days < 4) return false;
+      var m = days % 7;
+      return m === 4 || m === 0;
+    }
+
+    function buildSentWaitingCard(thread){
+      var card = el("section","letter appear");
+      var sealed = el("div","sealed-note");
+      sealed.innerHTML = '<span class="paw"></span>已封存，等待對方回答';
+      card.appendChild(sealed);
+      var days = Math.floor((Date.now() - (thread.starterTs||Date.now())) / 86400000);
+      if(isNudgeDay(days)){
+        var nudge = el("div","nudge-note");
+        var p = el("p"); p.textContent = "已經等了 "+days+" 天了，要不要私訊提醒對方一下？";
+        nudge.appendChild(p);
+        var nudgeBtn = el("button","btn ghost"); nudgeBtn.type="button"; nudgeBtn.textContent="複製提醒文字";
+        nudgeBtn.addEventListener("click", function(){
+          copyText("今天，是我在真心話轉盤等待你的第"+days+"天，你不來救我的話....我就要繼續被困在這裡了~嗚嗚嗚", nudgeBtn);
+        });
+        nudge.appendChild(nudgeBtn);
+        card.appendChild(nudge);
+      }
+      renderQuestionHeader(card, thread.qi);
+      return card;
+    }
+
+    function renderMineZone(){
+      if(draftingMine) return; // 正在抽新題、還沒封存，不要蓋掉
+      mySentArea.innerHTML = "";
+      var out = myOutgoing();
+      if(out){ mySentArea.appendChild(buildSentWaitingCard(out)); return; }
+      var done = latestDoneStarter();
+      if(done){ mySentArea.appendChild(buildRevealCard(done)); return; }
+      var empty = el("p","zone-empty"); empty.textContent = "還沒有寄出信件，轉一輪抽題開始吧。";
+      mySentArea.appendChild(empty);
+    }
+
+    function buildAnswerIncomingCard(thread){
+      draftingTheirs = true;
+      var formCard = answerForm(thread.qi, "封存並拆信", function(payload, done){
+        answerThread(thread.id, payload).then(function(){
+          draftingTheirs = false;
+          renderTheirsZone();
+          updateHubUI();
+        }).catch(function(err){
+          done("回覆失敗，請檢查網路連線後再試一次");
+        });
+      });
+      var note = el("div","sealed-note");
+      note.style.background="var(--sky-soft)"; note.style.color="var(--sky)";
+      note.innerHTML = '<span class="paw"></span>'+(thread.starterName||"對方")+' 已經封存了一封信，換你回答同一題';
+      formCard.insertBefore(note, formCard.firstChild);
+      return formCard;
+    }
+
+    function renderTheirsZone(){
+      if(draftingTheirs) return; // 正在回覆對方的信、還沒封存，不要蓋掉
+      theirSentArea.innerHTML = "";
+      var inc = myIncoming();
+      if(inc){ theirSentArea.appendChild(buildAnswerIncomingCard(inc)); return; }
+      var done = latestDoneResponder();
+      if(done){ theirSentArea.appendChild(buildRevealCard(done)); return; }
+      var empty = el("p","zone-empty"); empty.textContent = "對方還沒有來信。";
+      theirSentArea.appendChild(empty);
+    }
+
+    function startDraw(qi){
+      draftingMine = true;
+      mySentArea.innerHTML = "";
+      setStatus("不喜歡這題也可以再轉一次，喜歡的話寫完後封存");
+      var card = answerForm(qi, "封存這封信", function(payload, done){
+        startNewThread(qi, payload).then(function(){
+          draftingMine = false;
+          renderMineZone();
+          updateHubUI();
+        }).catch(function(err){
+          done("封存失敗，請檢查網路連線後再試一次");
+        });
+      });
+      mySentArea.appendChild(card);
+      updateHubUI();
+    }
+
+    function renderMemoSide(name, choice, note, daily){
+      var s = el("div","memo-side");
+      var b = el("b"); b.textContent = name || ""; s.appendChild(b);
+      s.appendChild(document.createTextNode("："+(choice? choice+"　":"")+(note||"")));
+      if(daily){
+        var d = el("div","memo-daily"); d.textContent = "🗒 "+daily;
+        s.appendChild(d);
+      }
+      return s;
+    }
+
+    function renderMemo(){
+      var list = threads.filter(function(t){ return t.status==="done"; });
+      memoCount.textContent = "("+list.length+")";
+      memoBody.innerHTML = "";
+      if(list.length===0){ memoBody.innerHTML = '<p class="empty-note">還沒有一起拆開的信——轉輪盤抽一題開始吧。</p>'; return; }
+      list.slice().sort(function(a,b){ return (b.responderTs||0)-(a.responderTs||0); }).forEach(function(entry){
+        var item = Q[entry.qi];
+        if(!item) return;
+        var row = el("div","memo");
+        var del = el("button","memo-del"); del.type="button"; del.textContent="×"; del.setAttribute("aria-label","刪除");
+        del.addEventListener("click", function(){
+          if(confirm("要刪除這段回憶嗎？兩人都會看不到囉。")){
+            deleteDoc(doc(db,"rooms",roomId,"threads",entry.id)).catch(function(){});
+          }
+        });
+        row.appendChild(del);
+        var q = el("div","memo-q"); q.textContent = CATS[item[0]].label+"｜"+item[1];
+        row.appendChild(q);
+        var pair = el("div","memo-pair");
+        pair.appendChild(renderMemoSide(entry.starterName, entry.starterChoice, entry.starterNote, entry.starterDaily));
+        pair.appendChild(renderMemoSide(entry.responderName, entry.responderChoice, entry.responderNote, entry.responderDaily));
+        row.appendChild(pair);
+        var meta = el("div","hint"); meta.style.marginTop="6px"; meta.textContent = fmtTime(entry.responderTs||entry.starterTs||Date.now());
+        row.appendChild(meta);
+        memoBody.appendChild(row);
+      });
+    }
+
+    function drawCategory(targetCat){
+      if(!creditAvailable()) return;
+      if(hubBtn.getAttribute("aria-disabled")==="true") return;
+      animateWheelTo(targetCat, function(){
+        var askedIdxs = threads.map(function(t){ return t.qi; });
+        var qi = nextQuestionInCat(targetCat, askedIdxs);
+        startDraw(qi);
+      });
+    }
+
+    hubBtn.addEventListener("click", function(){
+      drawCategory(Math.floor(Math.random()*CATS.length));
+    });
+
+    catChips.forEach(function(chip, idx){
+      chip.addEventListener("click", function(){ drawCategory(idx); });
+    });
+
+    function onThreadsChanged(){
+      updateHubUI();
+      renderMineZone();
+      renderTheirsZone();
+      renderMemo();
+      if(!draftingMine && !draftingTheirs) setStatus("");
+    }
+
+    // ---------- 即時監聽（身分驗證與聊天室人數已經在進站前確認過了）----------
+    setStatus("連線中…");
+    setHubEnabled(false);
+    var q = query(threadsCol, orderBy("createdAt","asc"));
+    onSnapshot(q, function(snap){
+      threads = snap.docs.map(function(d){ var data=d.data(); data.id=d.id; return data; });
+      onThreadsChanged();
+    }, function(err){
+      setStatus("連線發生問題，請檢查 Firebase 設定或網路："+err.message);
+    });
+  }
+
+  // ================= 聊天室登入畫面 =================
+  function renderRoomBlocked(reason){
+    var gate = $("roomGate");
+    var msg = reason === "full"
+      ? "這個聊天室已經有兩個人在使用了，沒辦法再加入——連結可能被傳給了第三個人。"
+      : "連線時發生問題，請重新整理頁面再試一次；如果一直失敗，可能是 Firebase 設定或網路的問題。";
+    gate.innerHTML =
+      '<h1>真心話轉盤</h1>' +
+      '<p>'+msg+'</p>' +
+      '<button class="btn primary" id="ownRoomBtn" type="button">建立我自己的新聊天室</button>';
+    $("ownRoomBtn").addEventListener("click", function(){
+      var roomId = randomRoomId();
+      ls_set(ROOM_KEY, roomId);
+      setRoomInUrl(roomId);
+      showApp(roomId);
+    });
+  }
+
+  // 讓網址列隨時顯示目前所在的聊天室代碼，避免使用者搞不清楚自己在哪個房間
+  function setRoomInUrl(roomId){
+    try{
+      var u = new URL(location.href);
+      u.searchParams.set("room", roomId);
+      history.replaceState(null, "", u.pathname + u.search);
+    }catch(e){}
+  }
+
+  function showApp(roomId){
+    var gate = $("roomGate");
+    gate.innerHTML = '<h1>真心話轉盤</h1><p>正在確認聊天室狀態…</p>';
+    onAuthStateChanged(auth, function(user){
+      if(!user) return;
+      checkMembership(roomId, user.uid, function(ok, reason){
+        if(ok){
+          gate.hidden = true;
+          $("appWrap").hidden = false;
+          initApp(roomId, user.uid);
+        } else {
+          renderRoomBlocked(reason);
+        }
+      });
+    });
+    signInAnonymously(auth).catch(function(err){
+      console.error("匿名登入失敗：", err);
+      var code = (err && err.code) ? err.code : "unknown";
+      var msg = (err && err.message) ? err.message : "";
+      gate.innerHTML = '<h1>真心話轉盤</h1><p>登入失敗，請檢查網路連線後重新整理頁面。</p>' +
+        '<p style="font-size:13px;color:#999;word-break:break-all;">錯誤代碼：'+code+'<br>'+msg+'</p>';
+    });
+  }
+
+  (function startGate(){
+    var params = new URLSearchParams(location.search);
+    var urlRoom = params.get("room");
+    var savedRoom = ls_get(ROOM_KEY, null);
+
+    if(urlRoom){
+      ls_set(ROOM_KEY, urlRoom);
+      showApp(urlRoom);
+      return;
+    }
+    if(savedRoom){
+      setRoomInUrl(savedRoom);
+      showApp(savedRoom);
+      return;
+    }
+
+    var gateHint = $("gateHint");
+    $("createRoomBtn").addEventListener("click", function(){
+      var roomId = randomRoomId();
+      ls_set(ROOM_KEY, roomId);
+      setRoomInUrl(roomId);
+      showApp(roomId);
+    });
+    $("joinRoomBtn").addEventListener("click", function(){
+      var raw = $("joinRoomInput").value.trim();
+      var roomId = null;
+      if(raw.indexOf("room=")>=0){
+        try{ roomId = new URL(raw).searchParams.get("room"); }catch(e){}
+      }
+      if(!roomId) roomId = raw.toUpperCase().replace(/[^A-Z0-9]/g,"");
+      if(!roomId){ gateHint.textContent = "請貼上完整的聊天室連結，或輸入聊天室代碼"; return; }
+      ls_set(ROOM_KEY, roomId);
+      setRoomInUrl(roomId);
+      showApp(roomId);
+    });
+  })();
+
+})();
+</script>
+</body>
+</html>
